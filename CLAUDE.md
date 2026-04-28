@@ -336,6 +336,11 @@ When adding assets:
 | `ui/fonts/Kenney Future.ttf` | UI Pack Space Station | `HUD`, `GameOver`, `MainMenu` | Primary UI font |
 | `ui/fonts/Kenney Future Narrow.ttf` | UI Pack Space Station | _(reserved)_ | Compact UI font |
 | `ui/png/grey/default/*.png` | UI Pack Space Station | _(available for theming)_ | Bars, buttons, crosshairs |
+| `models/space_station/container.glb` | Space Station Kit | `debris_safe.tscn` | Safe debris mesh (cargo container, scaled 3×) |
+| `models/space_station/rocks.glb` | Space Station Kit | `debris_hazard.tscn` | Hazard debris mesh (rocks, scaled 3×) |
+| `models/space_station/skip.glb` | Space Station Kit | _(reserved)_ | Additional debris variant |
+| `models/space_station/Textures/colormap.png` | Space Station Kit | GLB URI resolution | Shared texture atlas for all space station models |
+| `models/characters/animal-penguin.glb` | Cube Pets | `player.tscn` | Player character mesh (scaled 1.5×) |
 
 ### Recommended Kenney packs for this game
 | Pack | Use for |
