@@ -24,11 +24,13 @@ func _physics_process(delta: float) -> void:
 
 func bounce(normal: Vector3) -> void:
 	_velocity.y = BOUNCE_FORCE
+	AudioManager.play_jump()
 	jumped.emit()
 
 
 func take_damage(amount: int) -> void:
 	stats.health -= amount
+	AudioManager.play_damage()
 	damaged.emit(amount)
 	if stats.health <= 0:
 		died.emit()

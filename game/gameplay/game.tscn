@@ -10,11 +10,43 @@
 [ext_resource type="PackedScene" path="res://game/objects/debris_safe.tscn" id="Scene_DebrisSafe"]
 [ext_resource type="PackedScene" path="res://game/objects/debris_hazard.tscn" id="Scene_DebrisHazard"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProcSky_1"]
+sky_top_color = Color(0.005, 0.005, 0.04, 1)
+sky_horizon_color = Color(0.01, 0.01, 0.03, 1)
+sky_curve = 0.15
+sky_energy_multiplier = 0.4
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.01, 0.01, 0.02, 1)
+ground_curve = 0.02
+sun_angle_max = 10.0
+sun_curve = 0.12
+
+[sub_resource type="Sky" id="Sky_1"]
+sky_material = SubResource("ProcSky_1")
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 2
+sky = SubResource("Sky_1")
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.15, 0.35, 1)
+ambient_light_energy = 0.4
+fog_enabled = false
+glow_enabled = true
+glow_intensity = 0.4
+glow_strength = 1.0
+glow_bloom = 0.1
+
 [node name="Game" type="Node3D"]
 script = ExtResource("Script_Game")
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 20, 0)
+light_color = Color(0.9, 0.85, 1.0, 1)
+light_energy = 1.2
+shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("Scene_Player")]
 

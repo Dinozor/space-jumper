@@ -3,6 +3,8 @@ extends CanvasLayer
 
 ## Game-over screen: shows result and provides restart / menu actions.
 
+const _FONT: FontFile = preload("res://assets/kenney/ui/fonts/Kenney Future.ttf")
+
 signal restart_pressed
 signal menu_pressed
 
@@ -19,8 +21,23 @@ signal menu_pressed
 
 
 func _ready() -> void:
-	_restart_button.pressed.connect(restart_pressed.emit)
-	_menu_button.pressed.connect(menu_pressed.emit)
+	_reason_label.add_theme_font_override("font", _FONT)
+	_reason_label.add_theme_font_size_override("font_size", 28)
+	for btn: Button in [_restart_button, _menu_button]:
+		btn.add_theme_font_override("font", _FONT)
+		btn.add_theme_font_size_override("font_size", 18)
+	_restart_button.pressed.connect(_on_restart_pressed)
+	_menu_button.pressed.connect(_on_menu_pressed)
+
+
+func _on_restart_pressed() -> void:
+	AudioManager.play_button()
+	restart_pressed.emit()
+
+
+func _on_menu_pressed() -> void:
+	AudioManager.play_button()
+	menu_pressed.emit()
 
 
 func show_result(reason: String) -> void:

@@ -46,6 +46,7 @@ func _on_station_reached() -> void:
 	if _game_ended:
 		return
 	_game_ended = true
+	AudioManager.play_win()
 	level_won.emit()
 	_game_over.show_result("won")
 
@@ -58,6 +59,7 @@ func _on_player_left_behind() -> void:
 
 func _end_game(reason: String) -> void:
 	_game_ended = true
+	AudioManager.play_lose()
 	level_lost.emit(reason)
 	_game_over.show_result(reason)
 
