@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://wall_segment"]
+
+; ──────────────────────────────────────────────
+; WallSegment.tscn
+;
+; HOW TO ADD KENNEY ASSETS:
+; 1. Download "Kenney 3D Platformer" or "Kenney Isometric Roads"
+;    from https://kenney.nl/assets
+; 2. Import the .glb models into res://assets/kenney/
+; 3. Replace the MeshInstance2D / ColorRect below with a
+;    SubViewport containing a Node3D scene with the Kenney mesh.
+;    OR use the Sprite2D approach with pre-rendered PNGs from
+;    Kenney's "Pixel Platformer" sheet.
+;
+; Suggested Kenney packs for 3D look on 2D:
+;   - "Kenney 3D Platformer" (.glb) – bake to sprite
+;   - "Kenney Isometric City" – works great sideways
+;   - "Kenney Minigolf" – clean modular walls
+; ──────────────────────────────────────────────
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(32, 120)
+
+[node name="WallSegment" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="Visual" type="ColorRect" parent="."]
+; Replace this ColorRect with a Sprite2D or SubViewportContainer
+; once Kenney assets are imported.
+; Position is offset so the body origin is at top-left.
+position = Vector2(-16, 0)
+size = Vector2(32, 120)
+color = Color(0.42, 0.52, 0.82, 1)

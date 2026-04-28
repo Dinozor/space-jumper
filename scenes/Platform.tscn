@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://platform_scene"]
+
+[sub_resource type="RectangleShape2D" id="RectShape"]
+size = Vector2(90, 16)
+
+[node name="Platform" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectShape")
+
+[node name="Visual" type="ColorRect" parent="."]
+; Replace with Kenney platform sprite once assets imported
+position = Vector2(-45, -8)
+size = Vector2(90, 16)
+color = Color(0.30, 0.80, 0.45, 1)
