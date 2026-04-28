@@ -327,7 +327,15 @@ When adding assets:
 
 | File in `res://assets/kenney/` | Source pack | Used by | Purpose |
 |-------------------------------|-------------|---------|---------|
-| _(none yet — add as you go)_ | | | |
+| `audio/sfx/bounce_jump.ogg` | Sci-Fi Sounds (`thrusterFire_000`) | `AudioManager` | Player bounces off debris |
+| `audio/sfx/damage.ogg` | Impact Sounds (`impactMetal_heavy_000`) | `AudioManager` | Player takes damage |
+| `audio/sfx/button_click.ogg` | Interface Sounds (`click_001`) | `AudioManager` | UI button press |
+| `audio/sfx/win.ogg` | Interface Sounds (`confirmation_001`) | `AudioManager` | Level complete |
+| `audio/sfx/lose.ogg` | Interface Sounds (`error_001`) | `AudioManager` | Game over |
+| `audio/sfx/drift_warning.ogg` | Sci-Fi Sounds (`forceField_000`) | `AudioManager` | Drift warning trigger |
+| `ui/fonts/Kenney Future.ttf` | UI Pack Space Station | `HUD`, `GameOver`, `MainMenu` | Primary UI font |
+| `ui/fonts/Kenney Future Narrow.ttf` | UI Pack Space Station | _(reserved)_ | Compact UI font |
+| `ui/png/grey/default/*.png` | UI Pack Space Station | _(available for theming)_ | Bars, buttons, crosshairs |
 
 ### Recommended Kenney packs for this game
 | Pack | Use for |
