@@ -1,61 +1,410 @@
-# CLAUDE.md
+# Wall Jumper — Claude Code Project Guide
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Game Overview
 
-## Running the Project
+**Genre:** 3D endless arcade / survival  
+**Engine:** Godot 4 (latest stable)  
+**Export target:** Web (HTML5)  
+**Visual style:** 3D using Kenney assets
 
-- **Engine:** Godot 4.6 (open `project.godot` in Godot 4.3+)
-- **Run:** Press **F5** in the Godot editor (or `Project → Run`)
-- **No build step:** GDScript is interpreted at runtime; Godot hot-reloads changes during development
-- **Web export:** `Project → Export → Web (HTML5)`, enable "Embed PCK". Requires COOP headers when self-hosting (itch.io handles this automatically)
+### Story
+The player has fallen out of a space station along with a torrent of other debris. To survive,
+they must jump between the falling objects to climb back up to the space station before they
+drift too far away or fall too far behind.
 
-## Architecture
+### Core Loop
+- The player and a stream of objects fall together in a vertical tube-shaped path
+- Player can move **forward, backward, left, right** only (no direct up/down control)
+- **Touch an object → bounce/jump off it** upward toward the space station
+- Miss too many jumps → drift sideways out of the fall corridor → **lose (drifted away)**
+- Jump too slowly or wait too long → fall too far below the space station → **lose (left behind)**
+- Reach the space station at the top → **win the level**
 
-The game is a Doodle Jump–style vertical climber. `scenes/Main.tscn` is the root scene; `scripts/Main.gd` wires all the signals together.
+### Objects in the fall corridor
+| Type | Behaviour |
+|------|-----------|
+| Safe debris | Bounce off, gain height |
+| Hazard debris | Damages player on contact, still bounceable |
+| Boss objects | Special encounter, must be defeated to pass |
+
+### Progression
+- Multiple levels, each with a different debris theme and space environment
+- Unlockable levels and cosmetics
+- Boss encounters gating progress between level sets
+
+---
+
+## Project Structure
+
+The project uses a **feature-folder** layout. Scenes and their attached scripts always live
+together in the same folder — never separated into a top-level `scenes/` or `scripts/` split.
+Pure logic with no scene dependency lives in `core/`. Imported art lives in `assets/`.
 
 ```
-Main.tscn / Main.gd (orchestrator)
-├── Player (CharacterBody2D) → Player.gd
-│   ├── Sprite2D (placeholder rect)
-│   ├── GPUParticles2D (trail on jump)
-│   └── Camera2D → FollowCamera.gd
-├── WallSpawner (Node2D) → WallSpawner.gd
-│   ├── spawns WallSegment.tscn instances (left+right walls per row)
-│   └── spawns Platform.tscn instances (bounce platforms in the gap)
-├── BackgroundScroller (Node2D) → BackgroundScroller.gd
-└── GameUI (CanvasLayer) → GameUI.gd
-    ├── ScoreLabel, BestLabel
-    └── GameOverPanel
+wall_jumper/
+├── CLAUDE.md                  ← this file
+├── project.godot
+├── icon.svg
+│
+├── core/                      ← pure GDScript, no scene dependency
+│   ├── autoloads/             ← singletons registered in Project Settings
+│   │   ├── game_state.gd      ← score, lives, unlocks, current level
+│   │   └── audio_manager.gd   ← music + sfx playback
+│   ├── models/                ← RefCounted data classes (no Node inheritance)
+│   │   ├── level_data.gd      ← LevelData resource class definition
+│   │   └── player_stats.gd    ← runtime player state (health, score, etc.)
+│   └── utils/                 ← stateless helper functions
+│       └── math_utils.gd
+│
+├── game/                      ← everything that is a Godot node (scene + script together)
+│   ├── main/
+│   │   └── main.tscn          ← bootstraps the game, loads correct scene
+│   ├── menu/
+│   │   ├── main_menu.tscn
+│   │   ├── main_menu.gd
+│   │   ├── level_select.tscn
+│   │   └── level_select.gd
+│   ├── gameplay/
+│   │   ├── game.tscn          ← root scene for a running level
+│   │   ├── game.gd
+│   │   ├── fall_corridor.tscn ← the tube the player falls inside
+│   │   └── fall_corridor.gd
+│   ├── player/
+│   │   ├── player.tscn
+│   │   └── player.gd
+│   ├── objects/               ← falling debris and interactive objects
+│   │   ├── debris_safe.tscn
+│   │   ├── debris_safe.gd
+│   │   ├── debris_hazard.tscn
+│   │   ├── debris_hazard.gd
+│   │   ├── boss_base.tscn
+│   │   └── boss_base.gd
+│   ├── systems/               ← manager nodes with no visual, attached to Game
+│   │   ├── corridor_spawner.gd
+│   │   ├── drift_tracker.gd
+│   │   └── level_manager.gd
+│   └── ui/
+│       ├── hud.tscn
+│       ├── hud.gd
+│       ├── game_over.tscn
+│       └── game_over.gd
+│
+├── resources/                 ← .tres / .res data files (instances of core/models/)
+│   └── levels/
+│       ├── level_01.tres
+│       └── ...
+│
+├── config/                    ← project-level tuning tables and settings
+│   └── gameplay_config.tres
+│
+└── assets/
+    └── kenney/                ← copied from external source, read-only from code
+        ├── characters/
+        ├── environment/
+        ├── objects/
+        └── ui/
 ```
 
-### Key scripts
+### Why this layout
 
-| Script | Responsibility |
-|---|---|
-| `Player.gd` | Physics, wall-jump detection, coyote time, scoring |
-| `WallSpawner.gd` | Procedural row generation, difficulty scaling, culling off-screen rows |
-| `FollowCamera.gd` | Upward-only camera follow with lead offset |
-| `GameUI.gd` | Score display; best score persisted via system clipboard |
-| `BackgroundScroller.gd` | Parallax navy-sky tiles |
+| Folder | Rule |
+|--------|------|
+| `core/` | No `Node` subclasses. No `@onready`. No scene paths. Testable in isolation. |
+| `game/` | Every `.tscn` lives next to its `.gd`. Subfolders are features, not file types. |
+| `resources/` | Only `.tres`/`.res` data files. No code here. |
+| `config/` | Tuning data readable by designers without touching scripts. |
+| `assets/` | Never written to at runtime. Paths only referenced via `@export` or constants. |
 
-### Core gameplay loop
+---
 
-1. **Gravity** is applied continuously; the player wall-slides at terminal velocity (`WALL_SLIDE_SPEED = 80`).
-2. **Wall jump** launches the player away from the wall (`WALL_JUMP_FORCE = Vector2(420, -700)`) with a 0.12 s coyote-time grace period.
-3. **WallSpawner** generates new rows ahead of the camera and culls rows that scroll off the bottom. Gap width shrinks linearly from 260 px → 140 px as score increases (difficulty = `min(score/500, 1.0)`).
-4. **Score** = `floor(abs(height_climbed) / 10)`. Game over when the player falls >500 px below the camera center.
+## Architecture Rules
 
-### Tuning constants
+- **Scenes are self-contained.** No scene directly accesses the internals of another scene.
+- **Communicate via signals**, not direct `get_node()` calls across scene boundaries.
+- **Singletons (autoloads)** only for truly global state: `GameState`, `AudioManager`.
+  Register them in Project Settings → Autoload, pointing to `core/autoloads/`.
+- **Groups** for cross-tree lookups: `"player"`, `"debris"`, `"main_camera"`.
+- **`core/models/`** classes are pure `RefCounted` or `Resource` — never inherit `Node`.
+- **`game/systems/`** nodes attach to `Game` as children and coordinate via signals.
+- The **corridor** is the world. The space station moves toward the player (or player falls
+  away from it) — never move the station, move everything else.
 
-Physics constants are at the top of `scripts/Player.gd`; level-generation constants are at the top of `scripts/WallSpawner.gd`. Adjust those when tweaking feel or difficulty.
+---
 
-## Project Configuration
+## Code Style
 
-`project.godot` defines:
-- Viewport: 480×800, stretched via `canvas_items`, mobile renderer
-- Input map: `move_left` (A/←), `move_right` (D/→), `jump` (Space/↑)
-- Main scene: `res://scenes/Main.tscn`
+Follow the [official GDScript style guide](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html) strictly. Key rules summarised:
 
-## Asset Integration
+### Naming
+```gdscript
+# Classes and nodes: PascalCase
+class_name DebrisHazard
 
-The game ships with colored-rectangle placeholders. To swap in Kenney assets, replace the `Sprite2D` texture on `Player` and the `ColorRect` in `WallSegment.tscn`/`Platform.tscn` with the appropriate PNG sprites (see README.md for detailed steps).
+# Functions and variables: snake_case
+var jump_force: float = 800.0
+func apply_jump_force() -> void:
+
+# Constants: SCREAMING_SNAKE_CASE
+const MAX_DRIFT_DISTANCE: float = 12.0
+
+# Signals: snake_case, past tense verb
+signal player_jumped
+signal debris_destroyed(points: int)
+
+# Enums: PascalCase name, SCREAMING_SNAKE_CASE values
+enum DebrisType { SAFE, HAZARD, BOSS }
+
+# Private members: prefix with underscore
+var _current_health: int = 3
+func _apply_damage(amount: int) -> void:
+```
+
+### File layout order (top to bottom)
+```gdscript
+class_name MyClass
+extends Node3D
+
+## Doc comment describing what this script does.
+
+# Signals
+signal something_happened
+
+# Enums
+enum State { IDLE, FALLING, JUMPING }
+
+# Constants
+const SPEED: float = 10.0
+
+# @export variables
+@export var jump_force: float = 800.0
+
+# Public variables
+var current_state: State = State.IDLE
+
+# Private variables
+var _timer: float = 0.0
+
+# @onready variables (last, just before _ready)
+@onready var _mesh: MeshInstance3D = $Mesh
+
+
+func _ready() -> void:
+    pass
+
+
+func _physics_process(delta: float) -> void:
+    pass
+
+
+# Public methods before private methods
+func do_something() -> void:
+    pass
+
+
+func _private_helper() -> void:
+    pass
+```
+
+### Types
+- **Always** use static typing. Every variable, parameter, and return type must be typed.
+- Use `@export` for any value a designer might want to tune.
+- Never use `var x = something` — always `var x: Type = something`.
+
+### Functions
+- Max **40 lines** per function. If longer, extract a helper.
+- One blank line between functions, two blank lines before the first method after properties.
+- Use `return` early to avoid deep nesting (guard clauses).
+
+### Comments
+- Use `##` doc comments on class definitions and public functions.
+- Use `#` inline for *why*, not *what* — the code should explain what.
+- No commented-out dead code in commits.
+
+### Misc
+- No magic numbers — give everything a named constant.
+- Prefer `Vector3.ZERO`, `Color.WHITE` etc. over `Vector3(0,0,0)`.
+- Use `push_error()` / `push_warning()` instead of `print()` for diagnostic output.
+- `assert()` for invariants that must always hold in debug.
+
+---
+
+## Git Workflow
+
+### Setup
+```bash
+git init
+git add .
+git commit -m "chore: initial project structure"
+```
+
+### Commit convention — Conventional Commits 1.0.0
+
+Format:
+```
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+**Types used in this project:**
+
+| Type | When to use |
+|------|-------------|
+| `feat` | New gameplay feature, new scene, new mechanic |
+| `fix` | Bug fix in script or scene |
+| `refactor` | Code restructure with no behaviour change |
+| `style` | Formatting, naming — no logic change |
+| `assets` | Adding or updating Kenney assets |
+| `level` | New or edited level data (.tres) |
+| `docs` | CLAUDE.md or other documentation |
+| `chore` | Project settings, export config, dependencies |
+| `perf` | Performance improvement |
+| `test` | Adding tests or validation scripts |
+| `revert` | Reverting a previous commit |
+
+**Scopes** (optional, use when helpful):
+
+`player`, `debris`, `corridor`, `ui`, `menu`, `audio`, `camera`, `boss`, `hud`
+
+**Examples:**
+```
+feat(player): add lateral drift detection and out-of-bounds loss condition
+fix(corridor): debris spawner not culling objects below camera
+assets(environment): add kenney space kit skybox and platform meshes
+level: add level_02 with asteroid debris theme
+refactor(player): extract jump logic into dedicated _handle_jump method
+docs: update asset manifest with new kenney character paths
+chore: configure html5 export with COOP/COEP headers
+```
+
+### When to commit
+- After every meaningful, working change — not after every line
+- **Never commit broken or erroring code**
+- Run `godot --headless --check-only` before every commit (see Validation below)
+- One logical change per commit — if you can't describe it in one line, split it
+
+---
+
+## Godot Validation
+
+Before every commit, run:
+```bash
+godot --headless --check-only
+```
+
+This parses all GDScript files and reports errors without launching the game.
+**Fix all errors before committing.** Do not commit if this command exits non-zero.
+
+If errors appear after editing a script:
+1. Read the full error including file path and line number
+2. Fix the root cause — do not suppress with `@warning_ignore` unless genuinely a false positive
+3. Re-run the check
+4. Then commit
+
+---
+
+## Asset Pipeline
+
+### Source folder
+All raw Kenney assets live **outside** the project at:
+```
+/home/dino/projects/asstes/
+```
+
+When adding assets:
+1. `ls` / `find` the source folder to understand what's available
+2. Pick the most appropriate file for the purpose
+3. Copy **only what is needed** into the relevant subfolder under `res://assets/kenney/`
+4. Never reference paths outside `res://` in any script or scene
+5. Add the asset to the **Asset Manifest** below
+6. Commit with `assets(<scope>): <description>`
+
+### Asset Manifest
+
+> Update this table every time a new asset is copied in.
+
+| File in `res://assets/kenney/` | Source pack | Used by | Purpose |
+|-------------------------------|-------------|---------|---------|
+| _(none yet — add as you go)_ | | | |
+
+### Recommended Kenney packs for this game
+| Pack | Use for |
+|------|---------|
+| Space Kit | Environment, space station, skybox |
+| 3D Platformer | Debris / safe objects |
+| Sci-Fi RTS | Hazard objects, boss parts |
+| Character Pack (Robot) | Player character |
+| UI Pack (Space) | HUD and menu chrome |
+| Particle Pack | Jump effects, damage flashes |
+
+---
+
+## Level Data Format
+
+Each level is a `.tres` file using the `LevelData` resource (`core/models/level_data.gd`).
+The `.tres` instances live in `resources/levels/`.
+
+```gdscript
+# resources/level_data.gd
+class_name LevelData
+extends Resource
+
+@export var level_id: int = 0
+@export var display_name: String = ""
+@export var description: String = ""
+@export var is_unlocked: bool = false
+@export var has_boss: bool = false
+@export var debris_theme: String = "generic"       # maps to a spawner config
+@export var fall_speed: float = 8.0               # base debris fall speed
+@export var corridor_radius: float = 10.0          # how wide the fall tube is
+@export var station_approach_speed: float = 1.0    # how fast station descends toward player
+@export var unlock_requires: int = -1              # level_id that must be beaten first (-1 = free)
+```
+
+---
+
+## Gameplay Constants (tune here first)
+
+These live in their respective scripts as `@export` vars so they're tunable in the editor.
+Document the design intent next to each one.
+
+| Constant | Home script | Design intent |
+|----------|-------------|---------------|
+| `MOVE_SPEED` | `game/player/player.gd` | How fast player slides laterally |
+| `JUMP_FORCE` | `game/player/player.gd` | Height gained per bounce |
+| `DRIFT_LIMIT` | `game/systems/drift_tracker.gd` | Distance from corridor centre before loss |
+| `FALL_BEHIND_LIMIT` | `game/systems/drift_tracker.gd` | Distance below station before loss |
+| `DEBRIS_FALL_SPEED` | `game/systems/corridor_spawner.gd` | Base downward speed of objects |
+| `SPAWN_RATE` | `game/systems/corridor_spawner.gd` | Objects per second |
+| `HAZARD_RATIO` | `game/systems/corridor_spawner.gd` | Fraction of debris that are hazards (0–1) |
+
+---
+
+## Web Export Checklist
+
+Before shipping an HTML5 build:
+- [ ] Export preset configured: Project → Export → Web
+- [ ] "Embed PCK" enabled
+- [ ] Server sends required headers (itch.io handles this automatically):
+  ```
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  ```
+- [ ] Test in Chrome and Firefox
+- [ ] Audio works (browsers require a user gesture before first sound)
+
+---
+
+## Session Workflow for Claude Code
+
+When starting a session:
+1. Read this file in full
+2. Run `godot --headless --check-only` and note any existing errors
+3. Check `git log --oneline -10` to understand recent changes
+
+When finishing a task:
+1. Run `godot --headless --check-only` — fix errors before proceeding
+2. Stage and commit with a Conventional Commit message
+3. Summarise what was done and what the next logical step is
