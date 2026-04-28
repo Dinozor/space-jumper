@@ -30,8 +30,8 @@ func _ready() -> void:
 	_game_over.menu_pressed.connect(_go_to_menu)
 	_game_over.hide()
 	_corridor_spawner.fill_initial()
+	_player.set_physics_process(false)
 	_hud.show_start_prompt(true)
-	get_tree().paused = true
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -48,7 +48,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _start_game() -> void:
 	_game_started = true
-	get_tree().paused = false
+	_player.set_physics_process(true)
 	_hud.show_start_prompt(false)
 
 
@@ -87,10 +87,8 @@ func _end_game(reason: String) -> void:
 
 
 func _restart() -> void:
-	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 
 func _go_to_menu() -> void:
-	get_tree().paused = false
 	get_tree().change_scene_to_file("res://game/menu/main_menu.tscn")

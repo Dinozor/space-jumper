@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	if body is Player:
+	if body is Player and body.is_physics_processing():
 		var normal := (body.global_position - global_position).normalized()
 		bounce_triggered.emit(normal)
 		body.bounce(normal)
