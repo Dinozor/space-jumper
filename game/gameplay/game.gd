@@ -15,6 +15,7 @@ signal level_lost(reason: String)
 @onready var _hud: HUD = $HUD
 @onready var _game_over: GameOver = $GameOver
 
+var _game_started: bool = false
 var _game_ended: bool = false
 
 
@@ -28,6 +29,27 @@ func _ready() -> void:
 	_game_over.restart_pressed.connect(_restart)
 	_game_over.menu_pressed.connect(_go_to_menu)
 	_game_over.hide()
+	_corridor_spawner.fill_initial()
+	_hud.show_start_prompt(true)
+	get_tree().paused = true
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if _game_started or _game_ended:
+		return
+	var is_press: bool = (
+		(event is InputEventKey and event.is_pressed() and not event.is_echo())
+		or (event is InputEventMouseButton and event.is_pressed())
+		or (event is InputEventJoypadButton and event.is_pressed())
+	)
+	if is_press:
+		_start_game()
+
+
+func _start_game() -> void:
+	_game_started = true
+	get_tree().paused = false
+	_hud.show_start_prompt(false)
 
 
 func _on_player_died() -> void:
@@ -65,8 +87,10 @@ func _end_game(reason: String) -> void:
 
 
 func _restart() -> void:
+	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 
 func _go_to_menu() -> void:
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://game/menu/main_menu.tscn")
