@@ -31,7 +31,5 @@ func _spawn_at(y: float) -> void:
 	var instance: Node3D = scene.instantiate()
 	add_child(instance)
 	instance.position = Vector3(
-		randf_range(-spawn_z_range, spawn_z_range),
-		y,
-		randf_range(-spawn_z_range, spawn_z_range)
+		randf_range(-spawn_z_range, spawn_z_range), y, randf_range(-spawn_z_range, spawn_z_range)
 	)

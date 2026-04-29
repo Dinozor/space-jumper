@@ -98,11 +98,11 @@ wall_jumper/
 │   └── gameplay_config.tres
 │
 └── assets/
-    └── kenney/                ← copied from external source, read-only from code
-        ├── characters/
-        ├── environment/
-        ├── objects/
-        └── ui/
+	└── kenney/                ← copied from external source, read-only from code
+		├── characters/
+		├── environment/
+		├── objects/
+		└── ui/
 ```
 
 ### Why this layout
@@ -189,20 +189,20 @@ var _timer: float = 0.0
 
 
 func _ready() -> void:
-    pass
+	pass
 
 
 func _physics_process(delta: float) -> void:
-    pass
+	pass
 
 
 # Public methods before private methods
 func do_something() -> void:
-    pass
+	pass
 
 
 func _private_helper() -> void:
-    pass
+	pass
 ```
 
 ### Types
@@ -289,18 +289,24 @@ chore: configure html5 export with COOP/COEP headers
 
 ## Godot Validation
 
-Before every commit, run:
+Before every commit, run both steps in order:
+
 ```bash
+# 1. Format all GDScript files
+~/.local/share/nvim/mason/bin/gdformat .
+
+# 2. Parse all GDScript files for errors
 godot --headless --check-only
 ```
 
-This parses all GDScript files and reports errors without launching the game.
-**Fix all errors before committing.** Do not commit if this command exits non-zero.
+`gdformat` enforces consistent style (line length, spacing). Run it first so the error check
+sees clean code. **Fix all errors before committing.** Do not commit if either command exits
+non-zero.
 
 If errors appear after editing a script:
 1. Read the full error including file path and line number
 2. Fix the root cause — do not suppress with `@warning_ignore` unless genuinely a false positive
-3. Re-run the check
+3. Re-run both checks
 4. Then commit
 
 ---
@@ -418,6 +424,7 @@ When starting a session:
 3. Check `git log --oneline -10` to understand recent changes
 
 When finishing a task:
-1. Run `godot --headless --check-only` — fix errors before proceeding
-2. Stage and commit with a Conventional Commit message
-3. Summarise what was done and what the next logical step is
+1. Run `~/.local/share/nvim/mason/bin/gdformat .` — format all GDScript files
+2. Run `godot --headless --check-only` — fix errors before proceeding
+3. Stage and commit with a Conventional Commit message
+4. Summarise what was done and what the next logical step is

@@ -42,9 +42,7 @@ func _apply_gravity(delta: float) -> void:
 
 func _apply_movement() -> void:
 	var input := Vector3(
-		Input.get_axis("move_left", "move_right"),
-		0.0,
-		Input.get_axis("move_forward", "move_back")
+		Input.get_axis("move_left", "move_right"), 0.0, Input.get_axis("move_forward", "move_back")
 	)
 	_velocity.x = input.x * MOVE_SPEED
 	_velocity.z = input.z * MOVE_SPEED
