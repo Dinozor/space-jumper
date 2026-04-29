@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://spacesttn001"]
+
+[ext_resource type="PackedScene" uid="uid://ssfloor001" path="res://assets/kenney/models/space_station/floor.glb" id="Scene_Floor"]
+[ext_resource type="PackedScene" uid="uid://ssstruct001" path="res://assets/kenney/models/space_station/structure.glb" id="Scene_Structure"]
+
+[node name="SpaceStation" type="Node3D"]
+
+[node name="Floor" type="Node3D" parent="."]
+
+[node name="Tile_0_0" parent="Floor" instance=ExtResource("Scene_Floor")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -6, 0, -6)
+
+[node name="Tile_1_0" parent="Floor" instance=ExtResource("Scene_Floor")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -6)
+
+[node name="Tile_2_0" parent="Floor" instance=ExtResource("Scene_Floor")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 6, 0, -6)
+
+[node name="Tile_0_1" parent="Floor" instance=ExtResource("Scene_Floor")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -6, 0, 0)
+
+[node name="Tile_1_1" parent="Floor" instance=ExtResource("Scene_Floor")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="Tile_2_1" parent="Floor" instance=ExtResource("Scene_Floor")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 6, 0, 0)
+
+[node name="Tile_0_2" parent="Floor" instance=ExtResource("Scene_Floor")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -6, 0, 6)
+
+[node name="Tile_1_2" parent="Floor" instance=ExtResource("Scene_Floor")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 6)
+
+[node name="Tile_2_2" parent="Floor" instance=ExtResource("Scene_Floor")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 6, 0, 6)
+
+[node name="Structure_NW" parent="." instance=ExtResource("Scene_Structure")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -6, 0, -6)
+
+[node name="Structure_NE" parent="." instance=ExtResource("Scene_Structure")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 6, 0, -6)
+
+[node name="Structure_SW" parent="." instance=ExtResource("Scene_Structure")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -6, 0, 6)
+
+[node name="Structure_SE" parent="." instance=ExtResource("Scene_Structure")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 6, 0, 6)
+
+[node name="BeaconLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+light_color = Color(0.6, 0.85, 1, 1)
+light_energy = 8.0
+omni_range = 35.0
