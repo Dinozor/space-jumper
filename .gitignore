@@ -1,0 +1,21 @@
+# Godot 4 generated files
+.godot/imported/
+.godot/shader_cache/
+
+# Per-machine editor state (folding, edit positions, open tabs)
+.godot/editor/*-folding-*.cfg
+.godot/editor/*-editstate-*.cfg
+.godot/editor/script_editor_cache.cfg
+.godot/editor/editor_layout.cfg
+.godot/editor/project_metadata.cfg
+.godot/editor/filesystem_cache*
+.godot/editor/filesystem_update*
+
+# Export artefacts
+export/
+*.pck
+*.apk
+*.aab
+
+# macOS
+.DS_Store
