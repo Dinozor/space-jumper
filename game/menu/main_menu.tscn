@@ -1,13 +1,18 @@
-[gd_scene format=3 uid="uid://mainmenuscn1"]
+[gd_scene format=3 uid="uid://iuar7gfvkn0p"]
 
-[ext_resource type="Script" path="res://game/menu/main_menu.gd" id="Script_1"]
+[ext_resource type="Script" uid="uid://bim8til2hxk2" path="res://game/menu/main_menu.gd" id="Script_1"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=874603690]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("Script_1")
 
-[node name="VBox" type="VBoxContainer" parent="."]
+[node name="VBox" type="VBoxContainer" parent="." unique_id=1454432647]
+layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -17,11 +22,14 @@ offset_top = -90.0
 offset_right = 120.0
 offset_bottom = 90.0
 
-[node name="PlayButton" type="Button" parent="VBox"]
+[node name="PlayButton" type="Button" parent="VBox" unique_id=264093592]
+layout_mode = 2
 text = "Play"
 
-[node name="LevelSelectButton" type="Button" parent="VBox"]
+[node name="LevelSelectButton" type="Button" parent="VBox" unique_id=406645112]
+layout_mode = 2
 text = "Level Select"
 
-[node name="QuitButton" type="Button" parent="VBox"]
+[node name="QuitButton" type="Button" parent="VBox" unique_id=565157653]
+layout_mode = 2
 text = "Quit"

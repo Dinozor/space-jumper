@@ -1,23 +1,21 @@
-[gd_scene format=3 uid="uid://gamescene01"]
+[gd_scene format=3 uid="uid://cpef5tcmsob8f"]
 
-[ext_resource type="Script" path="res://game/gameplay/game.gd" id="Script_Game"]
-[ext_resource type="Script" path="res://game/systems/corridor_spawner.gd" id="Script_CorridorSpawner"]
-[ext_resource type="Script" path="res://game/systems/drift_tracker.gd" id="Script_DriftTracker"]
-[ext_resource type="Script" path="res://game/systems/level_manager.gd" id="Script_LevelManager"]
-[ext_resource type="PackedScene" path="res://game/player/player.tscn" id="Scene_Player"]
-[ext_resource type="PackedScene" path="res://game/ui/hud.tscn" id="Scene_HUD"]
-[ext_resource type="PackedScene" path="res://game/ui/game_over.tscn" id="Scene_GameOver"]
-[ext_resource type="PackedScene" path="res://game/objects/debris_safe.tscn" id="Scene_DebrisSafe"]
-[ext_resource type="PackedScene" path="res://game/objects/debris_hazard.tscn" id="Scene_DebrisHazard"]
+[ext_resource type="PackedScene" uid="uid://debrisha0rd1" path="res://game/objects/debris_hazard.tscn" id="Scene_DebrisHazard"]
+[ext_resource type="PackedScene" uid="uid://debrissafe01" path="res://game/objects/debris_safe.tscn" id="Scene_DebrisSafe"]
+[ext_resource type="PackedScene" uid="uid://dp4g5kwtgxq0d" path="res://game/ui/game_over.tscn" id="Scene_GameOver"]
+[ext_resource type="PackedScene" uid="uid://hudscene001" path="res://game/ui/hud.tscn" id="Scene_HUD"]
+[ext_resource type="PackedScene" uid="uid://playerscene1" path="res://game/player/player.tscn" id="Scene_Player"]
+[ext_resource type="Script" uid="uid://din7h273lfkkr" path="res://game/systems/corridor_spawner.gd" id="Script_CorridorSpawner"]
+[ext_resource type="Script" uid="uid://bbd8l7wusl2q7" path="res://game/systems/drift_tracker.gd" id="Script_DriftTracker"]
+[ext_resource type="Script" uid="uid://c81nx6jtrhhro" path="res://game/gameplay/game.gd" id="Script_Game"]
+[ext_resource type="Script" uid="uid://bewj2th0xnmhd" path="res://game/systems/level_manager.gd" id="Script_LevelManager"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProcSky_1"]
 sky_top_color = Color(0.005, 0.005, 0.04, 1)
 sky_horizon_color = Color(0.01, 0.01, 0.03, 1)
-sky_curve = 0.15
 sky_energy_multiplier = 0.4
 ground_bottom_color = Color(0, 0, 0, 1)
 ground_horizon_color = Color(0.01, 0.01, 0.02, 1)
-ground_curve = 0.02
 sun_angle_max = 10.0
 sun_curve = 0.12
 
@@ -30,37 +28,35 @@ sky = SubResource("Sky_1")
 ambient_light_source = 2
 ambient_light_color = Color(0.15, 0.15, 0.35, 1)
 ambient_light_energy = 0.4
-fog_enabled = false
 glow_enabled = true
 glow_intensity = 0.4
-glow_strength = 1.0
 glow_bloom = 0.1
 
-[node name="Game" type="Node3D"]
+[node name="Game" type="Node3D" unique_id=655756242]
 script = ExtResource("Script_Game")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1694526052]
 environment = SubResource("Environment_1")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=112768540]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 20, 0)
-light_color = Color(0.9, 0.85, 1.0, 1)
+light_color = Color(0.9, 0.85, 1, 1)
 light_energy = 1.2
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("Scene_Player")]
+[node name="Player" parent="." unique_id=1363985257 instance=ExtResource("Scene_Player")]
 
-[node name="CorridorSpawner" type="Node" parent="."]
+[node name="CorridorSpawner" type="Node" parent="." unique_id=1109589677]
 script = ExtResource("Script_CorridorSpawner")
 safe_debris_scene = ExtResource("Scene_DebrisSafe")
 hazard_debris_scene = ExtResource("Scene_DebrisHazard")
 
-[node name="DriftTracker" type="Node" parent="."]
+[node name="DriftTracker" type="Node" parent="." unique_id=1872405894]
 script = ExtResource("Script_DriftTracker")
 
-[node name="LevelManager" type="Node" parent="."]
+[node name="LevelManager" type="Node" parent="." unique_id=1465018964]
 script = ExtResource("Script_LevelManager")
 
-[node name="HUD" parent="." instance=ExtResource("Scene_HUD")]
+[node name="HUD" parent="." unique_id=506885096 instance=ExtResource("Scene_HUD")]
 
-[node name="GameOver" parent="." instance=ExtResource("Scene_GameOver")]
+[node name="GameOver" parent="." unique_id=1351267110 instance=ExtResource("Scene_GameOver")]
