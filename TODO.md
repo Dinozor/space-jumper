@@ -31,4 +31,4 @@
 - [ ] Replace hardcoded spawner ratios (`HAZARD_RATIO`, `boost_spawn_ratio`, etc.) with lookups into the spawn table resource
 
 ## CI/CD
-- [ ] Set up pipeline; use butler to deploy to itch.io
+- [x] Set up pipeline; use butler to deploy to itch.io

@@ -13,6 +13,7 @@
 
 # Export artefacts
 export/
+build/
 *.pck
 *.apk
 *.aab
