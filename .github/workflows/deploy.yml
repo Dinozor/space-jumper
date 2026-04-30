@@ -32,6 +32,6 @@ jobs:
         run: |
           curl -L -o butler.zip "https://github.com/itchio/butler/releases/latest/download/butler-linux-amd64.zip"
           unzip -o butler.zip
-          chmod +x butler
-          ./butler push ./build/Web dinocrys/space-jumper:html5 \
+          chmod +x linux-amd64/butler
+          linux-amd64/butler push ./build/Web dinocrys/space-jumper:html5 \
             --userversion "$(git rev-parse --short HEAD)"
