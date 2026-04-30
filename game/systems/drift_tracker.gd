@@ -5,7 +5,7 @@ extends Node
 
 signal drifted_out
 
-const MAX_DRIFT_DISTANCE: float = 12.0
+const MAX_DRIFT_DISTANCE: float = 24.0
 
 @export var player: Player
 

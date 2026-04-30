@@ -1,21 +1,21 @@
 [gd_scene format=3 uid="uid://playerscene1"]
 
-[ext_resource type="Script" path="res://game/player/player.gd" id="Script_1"]
-[ext_resource type="PackedScene" path="res://assets/kenney/models/characters/animal-penguin.glb" id="Scene_Mesh"]
+[ext_resource type="PackedScene" uid="uid://xu8dntwtxn4y" path="res://assets/kenney/models/characters/animal-penguin.glb" id="Scene_Mesh"]
+[ext_resource type="Script" uid="uid://dhtipacdcpx4c" path="res://game/player/player.gd" id="Script_1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
-radius = 0.4
-height = 1.8
+radius = 1.1499023
+height = 2.2998047
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" unique_id=730394003]
 script = ExtResource("Script_1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=131414282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_1")
 
-[node name="Mesh" parent="." instance=ExtResource("Scene_Mesh")]
-scale = Vector3(1.5, 1.5, 1.5)
+[node name="Mesh" parent="." unique_id=309760172 instance=ExtResource("Scene_Mesh")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="."]
-position = Vector3(0, 5, 10)
-rotation = Vector3(-0.4, 0, 0)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=693745719]
+transform = Transform3D(1, 0, 0, 0, 0.62251467, -0.78260815, 0, 0.78260815, 0.62251467, 0, -5, 10)

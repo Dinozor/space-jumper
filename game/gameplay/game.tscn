@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://cpef5tcmsob8f"]
 
-[ext_resource type="PackedScene" uid="uid://spacesttn001" path="res://game/objects/space_station.tscn" id="Scene_SpaceStation"]
 [ext_resource type="PackedScene" uid="uid://debrisha0rd1" path="res://game/objects/debris_hazard.tscn" id="Scene_DebrisHazard"]
 [ext_resource type="PackedScene" uid="uid://debrissafe01" path="res://game/objects/debris_safe.tscn" id="Scene_DebrisSafe"]
 [ext_resource type="PackedScene" uid="uid://dp4g5kwtgxq0d" path="res://game/ui/game_over.tscn" id="Scene_GameOver"]
 [ext_resource type="PackedScene" uid="uid://hudscene001" path="res://game/ui/hud.tscn" id="Scene_HUD"]
 [ext_resource type="PackedScene" uid="uid://playerscene1" path="res://game/player/player.tscn" id="Scene_Player"]
+[ext_resource type="PackedScene" uid="uid://crvi684jvpq3d" path="res://game/objects/space_station.tscn" id="Scene_SpaceStation"]
 [ext_resource type="Script" uid="uid://din7h273lfkkr" path="res://game/systems/corridor_spawner.gd" id="Script_CorridorSpawner"]
 [ext_resource type="Script" uid="uid://bbd8l7wusl2q7" path="res://game/systems/drift_tracker.gd" id="Script_DriftTracker"]
 [ext_resource type="Script" uid="uid://c81nx6jtrhhro" path="res://game/gameplay/game.gd" id="Script_Game"]
@@ -45,7 +45,7 @@ light_color = Color(0.9, 0.85, 1, 1)
 light_energy = 1.2
 shadow_enabled = true
 
-[node name="SpaceStation" parent="." instance=ExtResource("Scene_SpaceStation")]
+[node name="SpaceStation" parent="." unique_id=1535071181 instance=ExtResource("Scene_SpaceStation")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 80, 0)
 
 [node name="Player" parent="." unique_id=1363985257 instance=ExtResource("Scene_Player")]

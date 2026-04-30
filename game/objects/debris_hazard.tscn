@@ -1,16 +1,17 @@
 [gd_scene format=3 uid="uid://debrisha0rd1"]
 
-[ext_resource type="Script" path="res://game/objects/debris_hazard.gd" id="Script_1"]
-[ext_resource type="PackedScene" path="res://assets/kenney/models/space_station/rocks.glb" id="Scene_Mesh"]
+[ext_resource type="PackedScene" uid="uid://ix2a1la232p5" path="res://assets/kenney/models/space_station/rocks.glb" id="Scene_Mesh"]
+[ext_resource type="Script" uid="uid://bt20rmr24fif2" path="res://game/objects/debris_hazard.gd" id="Script_1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1"]
-size = Vector3(1.75, 1.75, 1.75)
+size = Vector3(0.7548828, 0.2692871, 0.93530273)
 
-[node name="DebrisHazard" type="RigidBody3D"]
+[node name="DebrisHazard" type="RigidBody3D" unique_id=1024872854]
 script = ExtResource("Script_1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=300689889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11855936, 0)
 shape = SubResource("BoxShape3D_1")
 
-[node name="Mesh" parent="." instance=ExtResource("Scene_Mesh")]
-scale = Vector3(3, 3, 3)
+[node name="Mesh" parent="." unique_id=1000837 instance=ExtResource("Scene_Mesh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5030422, 0, -0.51157206)
