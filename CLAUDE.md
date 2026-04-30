@@ -432,8 +432,8 @@ When finishing a task:
 ## TODO
 
 ### UI / HUD
-- [ ] Add player health bar
-- [ ] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
+- [x] Add player health bar
+- [x] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
 
 ### Gameplay mechanics
 - [ ] Cap max fall speed so player can catch the station
