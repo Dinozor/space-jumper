@@ -440,7 +440,7 @@ When finishing a task:
 ### Gameplay mechanics
 - [x] Cap max fall speed so player can catch the station
 - [x] Debris should have varied falling speeds
-- [ ] Add more debris variety — need wall-type obstacles
+- [x] Add more debris variety — need wall-type obstacles
 - [ ] Add huge debris chunk with a doorway the player must navigate through
 - [ ] Add jetpack boost intro: player starts with a burst, game begins when it runs out
 

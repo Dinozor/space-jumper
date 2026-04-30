@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://debrisha0rd1" path="res://game/objects/debris_hazard.tscn" id="Scene_DebrisHazard"]
 [ext_resource type="PackedScene" uid="uid://debrissafe01" path="res://game/objects/debris_safe.tscn" id="Scene_DebrisSafe"]
+[ext_resource type="PackedScene" uid="uid://debrwall001" path="res://game/objects/debris_wall.tscn" id="Scene_DebrisWall"]
 [ext_resource type="PackedScene" uid="uid://dp4g5kwtgxq0d" path="res://game/ui/game_over.tscn" id="Scene_GameOver"]
 [ext_resource type="PackedScene" uid="uid://hudscene001" path="res://game/ui/hud.tscn" id="Scene_HUD"]
 [ext_resource type="PackedScene" uid="uid://playerscene1" path="res://game/player/player.tscn" id="Scene_Player"]
@@ -54,6 +55,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 80, 0)
 script = ExtResource("Script_CorridorSpawner")
 safe_debris_scene = ExtResource("Scene_DebrisSafe")
 hazard_debris_scene = ExtResource("Scene_DebrisHazard")
+wall_debris_scene = ExtResource("Scene_DebrisWall")
 
 [node name="DriftTracker" type="Node" parent="." unique_id=1872405894]
 script = ExtResource("Script_DriftTracker")
