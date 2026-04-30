@@ -6,3 +6,8 @@ var score: int = 0
 var lives: int = 3
 var current_level: int = 0
 var unlocked_levels: Array[int] = [0]
+var levels: Array[LevelData] = []
+
+
+func _ready() -> void:
+	levels = LevelLoader.load_all()
