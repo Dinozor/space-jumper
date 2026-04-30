@@ -8,12 +8,7 @@ const _FONT: FontFile = preload("res://assets/kenney/ui/fonts/Kenney Future.ttf"
 signal restart_pressed
 signal menu_pressed
 
-@export var reason_messages: Dictionary = {
-	"died": "You were destroyed!",
-	"drifted": "You drifted away!",
-	"left_behind": "You were left behind!",
-	"won": "You reached the station!",
-}
+var _reason_messages: Dictionary
 
 @onready var _reason_label: Label = $Panel/ReasonLabel
 @onready var _restart_button: Button = $Panel/RestartButton
@@ -21,6 +16,12 @@ signal menu_pressed
 
 
 func _ready() -> void:
+	_reason_messages = {
+		Game.EndState.DIED: "You were destroyed!",
+		Game.EndState.DRIFTED: "You drifted away!",
+		Game.EndState.LEFT_BEHIND: "You were left behind!",
+		Game.EndState.WON: "You reached the station!",
+	}
 	_reason_label.add_theme_font_override("font", _FONT)
 	_reason_label.add_theme_font_size_override("font_size", 28)
 	for btn: Button in [_restart_button, _menu_button]:
@@ -40,6 +41,6 @@ func _on_menu_pressed() -> void:
 	menu_pressed.emit()
 
 
-func show_result(reason: String) -> void:
-	_reason_label.text = reason_messages.get(reason, "Game Over")
+func show_result(reason: Game.EndState) -> void:
+	_reason_label.text = _reason_messages.get(reason, "Game Over")
 	show()

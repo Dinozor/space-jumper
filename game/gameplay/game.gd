@@ -4,7 +4,9 @@ extends Node3D
 ## Root node for a running level. Owns and coordinates all gameplay systems.
 
 signal level_won
-signal level_lost(reason: String)
+signal level_lost(reason: EndState)
+
+enum EndState { DIED, DRIFTED, LEFT_BEHIND, WON }
 
 @export var level_data: LevelData
 
@@ -85,13 +87,13 @@ func _on_player_damaged(_amount: int) -> void:
 func _on_player_died() -> void:
 	if _game_ended:
 		return
-	_end_game("died")
+	_end_game(EndState.DIED)
 
 
 func _on_player_drifted_out() -> void:
 	if _game_ended:
 		return
-	_end_game("drifted")
+	_end_game(EndState.DRIFTED)
 
 
 func _on_station_reached() -> void:
@@ -100,16 +102,16 @@ func _on_station_reached() -> void:
 	_game_ended = true
 	AudioManager.play_win()
 	level_won.emit()
-	_game_over.show_result("won")
+	_game_over.show_result(EndState.WON)
 
 
 func _on_player_left_behind() -> void:
 	if _game_ended:
 		return
-	_end_game("left_behind")
+	_end_game(EndState.LEFT_BEHIND)
 
 
-func _end_game(reason: String) -> void:
+func _end_game(reason: EndState) -> void:
 	_game_ended = true
 	AudioManager.play_lose()
 	level_lost.emit(reason)

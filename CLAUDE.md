@@ -449,7 +449,7 @@ When finishing a task:
 - [x] Boost pickup for sparse-debris situations
 
 ### Tech / refactor
-- [ ] Refactor end-state strings to use an Enum
+- [x] Refactor end-state strings to use an Enum
 - [ ] Audit `_process` with `if _emitted: return` — replace with `set_process(false)` where better
 - [ ] Make level resources auto-loadable from folder
 
