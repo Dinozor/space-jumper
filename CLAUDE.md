@@ -325,16 +325,18 @@ If errors appear after editing a script:
 ### Source folder
 All raw Kenney assets live **outside** the project at:
 ```
-/home/dino/projects/assets/
+/home/dino/project/assets/
 ```
 
+That folder has its own `CLAUDE.md` listing every pack, its contents, and how to search and copy
+files — read it before looking for assets. All assets are CC0.
+
 When adding assets:
-1. `ls` / `find` the source folder to understand what's available
-2. Pick the most appropriate file for the purpose
-3. Copy **only what is needed** into the relevant subfolder under `res://assets/kenney/`
-4. Never reference paths outside `res://` in any script or scene
-5. Add the asset to the **Asset Manifest** below
-6. Commit with `assets(<scope>): <description>`
+1. Read `/home/dino/project/assets/CLAUDE.md` to find the right pack and file
+2. Copy **only what is needed** into the relevant subfolder under `res://assets/kenney/`
+3. Never reference paths outside `res://` in any script or scene
+4. Add the asset to the **Asset Manifest** below
+5. Commit with `assets(<scope>): <description>`
 
 ### Asset Manifest
 
