@@ -329,7 +329,8 @@ All raw Kenney assets live **outside** the project at:
 ```
 
 That folder has its own `CLAUDE.md` listing every pack, its contents, and how to search and copy
-files — read it before looking for assets. All assets are CC0.
+files — read it before looking for assets. Currently all assets are CC0, but future packs may
+carry different licences — check the pack's entry in that file before use.
 
 When adding assets:
 1. Read `/home/dino/project/assets/CLAUDE.md` to find the right pack and file
