@@ -54,7 +54,8 @@ wall_jumper/
 │   │   ├── level_data.gd      ← LevelData resource class definition
 │   │   └── player_stats.gd    ← runtime player state (health, score, etc.)
 │   └── utils/                 ← stateless helper functions
-│       └── math_utils.gd
+│       ├── math_utils.gd
+│       └── level_loader.gd    ← scans resources/levels/ and returns sorted LevelData array
 │
 ├── game/                      ← everything that is a Godot node (scene + script together)
 │   ├── main/
@@ -77,12 +78,21 @@ wall_jumper/
 │   │   ├── debris_safe.gd
 │   │   ├── debris_hazard.tscn
 │   │   ├── debris_hazard.gd
+│   │   ├── debris_wall.tscn
+│   │   ├── debris_wall.gd     ← blocks one corridor half; player must find the open side
+│   │   ├── debris_doorway.tscn
+│   │   ├── debris_doorway.gd  ← huge slab with a randomised gap; player navigates through
+│   │   ├── pickup_health.tscn
+│   │   ├── pickup_health.gd
+│   │   ├── pickup_boost.tscn
+│   │   ├── pickup_boost.gd
 │   │   ├── boss_base.tscn
 │   │   └── boss_base.gd
 │   ├── systems/               ← manager nodes with no visual, attached to Game
 │   │   ├── corridor_spawner.gd
 │   │   ├── drift_tracker.gd
-│   │   └── level_manager.gd
+│   │   ├── level_manager.gd
+│   │   └── pickup_spawner.gd  ← drops health/boost pickups above the player on a timer
 │   └── ui/
 │       ├── hud.tscn
 │       ├── hud.gd
@@ -91,8 +101,7 @@ wall_jumper/
 │
 ├── resources/                 ← .tres / .res data files (instances of core/models/)
 │   └── levels/
-│       ├── level_01.tres
-│       └── ...
+│       └── test_level.tres    ← only level so far; add more here (auto-loaded by LevelLoader)
 │
 ├── config/                    ← project-level tuning tables and settings
 │   └── gameplay_config.tres
@@ -399,6 +408,8 @@ Document the design intent next to each one.
 | `DEBRIS_FALL_SPEED` | `game/systems/corridor_spawner.gd` | Base downward speed of objects |
 | `SPAWN_RATE` | `game/systems/corridor_spawner.gd` | Objects per second |
 | `HAZARD_RATIO` | `game/systems/corridor_spawner.gd` | Fraction of debris that are hazards (0–1) |
+| `spawn_interval` | `game/systems/pickup_spawner.gd` | Seconds between pickup drops |
+| `boost_spawn_ratio` | `game/systems/pickup_spawner.gd` | Fraction of pickups that are boosts vs health (0–1) |
 
 ---
 
@@ -414,6 +425,16 @@ Before shipping an HTML5 build:
   ```
 - [ ] Test in Chrome and Firefox
 - [ ] Audio works (browsers require a user gesture before first sound)
+
+---
+
+## Running the Game
+
+```bash
+godot --main-scene game/gameplay/game.tscn   # run a level directly (skips menu)
+godot                                         # open the Godot editor
+godot --headless --export-debug "Web" build/  # build HTML5 export
+```
 
 ---
 
