@@ -142,98 +142,7 @@ wall_jumper/
 
 ## Code Style
 
-Follow the [official GDScript style guide](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html) strictly. Key rules summarised:
-
-### Naming
-```gdscript
-# Classes and nodes: PascalCase
-class_name DebrisHazard
-
-# Functions and variables: snake_case
-var jump_force: float = 800.0
-func apply_jump_force() -> void:
-
-# Constants: SCREAMING_SNAKE_CASE
-const MAX_DRIFT_DISTANCE: float = 12.0
-
-# Signals: snake_case, past tense verb
-signal player_jumped
-signal debris_destroyed(points: int)
-
-# Enums: PascalCase name, SCREAMING_SNAKE_CASE values
-enum DebrisType { SAFE, HAZARD, BOSS }
-
-# Private members: prefix with underscore
-var _current_health: int = 3
-func _apply_damage(amount: int) -> void:
-```
-
-### File layout order (top to bottom)
-```gdscript
-class_name MyClass
-extends Node3D
-
-## Doc comment describing what this script does.
-
-# Signals
-signal something_happened
-
-# Enums
-enum State { IDLE, FALLING, JUMPING }
-
-# Constants
-const SPEED: float = 10.0
-
-# @export variables
-@export var jump_force: float = 800.0
-
-# Public variables
-var current_state: State = State.IDLE
-
-# Private variables
-var _timer: float = 0.0
-
-# @onready variables (last, just before _ready)
-@onready var _mesh: MeshInstance3D = $Mesh
-
-
-func _ready() -> void:
-	pass
-
-
-func _physics_process(delta: float) -> void:
-	pass
-
-
-# Public methods before private methods
-func do_something() -> void:
-	pass
-
-
-func _private_helper() -> void:
-	pass
-```
-
-### Types
-- **Always** use static typing. Every variable, parameter, and return type must be typed.
-- Use `@export` for any value a designer might want to tune.
-- Never use `var x = something` — always `var x: Type = something`.
-
-### Functions
-- Max **40 lines** per function. If longer, extract a helper.
-- One blank line between functions, two blank lines before the first method after properties.
-- Use `return` early to avoid deep nesting (guard clauses).
-
-### Comments
-- Use `##` doc comments on class definitions and public functions.
-- Use `#` inline for *why*, not *what* — the code should explain what.
-- No commented-out dead code in commits.
-
-### Misc
-- No magic numbers — give everything a named constant.
-- Prefer `Vector3.ZERO`, `Color.WHITE` etc. over `Vector3(0,0,0)`.
-- Use `push_error()` / `push_warning()` instead of `print()` for diagnostic output.
-- `assert()` for invariants that must always hold in debug.
+See **[STYLE.md](STYLE.md)** for the full GDScript style guide (naming, file layout, types, functions, comments).
 
 ---
 
@@ -444,7 +353,7 @@ godot --headless --export-debug "Web" build/  # build HTML5 export
 ## Session Workflow for Claude Code
 
 When starting a session:
-1. Read this file in full
+1. Read this file in full, plus **[STYLE.md](STYLE.md)** and **[TODO.md](TODO.md)**
 2. Run `timeout 30 godot --headless --check-only` and note any existing errors
 3. Check `git log --oneline -10` to understand recent changes
 
@@ -452,30 +361,9 @@ When finishing a task:
 1. Run `~/.local/share/nvim/mason/bin/gdformat .` — format all GDScript files
 2. Run `timeout 30 godot --headless --check-only` — fix errors before proceeding
 3. Stage and commit with a Conventional Commit message
-4. If the task corresponded to a TODO item, mark it `[x]` in this file and include it in the commit
+4. If the task corresponded to a TODO item, mark it `[x]` in **[TODO.md](TODO.md)** and include it in the commit
 5. Summarise what was done and what the next logical step is
 
 ## TODO
 
-### UI / HUD
-- [x] Add player health bar
-- [x] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
-
-### Gameplay mechanics
-- [x] Cap max fall speed so player can catch the station
-- [x] Debris should have varied falling speeds
-- [x] Add more debris variety — need wall-type obstacles
-- [x] Add huge debris chunk with a doorway the player must navigate through
-- [x] Add jetpack boost intro: player starts with a burst, game begins when it runs out
-
-### Pickups
-- [x] Health pickup
-- [x] Boost pickup for sparse-debris situations
-
-### Tech / refactor
-- [x] Refactor end-state strings to use an Enum
-- [x] Audit `_process` with `if _emitted: return` — replace with `set_process(false)` where better
-- [x] Make level resources auto-loadable from folder
-
-### CI/CD
-- [ ] Set up pipeline; use butler to deploy to itch.io
+See **[TODO.md](TODO.md)**.
