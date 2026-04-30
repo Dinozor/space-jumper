@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://bewj2th0xnmhd" path="res://game/systems/level_manager.gd" id="Script_LevelManager"]
 [ext_resource type="Script" path="res://game/systems/pickup_spawner.gd" id="Script_PickupSpawner"]
 [ext_resource type="PackedScene" uid="uid://pickhp001" path="res://game/objects/pickup_health.tscn" id="Scene_PickupHealth"]
+[ext_resource type="PackedScene" uid="uid://pickboost01" path="res://game/objects/pickup_boost.tscn" id="Scene_PickupBoost"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProcSky_1"]
 sky_top_color = Color(0.005, 0.005, 0.04, 1)
@@ -64,6 +65,7 @@ doorway_debris_scene = ExtResource("Scene_DebrisDoorway")
 [node name="PickupSpawner" type="Node" parent="."]
 script = ExtResource("Script_PickupSpawner")
 pickup_scene = ExtResource("Scene_PickupHealth")
+boost_pickup_scene = ExtResource("Scene_PickupBoost")
 
 [node name="DriftTracker" type="Node" parent="." unique_id=1872405894]
 script = ExtResource("Script_DriftTracker")

@@ -46,6 +46,12 @@ func get_jetpack_fuel_ratio() -> float:
 	return _jetpack_timer / jetpack_duration
 
 
+func apply_boost(force: float) -> void:
+	_velocity.y = force
+	AudioManager.play_jump()
+	jumped.emit()
+
+
 func bounce(normal: Vector3) -> void:
 	_velocity.y = BOUNCE_FORCE
 	AudioManager.play_jump()

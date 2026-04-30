@@ -446,7 +446,7 @@ When finishing a task:
 
 ### Pickups
 - [x] Health pickup
-- [ ] Boost pickup for sparse-debris situations
+- [x] Boost pickup for sparse-debris situations
 
 ### Tech / refactor
 - [ ] Refactor end-state strings to use an Enum
