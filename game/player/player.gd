@@ -9,8 +9,9 @@ signal died
 
 const MOVE_SPEED: float = 8.0
 const BOUNCE_FORCE: float = 12.0
-const GRAVITY: float = -20.0
+const GRAVITY: float = -10.0
 
+@export var max_fall_speed: float = 20.0
 @export var rotation_speed: float = 10.0
 @export var max_tilt_angle: float = 0.35
 
@@ -44,6 +45,7 @@ func take_damage(amount: int) -> void:
 
 func _apply_gravity(delta: float) -> void:
 	_velocity.y += GRAVITY * delta
+	_velocity.y = maxf(_velocity.y, -max_fall_speed)
 
 
 func _apply_movement() -> void:

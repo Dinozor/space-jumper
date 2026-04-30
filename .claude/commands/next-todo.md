@@ -6,7 +6,7 @@ Steps:
 3. Implement the task, following all rules in CLAUDE.md: feature-folder layout, architecture rules, GDScript code style, naming conventions, 40-line function limit, static typing everywhere.
 4. Run validation synchronously (never use run_in_background):
    - `~/.local/share/nvim/mason/bin/gdformat .`
-   - `godot --headless --check-only`
+   - `timeout 30 godot --headless --check-only`
    Fix any errors before proceeding.
 5. Mark the completed item as `- [x]` in CLAUDE.md.
 6. Commit everything with a Conventional Commit message (feat/fix/refactor/style/docs/chore as appropriate, with scope if helpful).

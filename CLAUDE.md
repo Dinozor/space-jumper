@@ -282,7 +282,7 @@ chore: configure html5 export with COOP/COEP headers
 ### When to commit
 - After every meaningful, working change — not after every line
 - **Never commit broken or erroring code**
-- Run `godot --headless --check-only` before every commit (see Validation below)
+- Run `timeout 30 godot --headless --check-only` before every commit (see Validation below)
 - One logical change per commit — if you can't describe it in one line, split it
 
 ---
@@ -296,12 +296,12 @@ Before every commit, run both steps in order:
 ~/.local/share/nvim/mason/bin/gdformat .
 
 # 2. Parse all GDScript files for errors
-godot --headless --check-only
+timeout 30 godot --headless --check-only
 ```
 
 `gdformat` enforces consistent style (line length, spacing). Run it first so the error check
 sees clean code. **Fix all errors before committing.** Do not commit if either command exits
-non-zero.
+non-zero. `godot --headless --check-only` never exits on its own — always use `timeout 30`.
 
 If errors appear after editing a script:
 1. Read the full error including file path and line number
@@ -393,6 +393,7 @@ Document the design intent next to each one.
 |----------|-------------|---------------|
 | `MOVE_SPEED` | `game/player/player.gd` | How fast player slides laterally |
 | `JUMP_FORCE` | `game/player/player.gd` | Height gained per bounce |
+| `max_fall_speed` | `game/player/player.gd` | Terminal velocity cap so player can always catch the station |
 | `DRIFT_LIMIT` | `game/systems/drift_tracker.gd` | Distance from corridor centre before loss |
 | `FALL_BEHIND_LIMIT` | `game/systems/drift_tracker.gd` | Distance below station before loss |
 | `DEBRIS_FALL_SPEED` | `game/systems/corridor_spawner.gd` | Base downward speed of objects |
@@ -420,12 +421,12 @@ Before shipping an HTML5 build:
 
 When starting a session:
 1. Read this file in full
-2. Run `godot --headless --check-only` and note any existing errors
+2. Run `timeout 30 godot --headless --check-only` and note any existing errors
 3. Check `git log --oneline -10` to understand recent changes
 
 When finishing a task:
 1. Run `~/.local/share/nvim/mason/bin/gdformat .` — format all GDScript files
-2. Run `godot --headless --check-only` — fix errors before proceeding
+2. Run `timeout 30 godot --headless --check-only` — fix errors before proceeding
 3. Stage and commit with a Conventional Commit message
 4. If the task corresponded to a TODO item, mark it `[x]` in this file and include it in the commit
 5. Summarise what was done and what the next logical step is
@@ -437,7 +438,7 @@ When finishing a task:
 - [x] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
 
 ### Gameplay mechanics
-- [ ] Cap max fall speed so player can catch the station
+- [x] Cap max fall speed so player can catch the station
 - [ ] Debris should have varied falling speeds
 - [ ] Add more debris variety — need wall-type obstacles
 - [ ] Add huge debris chunk with a doorway the player must navigate through
