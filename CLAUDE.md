@@ -445,7 +445,7 @@ When finishing a task:
 - [x] Add jetpack boost intro: player starts with a burst, game begins when it runs out
 
 ### Pickups
-- [ ] Health pickup
+- [x] Health pickup
 - [ ] Boost pickup for sparse-debris situations
 
 ### Tech / refactor

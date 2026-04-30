@@ -10,6 +10,7 @@ signal level_lost(reason: String)
 
 @onready var _player: Player = $Player
 @onready var _corridor_spawner: CorridorSpawner = $CorridorSpawner
+@onready var _pickup_spawner: PickupSpawner = $PickupSpawner
 @onready var _drift_tracker: DriftTracker = $DriftTracker
 @onready var _level_manager: LevelManager = $LevelManager
 @onready var _hud: HUD = $HUD
@@ -22,8 +23,10 @@ var _game_ended: bool = false
 func _ready() -> void:
 	_drift_tracker.player = _player
 	_level_manager.player = _player
+	_pickup_spawner.player = _player
 	_player.died.connect(_on_player_died)
 	_player.damaged.connect(_on_player_damaged)
+	_player.healed.connect(_on_player_healed)
 	_player.jetpack_depleted.connect(_on_jetpack_depleted)
 	_drift_tracker.drifted_out.connect(_on_player_drifted_out)
 	_level_manager.station_reached.connect(_on_station_reached)
@@ -69,6 +72,10 @@ func _start_game() -> void:
 
 func _on_jetpack_depleted() -> void:
 	_hud.show_jetpack_bar(false)
+
+
+func _on_player_healed() -> void:
+	_hud.update_health(_player.stats.health)
 
 
 func _on_player_damaged(_amount: int) -> void:

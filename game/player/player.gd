@@ -5,6 +5,7 @@ extends CharacterBody3D
 
 signal jumped
 signal damaged(amount: int)
+signal healed
 signal died
 signal jetpack_depleted
 
@@ -49,6 +50,11 @@ func bounce(normal: Vector3) -> void:
 	_velocity.y = BOUNCE_FORCE
 	AudioManager.play_jump()
 	jumped.emit()
+
+
+func heal(amount: int) -> void:
+	stats.health = mini(stats.health + amount, PlayerStats.MAX_HEALTH)
+	healed.emit()
 
 
 func take_damage(amount: int) -> void:
