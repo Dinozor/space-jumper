@@ -316,7 +316,7 @@ If errors appear after editing a script:
 ### Source folder
 All raw Kenney assets live **outside** the project at:
 ```
-/home/dino/projects/asstes/
+/home/dino/projects/assets/
 ```
 
 When adding assets:
@@ -428,3 +428,28 @@ When finishing a task:
 2. Run `godot --headless --check-only` — fix errors before proceeding
 3. Stage and commit with a Conventional Commit message
 4. Summarise what was done and what the next logical step is
+
+## TODO
+
+### UI / HUD
+- [ ] Add player health bar
+- [ ] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
+
+### Gameplay mechanics
+- [ ] Cap max fall speed so player can catch the station
+- [ ] Debris should have varied falling speeds
+- [ ] Add more debris variety — need wall-type obstacles
+- [ ] Add huge debris chunk with a doorway the player must navigate through
+- [ ] Add jetpack boost intro: player starts with a burst, game begins when it runs out
+
+### Pickups
+- [ ] Health pickup
+- [ ] Boost pickup for sparse-debris situations
+
+### Tech / refactor
+- [ ] Refactor end-state strings to use an Enum
+- [ ] Audit `_process` with `if _emitted: return` — replace with `set_process(false)` where better
+- [ ] Make level resources auto-loadable from folder
+
+### CI/CD
+- [ ] Set up pipeline; use butler to deploy to itch.io
