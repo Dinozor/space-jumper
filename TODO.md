@@ -10,6 +10,7 @@
 - [x] Add more debris variety — need wall-type obstacles
 - [x] Add huge debris chunk with a doorway the player must navigate through
 - [x] Add jetpack boost intro: player starts with a burst, game begins when it runs out
+- [ ] Bounce direction should reflect off the contact surface — player bounces away from the object, not just straight up
 
 ## Pickups
 - [x] Health pickup
