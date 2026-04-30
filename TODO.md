@@ -4,6 +4,10 @@
 - [x] Add player health bar
 - [x] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
 
+## Bugs
+- [ ] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
+- [ ] Debris can trigger player bounce multiple times per touch — each contact should fire once only
+
 ## Gameplay mechanics
 - [x] Cap max fall speed so player can catch the station
 - [x] Debris should have varied falling speeds
