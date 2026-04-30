@@ -25,5 +25,10 @@
 - [x] Audit `_process` with `if _emitted: return` — replace with `set_process(false)` where better
 - [x] Make level resources auto-loadable from folder
 
+## Content / data
+- [ ] Define a spawn table resource — what objects can spawn, their weight/frequency, and at what difficulty thresholds they appear
+- [ ] Move all per-object tuning (fall speed, damage, size, etc.) into individual object resources instead of hardcoded script constants
+- [ ] Replace hardcoded spawner ratios (`HAZARD_RATIO`, `boost_spawn_ratio`, etc.) with lookups into the spawn table resource
+
 ## CI/CD
 - [ ] Set up pipeline; use butler to deploy to itch.io
