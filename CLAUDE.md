@@ -442,7 +442,7 @@ When finishing a task:
 - [x] Debris should have varied falling speeds
 - [x] Add more debris variety — need wall-type obstacles
 - [ ] Add huge debris chunk with a doorway the player must navigate through
-- [ ] Add jetpack boost intro: player starts with a burst, game begins when it runs out
+- [x] Add jetpack boost intro: player starts with a burst, game begins when it runs out
 
 ### Pickups
 - [ ] Health pickup

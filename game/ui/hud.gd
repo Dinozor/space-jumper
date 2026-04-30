@@ -8,6 +8,7 @@ const _FONT: FontFile = preload("res://assets/kenney/ui/fonts/Kenney Future.ttf"
 @onready var _score_label: Label = $ScoreLabel
 @onready var _health_bar: ProgressBar = $HealthBar
 @onready var _station_bar: ProgressBar = $StationBar
+@onready var _jetpack_bar: ProgressBar = $JetpackBar
 @onready var _drift_warning: Label = $DriftWarning
 @onready var _start_prompt: Label = $StartPromptLabel
 
@@ -24,6 +25,7 @@ func _ready() -> void:
 	_health_bar.max_value = float(PlayerStats.MAX_HEALTH)
 	_style_bar(_health_bar, Color(0.85, 0.2, 0.1, 1.0))
 	_style_bar(_station_bar, Color(0.1, 0.65, 0.9, 1.0))
+	_style_bar(_jetpack_bar, Color(1.0, 0.7, 0.0, 1.0))
 
 
 func update_score(value: int) -> void:
@@ -36,6 +38,14 @@ func update_health(value: int) -> void:
 
 func update_progress(value: float) -> void:
 	_station_bar.value = value
+
+
+func update_jetpack_fuel(ratio: float) -> void:
+	_jetpack_bar.value = ratio
+
+
+func show_jetpack_bar(show: bool) -> void:
+	_jetpack_bar.visible = show
 
 
 func show_drift_warning(show: bool) -> void:

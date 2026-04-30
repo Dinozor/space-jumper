@@ -24,6 +24,7 @@ func _ready() -> void:
 	_level_manager.player = _player
 	_player.died.connect(_on_player_died)
 	_player.damaged.connect(_on_player_damaged)
+	_player.jetpack_depleted.connect(_on_jetpack_depleted)
 	_drift_tracker.drifted_out.connect(_on_player_drifted_out)
 	_level_manager.station_reached.connect(_on_station_reached)
 	_level_manager.left_behind.connect(_on_player_left_behind)
@@ -42,6 +43,8 @@ func _process(_delta: float) -> void:
 		(_player.position.y - _level_manager.fall_floor_y) / total, 0.0, 1.0
 	)
 	_hud.update_progress(progress)
+	if _game_started:
+		_hud.update_jetpack_fuel(_player.get_jetpack_fuel_ratio())
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -59,7 +62,13 @@ func _unhandled_input(event: InputEvent) -> void:
 func _start_game() -> void:
 	_game_started = true
 	_player.set_physics_process(true)
+	_player.start_jetpack()
 	_hud.show_start_prompt(false)
+	_hud.show_jetpack_bar(true)
+
+
+func _on_jetpack_depleted() -> void:
+	_hud.show_jetpack_bar(false)
 
 
 func _on_player_damaged(_amount: int) -> void:
