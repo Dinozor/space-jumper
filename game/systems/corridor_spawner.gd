@@ -6,12 +6,14 @@ extends Node
 @export var safe_debris_scene: PackedScene
 @export var hazard_debris_scene: PackedScene
 @export var wall_debris_scene: PackedScene
+@export var doorway_debris_scene: PackedScene
 @export var spawn_interval: float = 0.1
 @export var spawn_z_range: float = 12.0
 @export var initial_fill_count: int = 36
 @export var fall_speed_min: float = 5.0
 @export var fall_speed_max: float = 12.0
 @export var wall_spawn_ratio: float = 0.15
+@export var doorway_spawn_ratio: float = 0.05
 
 var _timer: float = 0.0
 
@@ -34,7 +36,8 @@ func _spawn_at(y: float) -> void:
 		return
 	var instance: Node3D = scene.instantiate()
 	add_child(instance)
-	_place_instance(instance, y, scene == wall_debris_scene)
+	var centered: bool = scene == wall_debris_scene or scene == doorway_debris_scene
+	_place_instance(instance, y, centered)
 	var speed: float = randf_range(fall_speed_min, fall_speed_max)
 	(instance as RigidBody3D).linear_velocity = Vector3(0.0, -speed, 0.0)
 
@@ -43,6 +46,8 @@ func _choose_scene() -> PackedScene:
 	var roll: float = randf()
 	if wall_debris_scene != null and roll < wall_spawn_ratio:
 		return wall_debris_scene
+	if doorway_debris_scene != null and roll < wall_spawn_ratio + doorway_spawn_ratio:
+		return doorway_debris_scene
 	return safe_debris_scene if randf() > 0.25 else hazard_debris_scene
 
 

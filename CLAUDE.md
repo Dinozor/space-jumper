@@ -441,7 +441,7 @@ When finishing a task:
 - [x] Cap max fall speed so player can catch the station
 - [x] Debris should have varied falling speeds
 - [x] Add more debris variety — need wall-type obstacles
-- [ ] Add huge debris chunk with a doorway the player must navigate through
+- [x] Add huge debris chunk with a doorway the player must navigate through
 - [x] Add jetpack boost intro: player starts with a burst, game begins when it runs out
 
 ### Pickups
