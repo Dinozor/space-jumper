@@ -1,12 +1,13 @@
 class_name HUD
 extends CanvasLayer
 
-## In-game HUD: score, health, drift warning, and start prompt.
+## In-game HUD: score, health bar, station progress, drift warning, and start prompt.
 
 const _FONT: FontFile = preload("res://assets/kenney/ui/fonts/Kenney Future.ttf")
 
 @onready var _score_label: Label = $ScoreLabel
-@onready var _health_label: Label = $HealthLabel
+@onready var _health_bar: ProgressBar = $HealthBar
+@onready var _station_bar: ProgressBar = $StationBar
 @onready var _drift_warning: Label = $DriftWarning
 @onready var _start_prompt: Label = $StartPromptLabel
 
@@ -14,14 +15,15 @@ const _FONT: FontFile = preload("res://assets/kenney/ui/fonts/Kenney Future.ttf"
 func _ready() -> void:
 	_score_label.add_theme_font_override("font", _FONT)
 	_score_label.add_theme_font_size_override("font_size", 28)
-	_health_label.add_theme_font_override("font", _FONT)
-	_health_label.add_theme_font_size_override("font_size", 28)
 	_drift_warning.add_theme_font_override("font", _FONT)
 	_drift_warning.add_theme_font_size_override("font_size", 20)
 	_drift_warning.add_theme_color_override("font_color", Color(1.0, 0.3, 0.1, 1.0))
 	_start_prompt.add_theme_font_override("font", _FONT)
 	_start_prompt.add_theme_font_size_override("font_size", 34)
 	_start_prompt.add_theme_color_override("font_color", Color(0.9, 0.9, 1.0, 1.0))
+	_health_bar.max_value = float(PlayerStats.MAX_HEALTH)
+	_style_bar(_health_bar, Color(0.85, 0.2, 0.1, 1.0))
+	_style_bar(_station_bar, Color(0.1, 0.65, 0.9, 1.0))
 
 
 func update_score(value: int) -> void:
@@ -29,7 +31,11 @@ func update_score(value: int) -> void:
 
 
 func update_health(value: int) -> void:
-	_health_label.text = "x%d" % value
+	_health_bar.value = float(value)
+
+
+func update_progress(value: float) -> void:
+	_station_bar.value = value
 
 
 func show_drift_warning(show: bool) -> void:
@@ -38,3 +44,12 @@ func show_drift_warning(show: bool) -> void:
 
 func show_start_prompt(show: bool) -> void:
 	_start_prompt.visible = show
+
+
+func _style_bar(bar: ProgressBar, fill_color: Color) -> void:
+	var bg := StyleBoxFlat.new()
+	bg.bg_color = Color(0.1, 0.1, 0.1, 0.8)
+	bar.add_theme_stylebox_override("background", bg)
+	var fill := StyleBoxFlat.new()
+	fill.bg_color = fill_color
+	bar.add_theme_stylebox_override("fill", fill)

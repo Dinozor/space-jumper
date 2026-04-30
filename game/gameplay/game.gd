@@ -23,6 +23,7 @@ func _ready() -> void:
 	_drift_tracker.player = _player
 	_level_manager.player = _player
 	_player.died.connect(_on_player_died)
+	_player.damaged.connect(_on_player_damaged)
 	_drift_tracker.drifted_out.connect(_on_player_drifted_out)
 	_level_manager.station_reached.connect(_on_station_reached)
 	_level_manager.left_behind.connect(_on_player_left_behind)
@@ -32,6 +33,15 @@ func _ready() -> void:
 	_corridor_spawner.fill_initial()
 	_player.set_physics_process(false)
 	_hud.show_start_prompt(true)
+	_hud.update_health(_player.stats.health)
+
+
+func _process(_delta: float) -> void:
+	var total: float = _level_manager.station_y - _level_manager.fall_floor_y
+	var progress: float = clamp(
+		(_player.position.y - _level_manager.fall_floor_y) / total, 0.0, 1.0
+	)
+	_hud.update_progress(progress)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -50,6 +60,10 @@ func _start_game() -> void:
 	_game_started = true
 	_player.set_physics_process(true)
 	_hud.show_start_prompt(false)
+
+
+func _on_player_damaged(_amount: int) -> void:
+	_hud.update_health(_player.stats.health)
 
 
 func _on_player_died() -> void:

@@ -7,7 +7,7 @@ signal station_reached
 signal left_behind
 
 @export var station_y: float = 80.0
-@export var fall_floor_y: float = -20.0
+@export var fall_floor_y: float = -40.0
 @export var player: Player
 
 var _emitted: bool = false
