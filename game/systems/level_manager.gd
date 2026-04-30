@@ -10,15 +10,13 @@ signal left_behind
 @export var fall_floor_y: float = -40.0
 @export var player: Player
 
-var _emitted: bool = false
-
 
 func _physics_process(_delta: float) -> void:
-	if player == null or _emitted:
+	if player == null:
 		return
 	if player.position.y >= station_y:
-		_emitted = true
+		set_physics_process(false)
 		station_reached.emit()
 	elif player.position.y <= fall_floor_y:
-		_emitted = true
+		set_physics_process(false)
 		left_behind.emit()

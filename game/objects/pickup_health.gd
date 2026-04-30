@@ -15,8 +15,6 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if _collected:
-		return
 	position.y -= fall_speed * delta
 
 
@@ -24,6 +22,7 @@ func _on_body_entered(body: Node3D) -> void:
 	if _collected or not (body is Player) or not body.is_physics_processing():
 		return
 	_collected = true
+	set_physics_process(false)
 	(body as Player).heal(1)
 	collected.emit()
 	queue_free()
