@@ -427,7 +427,8 @@ When finishing a task:
 1. Run `~/.local/share/nvim/mason/bin/gdformat .` — format all GDScript files
 2. Run `godot --headless --check-only` — fix errors before proceeding
 3. Stage and commit with a Conventional Commit message
-4. Summarise what was done and what the next logical step is
+4. If the task corresponded to a TODO item, mark it `[x]` in this file and include it in the commit
+5. Summarise what was done and what the next logical step is
 
 ## TODO
 
