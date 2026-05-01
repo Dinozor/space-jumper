@@ -5,8 +5,8 @@
 - [x] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
 
 ## Bugs
-- [ ] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
-- [ ] Debris can trigger player bounce multiple times per touch — each contact should fire once only
+- [x] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
+- [x] Debris can trigger player bounce multiple times per touch — each contact should fire once only
 
 ## Gameplay mechanics
 - [x] Cap max fall speed so player can catch the station
@@ -24,6 +24,7 @@
 - [x] Refactor end-state strings to use an Enum
 - [x] Audit `_process` with `if _emitted: return` — replace with `set_process(false)` where better
 - [x] Make level resources auto-loadable from folder
+- [ ] Make first level loadable as resource to.
 
 ## Content / data
 - [ ] Define a spawn table resource — what objects can spawn, their weight/frequency, and at what difficulty thresholds they appear

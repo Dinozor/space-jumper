@@ -95,6 +95,19 @@ func _apply_velocity(delta: float) -> void:
 	velocity = _velocity
 	move_and_slide()
 	_velocity = velocity
+	_handle_slide_collisions()
+
+
+func _handle_slide_collisions() -> void:
+	var contacted: Array[Object] = []
+	for i: int in get_slide_collision_count():
+		var col: KinematicCollision3D = get_slide_collision(i)
+		var collider: Object = col.get_collider()
+		if collider == null or collider in contacted:
+			continue
+		contacted.append(collider)
+		if collider.has_method("on_player_contact"):
+			collider.on_player_contact(self)
 
 
 func _rotate_mesh(delta: float) -> void:

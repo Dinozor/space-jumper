@@ -3,13 +3,16 @@ extends RigidBody3D
 
 ## Huge space-station chunk with a doorway gap; player must navigate through the opening.
 
-@export var fall_speed: float = 8.0
-@export var damage: int = 1
-
 const CORRIDOR_HALF: float = 12.0
 const DOOR_WIDTH: float = 8.0
 const SLAB_HEIGHT: float = 20.0
 const SLAB_DEPTH: float = 6.0
+const BOUNCE_COOLDOWN: float = 0.5
+
+@export var fall_speed: float = 8.0
+@export var damage: int = 1
+
+var _bounce_on_cooldown: bool = false
 
 @onready var _left_col: CollisionShape3D = $LeftCollision
 @onready var _right_col: CollisionShape3D = $RightCollision
@@ -18,10 +21,7 @@ const SLAB_DEPTH: float = 6.0
 
 
 func _ready() -> void:
-	contact_monitor = true
-	max_contacts_reported = 4
 	linear_velocity = Vector3(0.0, -fall_speed, 0.0)
-	body_entered.connect(_on_body_entered)
 	var offsets: Array[float] = [-4.0, 0.0, 4.0]
 	var door_x: float = offsets[randi() % offsets.size()]
 	var mat: StandardMaterial3D = _make_material()
@@ -59,8 +59,16 @@ func _make_material() -> StandardMaterial3D:
 	return mat
 
 
-func _on_body_entered(body: Node3D) -> void:
-	if body is Player and body.is_physics_processing():
-		body.take_damage(damage)
-		var normal := (body.global_position - global_position).normalized()
-		body.bounce(normal)
+## Called by the player when a slide collision is detected against this object.
+func on_player_contact(player: Player) -> void:
+	if _bounce_on_cooldown:
+		return
+	_bounce_on_cooldown = true
+	get_tree().create_timer(BOUNCE_COOLDOWN).timeout.connect(_clear_bounce_cooldown)
+	player.take_damage(damage)
+	var normal: Vector3 = (player.global_position - global_position).normalized()
+	player.bounce(normal)
+
+
+func _clear_bounce_cooldown() -> void:
+	_bounce_on_cooldown = false
