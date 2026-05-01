@@ -19,6 +19,7 @@
 - [x] Debris can trigger player bounce multiple times per touch — each contact should fire once only
 - [x] Player should be invincible before game start as now he can die before game even starts.
 - [x] Level select only shows one level even though multiple `.tres` files exist in `resources/levels/` — investigate LevelLoader or level_select.gd to find why only one entry appears
+- [ ] Crash on level start: `Invalid call. Nonexistent function 'is_action_just_pressed' in base 'InputEventMouseMotion'` — `_unhandled_input` in game.gd and pause_menu.gd calls `event.is_action_just_pressed()` which is not implemented on mouse-motion events; replace with `Input.is_action_just_pressed()`
 
 ## Intro sequence
 - [x] Player starts below the debris field, boosting upward toward the station with no player control
