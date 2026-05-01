@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody3D
 
-## Player controller: handles XZ movement, bounce physics, and drift tracking.
+## Player controller: handles XZ movement, bounce physics, drift, and abilities.
 
 signal jumped
 signal damaged(amount: int)
@@ -21,10 +21,8 @@ const LATERAL_BOUNCE_DECAY: float = 3.0
 @export var jetpack_force: float = 15.0
 
 var stats: PlayerStats = PlayerStats.new()
-
 var station_escape_speed: float = 10.0
 var drag: float = 0.5
-
 var input_locked: bool = false
 var invincible: bool = false
 
@@ -32,15 +30,55 @@ var _velocity: Vector3 = Vector3.ZERO
 var _lateral_bounce: Vector3 = Vector3.ZERO
 var _jetpack_active: bool = false
 var _jetpack_timer: float = 0.0
+var _was_on_floor: bool = false
+var _abilities: Array[PlayerAbility] = []
 
 @onready var _mesh: Node3D = $Mesh
+
+
+func _ready() -> void:
+	_build_abilities()
+
+
+func _build_abilities() -> void:
+	for id: String in GameState.purchased_abilities:
+		var ability: PlayerAbility = _ability_for_id(id)
+		if ability != null:
+			add_child(ability)
+			_abilities.append(ability)
 
 
 func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
 	_apply_movement(delta)
+	_apply_jump_input()
 	_apply_velocity(delta)
+	_tick_abilities(delta)
+	_check_landed()
 	_rotate_mesh(delta)
+
+
+func _tick_abilities(delta: float) -> void:
+	for ab: PlayerAbility in _abilities:
+		ab.tick(self, delta)
+
+
+func _check_landed() -> void:
+	if is_on_floor() and not _was_on_floor:
+		for ab: PlayerAbility in _abilities:
+			ab.on_landed()
+	_was_on_floor = is_on_floor()
+
+
+func _apply_jump_input() -> void:
+	if input_locked or not Input.is_action_just_pressed("jump"):
+		return
+	if is_on_floor():
+		return
+	for ab: PlayerAbility in _abilities:
+		if ab.consume_extra_jump():
+			apply_boost(BOUNCE_FORCE)
+			return
 
 
 func start_jetpack() -> void:
@@ -54,6 +92,12 @@ func get_jetpack_fuel_ratio() -> float:
 	return _jetpack_timer / jetpack_duration
 
 
+func refill_jetpack(amount: float) -> void:
+	_jetpack_timer = minf(_jetpack_timer + amount, jetpack_duration)
+	if amount > 0.0 and not _jetpack_active:
+		_jetpack_active = true
+
+
 func apply_boost(force: float) -> void:
 	_velocity.y = force
 	AudioManager.play_jump()
@@ -62,8 +106,10 @@ func apply_boost(force: float) -> void:
 
 func bounce(normal: Vector3) -> void:
 	_velocity.y = maxf(normal.y, MIN_VERTICAL_BOUNCE) * BOUNCE_FORCE
-	_lateral_bounce.x = normal.x * BOUNCE_FORCE * LATERAL_BOUNCE_FACTOR
-	_lateral_bounce.z = normal.z * BOUNCE_FORCE * LATERAL_BOUNCE_FACTOR
+	var lateral: Vector3 = Vector3(normal.x, 0.0, normal.z) * BOUNCE_FORCE * LATERAL_BOUNCE_FACTOR
+	for ab: PlayerAbility in _abilities:
+		lateral = ab.modify_lateral_bounce(lateral)
+	_lateral_bounce = lateral
 	AudioManager.play_jump()
 	jumped.emit()
 
@@ -110,7 +156,7 @@ func _apply_movement(delta: float) -> void:
 	_velocity.z = input.z * MOVE_SPEED + _lateral_bounce.z
 
 
-func _apply_velocity(delta: float) -> void:
+func _apply_velocity(_delta: float) -> void:
 	velocity = _velocity
 	move_and_slide()
 	_velocity = velocity
@@ -138,3 +184,22 @@ func _rotate_mesh(delta: float) -> void:
 	_mesh.rotation.x = lerp(
 		_mesh.rotation.x, -normalized_vy * max_tilt_angle, rotation_speed * delta
 	)
+
+
+func _ability_for_id(id: String) -> PlayerAbility:
+	match id:
+		"double_jump":
+			return AbilityDoubleJump.new()
+		"grappling_gloves":
+			return AbilityGrapplingGloves.new()
+		"sticky_boots":
+			return AbilityStickyBoots.new()
+		"jetpack":
+			return AbilityJetpack.new()
+		"boost_recharge":
+			return AbilityBoostRecharge.new()
+		"shooting":
+			var ab: AbilityShooting = AbilityShooting.new()
+			ab.projectile_scene = load("res://game/objects/projectile.tscn")
+			return ab
+	return null
