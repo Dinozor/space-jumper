@@ -23,6 +23,8 @@ var _game_ended: bool = false
 
 
 func _ready() -> void:
+	_load_level_data()
+	_apply_level_data()
 	_drift_tracker.player = _player
 	_level_manager.player = _player
 	_pickup_spawner.player = _player
@@ -62,6 +64,23 @@ func _unhandled_input(event: InputEvent) -> void:
 	)
 	if is_press:
 		_start_game()
+
+
+func _load_level_data() -> void:
+	if level_data != null:
+		return
+	for level: LevelData in GameState.levels:
+		if level.level_id == GameState.current_level:
+			level_data = level
+			return
+
+
+func _apply_level_data() -> void:
+	if level_data == null:
+		return
+	_corridor_spawner.spawn_z_range = level_data.corridor_radius
+	_corridor_spawner.fall_speed_min = level_data.fall_speed * 0.75
+	_corridor_spawner.fall_speed_max = level_data.fall_speed * 1.25
 
 
 func _start_game() -> void:

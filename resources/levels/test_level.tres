@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://dpclodx8jecwh"]
+
+[ext_resource type="Script" uid="uid://poq7ts01dtmv" path="res://core/models/level_data.gd" id="1_huw1g"]
+
+[resource]
+script = ExtResource("1_huw1g")
+display_name = "Test level"
+debris_theme = "Random"
+environment_theme = "Random"
+fall_speed = 8.0
+corridor_radius = 12.0
+metadata/_custom_type_script = "uid://poq7ts01dtmv"

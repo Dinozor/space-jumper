@@ -31,7 +31,7 @@
 - [x] Refactor end-state strings to use an Enum
 - [x] Audit `_process` with `if _emitted: return` — replace with `set_process(false)` where better
 - [x] Make level resources auto-loadable from folder
-- [ ] Make first level loadable as resource to.
+- [x] Make first level loadable as resource too.
 
 ## Content / data
 - [ ] Define a spawn table resource — what objects can spawn, their weight/frequency, and at what difficulty thresholds they appear
