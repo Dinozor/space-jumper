@@ -55,7 +55,7 @@ func _spawn_from_table(y: float) -> void:
 	var instance: Node3D = entry.scene.instantiate()
 	add_child(instance)
 	_place_instance(instance, y, entry.is_centered)
-	(instance as RigidBody3D).linear_velocity = Vector3(0.0, -_pick_speed(entry), 0.0)
+	_configure_body(instance, _pick_speed(entry))
 
 
 func _spawn_legacy(y: float) -> void:
@@ -66,9 +66,13 @@ func _spawn_legacy(y: float) -> void:
 	add_child(instance)
 	var centered: bool = scene == wall_debris_scene or scene == doorway_debris_scene
 	_place_instance(instance, y, centered)
-	(instance as RigidBody3D).linear_velocity = Vector3(
-		0.0, -randf_range(fall_speed_min, fall_speed_max), 0.0
-	)
+	_configure_body(instance, randf_range(fall_speed_min, fall_speed_max))
+
+
+func _configure_body(instance: Node3D, speed: float) -> void:
+	var body := instance as RigidBody3D
+	body.gravity_scale = 0.0
+	body.linear_velocity = Vector3(0.0, -speed, 0.0)
 
 
 func _pick_speed(entry: SpawnEntry) -> float:
