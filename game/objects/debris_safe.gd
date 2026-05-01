@@ -6,6 +6,7 @@ extends RigidBody3D
 const BOUNCE_COOLDOWN: float = 0.5
 
 @export var fall_speed: float = 8.0
+@export var tags: PackedStringArray = []
 
 var _bounce_on_cooldown: bool = false
 
