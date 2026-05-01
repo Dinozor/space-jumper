@@ -47,6 +47,7 @@ orbital drift vs fast fleeing ship).
 - [x] Add huge debris chunk with a doorway the player must navigate through
 - [x] Add jetpack boost intro: player starts with a burst, game begins when it runs out
 - [x] Bounce direction should reflect off the contact surface — player bounces away from the object, not just straight up
+- [ ] Only dedicated hazard objects should deal damage — safe debris, walls, and doorways must not damage the player on contact (hitting a falling object is punishment enough)
 
 ## Pickups
 - [x] Health pickup
