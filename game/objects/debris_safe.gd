@@ -15,12 +15,11 @@ func _ready() -> void:
 
 
 ## Called by the player when a slide collision is detected against this object.
-func on_player_contact(player: Player) -> void:
+func on_player_contact(player: Player, normal: Vector3) -> void:
 	if _bounce_on_cooldown:
 		return
 	_bounce_on_cooldown = true
 	get_tree().create_timer(BOUNCE_COOLDOWN).timeout.connect(_clear_bounce_cooldown)
-	var normal: Vector3 = (player.global_position - global_position).normalized()
 	player.bounce(normal)
 
 

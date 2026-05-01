@@ -12,6 +12,9 @@ signal jetpack_depleted
 const MOVE_SPEED: float = 8.0
 const BOUNCE_FORCE: float = 12.0
 const GRAVITY: float = -10.0
+const MIN_VERTICAL_BOUNCE: float = 0.7
+const LATERAL_BOUNCE_FACTOR: float = 0.5
+const LATERAL_BOUNCE_DECAY: float = 8.0
 
 @export var max_fall_speed: float = 20.0
 @export var rotation_speed: float = 10.0
@@ -22,6 +25,7 @@ const GRAVITY: float = -10.0
 var stats: PlayerStats = PlayerStats.new()
 
 var _velocity: Vector3 = Vector3.ZERO
+var _lateral_bounce: Vector3 = Vector3.ZERO
 var _jetpack_active: bool = false
 var _jetpack_timer: float = 0.0
 
@@ -30,7 +34,7 @@ var _jetpack_timer: float = 0.0
 
 func _physics_process(delta: float) -> void:
 	_apply_gravity(delta)
-	_apply_movement()
+	_apply_movement(delta)
 	_apply_velocity(delta)
 	_rotate_mesh(delta)
 
@@ -53,7 +57,9 @@ func apply_boost(force: float) -> void:
 
 
 func bounce(normal: Vector3) -> void:
-	_velocity.y = BOUNCE_FORCE
+	_velocity.y = maxf(normal.y, MIN_VERTICAL_BOUNCE) * BOUNCE_FORCE
+	_lateral_bounce.x = normal.x * BOUNCE_FORCE * LATERAL_BOUNCE_FACTOR
+	_lateral_bounce.z = normal.z * BOUNCE_FORCE * LATERAL_BOUNCE_FACTOR
 	AudioManager.play_jump()
 	jumped.emit()
 
@@ -83,12 +89,13 @@ func _apply_gravity(delta: float) -> void:
 	_velocity.y = maxf(_velocity.y, -max_fall_speed)
 
 
-func _apply_movement() -> void:
-	var input := Vector3(
+func _apply_movement(delta: float) -> void:
+	var input: Vector3 = Vector3(
 		Input.get_axis("move_left", "move_right"), 0.0, Input.get_axis("move_forward", "move_back")
 	)
-	_velocity.x = input.x * MOVE_SPEED
-	_velocity.z = input.z * MOVE_SPEED
+	_lateral_bounce = _lateral_bounce.move_toward(Vector3.ZERO, LATERAL_BOUNCE_DECAY * delta)
+	_velocity.x = input.x * MOVE_SPEED + _lateral_bounce.x
+	_velocity.z = input.z * MOVE_SPEED + _lateral_bounce.z
 
 
 func _apply_velocity(delta: float) -> void:
@@ -107,7 +114,7 @@ func _handle_slide_collisions() -> void:
 			continue
 		contacted.append(collider)
 		if collider.has_method("on_player_contact"):
-			collider.on_player_contact(self)
+			collider.on_player_contact(self, col.get_normal())
 
 
 func _rotate_mesh(delta: float) -> void:
