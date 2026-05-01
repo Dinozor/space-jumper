@@ -51,10 +51,8 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	var total: float = _level_manager.station_y - _level_manager.fall_floor_y
-	var progress: float = clamp(
-		(_player.position.y - _level_manager.fall_floor_y) / total, 0.0, 1.0
-	)
+	var distance: float = _level_manager.station_y - _player.position.y
+	var progress: float = clamp(1.0 - distance / _level_manager.left_behind_distance, 0.0, 1.0)
 	_hud.update_progress(progress)
 	if _intro_active:
 		var digit: int = ceili(
