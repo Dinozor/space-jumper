@@ -51,6 +51,13 @@ func upgrade_stat(character_id: String, stat: String, cost: int) -> bool:
 	return true
 
 
+func unlock_next_level(completed_level_id: int) -> void:
+	for level: LevelData in levels:
+		if level.level_id == completed_level_id + 1 and level.level_id not in unlocked_levels:
+			unlocked_levels.append(level.level_id)
+			return
+
+
 func purchase_ability(ability_id: String, cost: int) -> bool:
 	if currency < cost or ability_id in purchased_abilities:
 		return false

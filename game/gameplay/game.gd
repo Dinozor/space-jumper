@@ -175,6 +175,7 @@ func _on_station_reached() -> void:
 func _award_currency() -> void:
 	if level_data != null:
 		GameState.currency += level_data.level_reward
+		GameState.unlock_next_level(level_data.level_id)
 
 
 func _on_player_left_behind() -> void:
