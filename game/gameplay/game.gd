@@ -74,6 +74,7 @@ func _apply_level_data() -> void:
 	_corridor_spawner.spawn_z_range = level_data.corridor_radius
 	_corridor_spawner.fall_speed_min = level_data.fall_speed * 0.75
 	_corridor_spawner.fall_speed_max = level_data.fall_speed * 1.25
+	_corridor_spawner.place_sections(level_data.sections)
 
 
 func _begin_intro() -> void:

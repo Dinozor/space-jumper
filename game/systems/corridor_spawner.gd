@@ -19,6 +19,16 @@ extends Node
 var _timer: float = 0.0
 
 
+func place_sections(sections: Array[LevelSection]) -> void:
+	for section: LevelSection in sections:
+		for entry: PatternEntry in section.entries:
+			if entry.scene == null:
+				continue
+			var instance: Node3D = entry.scene.instantiate()
+			add_child(instance)
+			instance.position = Vector3(entry.x_offset, section.spawn_y, entry.z_offset)
+
+
 func _physics_process(delta: float) -> void:
 	_timer += delta
 	if _timer >= spawn_interval:

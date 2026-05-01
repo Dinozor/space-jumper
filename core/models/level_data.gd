@@ -10,3 +10,4 @@ extends Resource
 @export var has_boss: bool = false
 @export var fall_speed: float = 10.0
 @export var corridor_radius: float = 8.0
+@export var sections: Array[LevelSection] = []

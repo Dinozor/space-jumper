@@ -14,11 +14,15 @@
 ## Bugs
 - [x] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
 - [x] Debris can trigger player bounce multiple times per touch — each contact should fire once only
+- [ ] Player should be invincible before game start as now he can die before game even starts.
 
 ## Intro sequence
 - [x] Player starts below the debris field, boosting upward toward the station with no player control
 - [x] Show a 3-2-1 countdown in the HUD during the boost; control is locked until it hits 0
 - [x] When countdown reaches 0 (boost runs out), player gains full control and gameplay begins
+
+## Ending squence
+- [ ] Some levels might have a rope hangin from the station (cable). When reaching close enought proximity to the station, cinematic starts, player hooks onto cable and drags himslef into the station. Player wins. Note, that player player should become invincible to the object, or better object appear from withing the station and can not harm player.
 
 ## Gameplay mechanics
 - [x] Cap max fall speed so player can catch the station
@@ -32,11 +36,16 @@
 - [x] Health pickup
 - [x] Boost pickup for sparse-debris situations
 
+## Level design
+- [x] Level scripted sections: LevelData can define PatternSections — lists of pre-placed objects at fixed Y positions, injected at startup before random fill
+- [x] Checkpoint debris type: a stationary platform (gravity_scale = 0) that bounces the player, usable in PatternSections as a mid-level rest point
+
 ## Tech / refactor
 - [x] Refactor end-state strings to use an Enum
 - [x] Audit `_process` with `if _emitted: return` — replace with `set_process(false)` where better
 - [x] Make level resources auto-loadable from folder
 - [x] Make first level loadable as resource too.
+- [ ] Create proper game stylebox/theme and apply it globaly. Do not configure it in code.
 
 ## Content / data
 - [x] Define a spawn table resource — what objects can spawn, their weight/frequency, and at what difficulty thresholds they appear
