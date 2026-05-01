@@ -68,6 +68,23 @@ orbital drift vs fast fleeing ship).
 - [x] Define a spawn table resource — what objects can spawn, their weight/frequency, and at what difficulty thresholds they appear
 - [x] Move all per-object tuning (fall speed, damage, size, etc.) into individual object resources instead of hardcoded script constants
 - [x] Replace hardcoded spawner ratios (`HAZARD_RATIO`, `boost_spawn_ratio`, etc.) with lookups into the spawn table resource
+- [ ] Add a tag/type system to debris — each object carries zero or more tags (e.g. `shootable`, `sticky`, `icy`); tags affect bounce behaviour and interaction rules; `shootable` objects can be destroyed by projectiles and some may require multiple hits
 
 ## CI/CD
 - [x] Set up pipeline; use butler to deploy to itch.io
+
+## Economy / Progression
+- [ ] Completing a level rewards the player with a currency amount (stored in `GameState`)
+- [ ] Add an unlockables / shop menu accessible from the main menu where currency is spent on upgrades and character unlocks
+
+## Upgrades & Abilities
+- [ ] Design a dynamic, data-driven ability system — abilities attach to the player as injectable resources/components; no hardcoded `if has_ability` branches in player code
+- [ ] Ability: double jump — grants one extra jump while airborne before landing again
+- [ ] Ability: jetpack — purchasable active upward thrust (distinct from the intro boost); has limited fuel that recharges
+- [ ] Ability: boost recharge — passive; slowly refills boost fuel after a cooldown of X seconds post-boost; upgradable to increase recharge rate (multiple upgrade tiers)
+- [ ] Ability: shooting — player fires projectiles that destroy `shootable`-tagged debris; pairs with the debris tag system
+
+## Characters
+- [ ] Allow players to unlock alternate characters from the Kenney Cube Pets pack via the shop menu
+- [ ] Each character has a stat profile: `move_speed`, `jump_force`, `aerodynamics` (scales the drag coefficient applied to that character)
+- [ ] Character stats are individually upgradable via the upgrades menu
