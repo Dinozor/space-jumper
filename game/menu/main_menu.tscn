@@ -18,9 +18,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -120.0
-offset_top = -90.0
+offset_top = -120.0
 offset_right = 120.0
-offset_bottom = 90.0
+offset_bottom = 120.0
 
 [node name="PlayButton" type="Button" parent="VBox" unique_id=264093592]
 layout_mode = 2
@@ -29,6 +29,10 @@ text = "Play"
 [node name="LevelSelectButton" type="Button" parent="VBox" unique_id=406645112]
 layout_mode = 2
 text = "Level Select"
+
+[node name="SettingsButton" type="Button" parent="VBox"]
+layout_mode = 2
+text = "Settings"
 
 [node name="QuitButton" type="Button" parent="VBox" unique_id=565157653]
 layout_mode = 2

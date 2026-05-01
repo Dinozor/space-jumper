@@ -9,6 +9,14 @@ const _SFX_WIN: AudioStream = preload("res://assets/kenney/audio/sfx/win.ogg")
 const _SFX_LOSE: AudioStream = preload("res://assets/kenney/audio/sfx/lose.ogg")
 const _SFX_DRIFT_WARNING: AudioStream = preload("res://assets/kenney/audio/sfx/drift_warning.ogg")
 
+var music_enabled: bool = true:
+	set(value):
+		music_enabled = value
+		if _music_player != null:
+			_music_player.volume_db = 0.0 if value else -80.0
+
+var sfx_enabled: bool = true
+
 var _music_player: AudioStreamPlayer
 
 
@@ -51,6 +59,8 @@ func play_drift_warning() -> void:
 
 
 func _play_sfx(stream: AudioStream) -> void:
+	if not sfx_enabled:
+		return
 	var player := AudioStreamPlayer.new()
 	add_child(player)
 	player.stream = stream

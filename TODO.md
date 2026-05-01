@@ -1,8 +1,15 @@
 # Wall Jumper — TODO
 
+## Settings / Options
+- [x] Add settings screen accessible from the main menu
+- [x] Volume toggle (music and SFX on/off)
+- [x] Control remapping for all player actions (move_left, move_right, move_forward, move_back)
+
 ## UI / HUD
 - [x] Add player health bar
 - [x] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
+- [ ] Level select must show levels loaded from `resources/levels/` via LevelLoader
+- [ ] Add "Back to Menu" button on the level select screen
 
 ## Bugs
 - [x] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
