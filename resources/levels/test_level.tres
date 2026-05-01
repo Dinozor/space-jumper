@@ -1,15 +1,13 @@
 [gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://dpclodx8jecwh"]
 
-[ext_resource type="Script" uid="uid://poq7ts01dtmv" path="res://core/models/level_data.gd" id="Script_LevelData"]
-[ext_resource type="Script" path="res://core/models/level_section.gd" id="Script_LevelSection"]
-[ext_resource type="Script" path="res://core/models/pattern_entry.gd" id="Script_PatternEntry"]
 [ext_resource type="PackedScene" path="res://game/objects/debris_checkpoint.tscn" id="Scene_Checkpoint"]
+[ext_resource type="Script" uid="uid://poq7ts01dtmv" path="res://core/models/level_data.gd" id="Script_LevelData"]
+[ext_resource type="Script" uid="uid://dpuyhtmvryy0i" path="res://core/models/level_section.gd" id="Script_LevelSection"]
+[ext_resource type="Script" uid="uid://br8vtliyn2oh3" path="res://core/models/pattern_entry.gd" id="Script_PatternEntry"]
 
 [sub_resource type="Resource" id="Entry_Checkpoint"]
 script = ExtResource("Script_PatternEntry")
 scene = ExtResource("Scene_Checkpoint")
-x_offset = 0.0
-z_offset = 0.0
 
 [sub_resource type="Resource" id="Section_Mid"]
 script = ExtResource("Script_LevelSection")
@@ -18,11 +16,12 @@ entries = Array[ExtResource("Script_PatternEntry")]([SubResource("Entry_Checkpoi
 
 [resource]
 script = ExtResource("Script_LevelData")
+level_id = 0
 display_name = "Test level"
 debris_theme = "Random"
 environment_theme = "Random"
 station_escape_speed = 8.0
-drag = 0.5
+drag = 0.4
 corridor_radius = 12.0
 sections = Array[ExtResource("Script_LevelSection")]([SubResource("Section_Mid")])
 has_cable_ending = true

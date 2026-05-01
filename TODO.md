@@ -37,8 +37,8 @@ orbital drift vs fast fleeing ship).
 - [x] Add `drag` to `LevelData`: a 0–1 coefficient applied to the player's upward velocity each frame (`velocity.y *= 1.0 - drag * delta`). Explains in-world why a bounce doesn't carry the player forever — atmospheric resistance, debris-field drag, or weak gravitational pull of the escaping station. Different levels can feel floaty (low drag, deep space) or sluggish (high drag, dense debris cloud).
 - [x] Win / left-behind thresholds in `LevelManager` should use distance-to-station rather than absolute Y so the system works when `station_escape_speed` varies across levels.
 - [x] Progress bar shows distance-to-station (closes as player gains, opens as player falls behind), not the player's absolute Y height.
-- [ ] Tune `test_level`: set `station_escape_speed` and `drag` so standing still means losing, but skilled bouncing lets you close the gap.
-- [ ] Add a second level with a faster `station_escape_speed` to prove the per-level parameter changes the feel in a meaningful way.
+- [x] Tune `test_level`: set `station_escape_speed` and `drag` so standing still means losing, but skilled bouncing lets you close the gap.
+- [x] Add a second level with a faster `station_escape_speed` to prove the per-level parameter changes the feel in a meaningful way.
 
 ## Gameplay mechanics
 - [x] Cap max fall speed so player can catch the station
@@ -47,7 +47,7 @@ orbital drift vs fast fleeing ship).
 - [x] Add huge debris chunk with a doorway the player must navigate through
 - [x] Add jetpack boost intro: player starts with a burst, game begins when it runs out
 - [x] Bounce direction should reflect off the contact surface — player bounces away from the object, not just straight up
-- [ ] Only dedicated hazard objects should deal damage — safe debris, walls, and doorways must not damage the player on contact (hitting a falling object is punishment enough)
+- [x] Only dedicated hazard objects should deal damage — safe debris, walls, and doorways must not damage the player on contact (hitting a falling object is punishment enough)
 
 ## Pickups
 - [x] Health pickup
