@@ -7,7 +7,6 @@ const WALL_HALF_OFFSET: float = 5.0
 const BOUNCE_COOLDOWN: float = 0.5
 
 @export var fall_speed: float = 8.0
-@export var damage: int = 1
 
 var _bounce_on_cooldown: bool = false
 

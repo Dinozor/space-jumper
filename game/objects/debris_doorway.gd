@@ -10,7 +10,6 @@ const SLAB_DEPTH: float = 6.0
 const BOUNCE_COOLDOWN: float = 0.5
 
 @export var fall_speed: float = 8.0
-@export var damage: int = 1
 
 var _bounce_on_cooldown: bool = false
 
@@ -65,7 +64,6 @@ func on_player_contact(player: Player, normal: Vector3) -> void:
 		return
 	_bounce_on_cooldown = true
 	get_tree().create_timer(BOUNCE_COOLDOWN).timeout.connect(_clear_bounce_cooldown)
-	player.take_damage(damage)
 	player.bounce(normal)
 
 
