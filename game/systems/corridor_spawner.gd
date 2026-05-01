@@ -49,6 +49,10 @@ func _spawn_at(y: float) -> void:
 
 
 func _spawn_from_table(y: float) -> void:
+	var wave: SpawnWave = spawn_table.pick_wave()
+	if wave != null:
+		_spawn_wave(wave, y)
+		return
 	var entry: SpawnEntry = spawn_table.pick(0.0)
 	if entry == null:
 		return
@@ -56,6 +60,18 @@ func _spawn_from_table(y: float) -> void:
 	add_child(instance)
 	_place_instance(instance, y, entry.is_centered)
 	_configure_body(instance, _pick_speed(entry))
+
+
+func _spawn_wave(wave: SpawnWave, base_y: float) -> void:
+	for we: WaveEntry in wave.entries:
+		if we.scene == null:
+			continue
+		var instance: Node3D = we.scene.instantiate()
+		add_child(instance)
+		var wx: float = we.x_offset if we.is_centered else we.x_offset + randf_range(-2.0, 2.0)
+		var wz: float = we.z_offset if we.is_centered else we.z_offset + randf_range(-2.0, 2.0)
+		instance.position = Vector3(wx, base_y + we.y_offset, wz)
+		_configure_body(instance, randf_range(fall_speed_min, fall_speed_max))
 
 
 func _spawn_legacy(y: float) -> void:
