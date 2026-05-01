@@ -21,6 +21,7 @@ offset_bottom = 90.0
 layout_mode = 2
 text = "LEVEL SELECT"
 horizontal_alignment = 1
+theme_override_font_sizes/font_size = 26
 
 [node name="ButtonContainer" type="HBoxContainer" parent="VBox"]
 layout_mode = 2

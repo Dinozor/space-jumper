@@ -3,8 +3,6 @@ extends Control
 
 ## Main menu: play, level select, quit.
 
-const _FONT: FontFile = preload("res://assets/kenney/ui/fonts/Kenney Future.ttf")
-
 signal play_pressed
 signal level_select_pressed
 signal settings_pressed
@@ -16,9 +14,6 @@ signal settings_pressed
 
 
 func _ready() -> void:
-	for btn: Button in [_play_button, _level_select_button, _settings_button, _quit_button]:
-		btn.add_theme_font_override("font", _FONT)
-		btn.add_theme_font_size_override("font_size", 22)
 	_play_button.pressed.connect(_on_play_pressed)
 	_level_select_button.pressed.connect(_on_level_select_pressed)
 	_settings_button.pressed.connect(_on_settings_pressed)

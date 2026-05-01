@@ -45,7 +45,7 @@
 - [x] Audit `_process` with `if _emitted: return` — replace with `set_process(false)` where better
 - [x] Make level resources auto-loadable from folder
 - [x] Make first level loadable as resource too.
-- [ ] Create proper game stylebox/theme and apply it globaly. Do not configure it in code.
+- [x] Create proper game stylebox/theme and apply it globaly. Do not configure it in code.
 
 ## Content / data
 - [x] Define a spawn table resource — what objects can spawn, their weight/frequency, and at what difficulty thresholds they appear

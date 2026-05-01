@@ -3,8 +3,6 @@ extends Control
 
 ## Settings screen: audio toggles and control remapping.
 
-const _FONT: FontFile = preload("res://assets/kenney/ui/fonts/Kenney Future.ttf")
-
 const _ACTIONS: Array[String] = ["move_left", "move_right", "move_forward", "move_back"]
 const _ACTION_LABELS: Array[String] = ["Move Left", "Move Right", "Move Forward", "Move Back"]
 
@@ -56,7 +54,6 @@ func _build_vbox() -> VBoxContainer:
 func _make_label(text: String, font_size: int) -> Label:
 	var label: Label = Label.new()
 	label.text = text
-	label.add_theme_font_override("font", _FONT)
 	label.add_theme_font_size_override("font_size", font_size)
 	return label
 
@@ -64,7 +61,6 @@ func _make_label(text: String, font_size: int) -> Label:
 func _make_button(text: String) -> Button:
 	var btn: Button = Button.new()
 	btn.text = text
-	btn.add_theme_font_override("font", _FONT)
 	btn.add_theme_font_size_override("font_size", 20)
 	return btn
 

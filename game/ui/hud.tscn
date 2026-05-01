@@ -2,6 +2,27 @@
 
 [ext_resource type="Script" path="res://game/ui/hud.gd" id="Script_1"]
 
+[sub_resource type="StyleBoxFlat" id="Box_HealthFill"]
+bg_color = Color(0.85, 0.2, 0.1, 1.0)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="Box_StationFill"]
+bg_color = Color(0.1, 0.65, 0.9, 1.0)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="Box_JetpackFill"]
+bg_color = Color(1.0, 0.7, 0.0, 1.0)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [node name="HUD" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("Script_1")
@@ -16,6 +37,7 @@ offset_top = 10.0
 offset_right = 240.0
 offset_bottom = 48.0
 text = "0"
+theme_override_font_sizes/font_size = 28
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 anchor_left = 1.0
@@ -29,6 +51,7 @@ offset_bottom = 38.0
 max_value = 3.0
 value = 3.0
 show_percentage = false
+theme_override_styles/fill = SubResource("Box_HealthFill")
 
 [node name="StationBar" type="ProgressBar" parent="."]
 anchor_left = 1.0
@@ -43,6 +66,7 @@ max_value = 1.0
 value = 0.333
 show_percentage = false
 fill_mode = 3
+theme_override_styles/fill = SubResource("Box_StationFill")
 
 [node name="JetpackBar" type="ProgressBar" parent="."]
 anchor_left = 0.5
@@ -57,6 +81,7 @@ max_value = 1.0
 value = 1.0
 show_percentage = false
 visible = false
+theme_override_styles/fill = SubResource("Box_JetpackFill")
 
 [node name="DriftWarning" type="Label" parent="."]
 anchor_left = 0.5
@@ -70,6 +95,8 @@ offset_bottom = 95.0
 text = "WARNING: DRIFTING!"
 horizontal_alignment = 1
 visible = false
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1.0, 0.3, 0.1, 1.0)
 
 [node name="StartPromptLabel" type="Label" parent="."]
 anchor_left = 0.5
@@ -83,6 +110,8 @@ offset_bottom = 30.0
 text = "PRESS ANY KEY TO START"
 horizontal_alignment = 1
 visible = false
+theme_override_font_sizes/font_size = 34
+theme_override_colors/font_color = Color(0.9, 0.9, 1.0, 1.0)
 
 [node name="CountdownLabel" type="Label" parent="."]
 anchor_left = 0.5
@@ -97,3 +126,5 @@ text = "3"
 horizontal_alignment = 1
 vertical_alignment = 1
 visible = false
+theme_override_font_sizes/font_size = 96
+theme_override_colors/font_color = Color(1.0, 0.85, 0.2, 1.0)

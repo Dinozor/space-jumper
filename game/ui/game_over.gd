@@ -3,8 +3,6 @@ extends CanvasLayer
 
 ## Game-over screen: shows result and provides restart / menu actions.
 
-const _FONT: FontFile = preload("res://assets/kenney/ui/fonts/Kenney Future.ttf")
-
 signal restart_pressed
 signal menu_pressed
 
@@ -22,11 +20,6 @@ func _ready() -> void:
 		Game.EndState.LEFT_BEHIND: "You were left behind!",
 		Game.EndState.WON: "You reached the station!",
 	}
-	_reason_label.add_theme_font_override("font", _FONT)
-	_reason_label.add_theme_font_size_override("font_size", 28)
-	for btn: Button in [_restart_button, _menu_button]:
-		btn.add_theme_font_override("font", _FONT)
-		btn.add_theme_font_size_override("font_size", 18)
 	_restart_button.pressed.connect(_on_restart_pressed)
 	_menu_button.pressed.connect(_on_menu_pressed)
 
