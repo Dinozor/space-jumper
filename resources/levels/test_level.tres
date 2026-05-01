@@ -22,6 +22,7 @@ display_name = "Test level"
 debris_theme = "Random"
 environment_theme = "Random"
 station_escape_speed = 8.0
+drag = 0.5
 corridor_radius = 12.0
 sections = Array[ExtResource("Script_LevelSection")]([SubResource("Section_Mid")])
 has_cable_ending = true

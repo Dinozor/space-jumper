@@ -10,6 +10,8 @@ extends Resource
 @export var has_boss: bool = false
 ## How fast the station is flying away — shared drift rate for player and all debris.
 @export var station_escape_speed: float = 10.0
+## 0–1 drag on upward velocity per second: low = floaty deep space, high = dense debris cloud.
+@export var drag: float = 0.5
 @export var corridor_radius: float = 8.0
 @export var sections: Array[LevelSection] = []
 @export var has_cable_ending: bool = false

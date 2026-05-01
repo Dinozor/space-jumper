@@ -23,6 +23,7 @@ const LATERAL_BOUNCE_DECAY: float = 8.0
 var stats: PlayerStats = PlayerStats.new()
 
 var station_escape_speed: float = 10.0
+var drag: float = 0.5
 
 var input_locked: bool = false
 var invincible: bool = false
@@ -90,6 +91,8 @@ func _apply_gravity(delta: float) -> void:
 			_jetpack_active = false
 			jetpack_depleted.emit()
 		return
+	if _velocity.y > 0.0:
+		_velocity.y *= 1.0 - drag * delta
 	_velocity.y -= station_escape_speed * delta
 	_velocity.y = maxf(_velocity.y, -station_escape_speed)
 
