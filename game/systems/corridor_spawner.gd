@@ -7,13 +7,14 @@ extends Node
 @export var hazard_debris_scene: PackedScene
 @export var wall_debris_scene: PackedScene
 @export var doorway_debris_scene: PackedScene
-@export var spawn_interval: float = 0.1
+@export var spawn_interval: float = 0.3
 @export var spawn_z_range: float = 12.0
 @export var initial_fill_count: int = 36
 @export var fall_speed_min: float = 5.0
 @export var fall_speed_max: float = 12.0
 @export var wall_spawn_ratio: float = 0.15
 @export var doorway_spawn_ratio: float = 0.05
+@export var spawn_table: SpawnTable
 
 var _timer: float = 0.0
 
@@ -31,6 +32,23 @@ func fill_initial() -> void:
 
 
 func _spawn_at(y: float) -> void:
+	if spawn_table != null:
+		_spawn_from_table(y)
+	else:
+		_spawn_legacy(y)
+
+
+func _spawn_from_table(y: float) -> void:
+	var entry: SpawnEntry = spawn_table.pick(0.0)
+	if entry == null:
+		return
+	var instance: Node3D = entry.scene.instantiate()
+	add_child(instance)
+	_place_instance(instance, y, entry.is_centered)
+	(instance as RigidBody3D).linear_velocity = Vector3(0.0, -_pick_speed(entry), 0.0)
+
+
+func _spawn_legacy(y: float) -> void:
 	var scene: PackedScene = _choose_scene()
 	if scene == null:
 		return
@@ -38,8 +56,15 @@ func _spawn_at(y: float) -> void:
 	add_child(instance)
 	var centered: bool = scene == wall_debris_scene or scene == doorway_debris_scene
 	_place_instance(instance, y, centered)
-	var speed: float = randf_range(fall_speed_min, fall_speed_max)
-	(instance as RigidBody3D).linear_velocity = Vector3(0.0, -speed, 0.0)
+	(instance as RigidBody3D).linear_velocity = Vector3(
+		0.0, -randf_range(fall_speed_min, fall_speed_max), 0.0
+	)
+
+
+func _pick_speed(entry: SpawnEntry) -> float:
+	if entry.fall_speed_override > 0.0:
+		return randf_range(entry.fall_speed_override * 0.75, entry.fall_speed_override * 1.25)
+	return randf_range(fall_speed_min, fall_speed_max)
 
 
 func _choose_scene() -> PackedScene:

@@ -34,9 +34,9 @@
 - [x] Make first level loadable as resource too.
 
 ## Content / data
-- [ ] Define a spawn table resource — what objects can spawn, their weight/frequency, and at what difficulty thresholds they appear
-- [ ] Move all per-object tuning (fall speed, damage, size, etc.) into individual object resources instead of hardcoded script constants
-- [ ] Replace hardcoded spawner ratios (`HAZARD_RATIO`, `boost_spawn_ratio`, etc.) with lookups into the spawn table resource
+- [x] Define a spawn table resource — what objects can spawn, their weight/frequency, and at what difficulty thresholds they appear
+- [x] Move all per-object tuning (fall speed, damage, size, etc.) into individual object resources instead of hardcoded script constants
+- [x] Replace hardcoded spawner ratios (`HAZARD_RATIO`, `boost_spawn_ratio`, etc.) with lookups into the spawn table resource
 
 ## CI/CD
 - [x] Set up pipeline; use butler to deploy to itch.io
