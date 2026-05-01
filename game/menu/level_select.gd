@@ -1,11 +1,10 @@
 class_name LevelSelect
 extends Control
 
-## Level selection screen. Populates buttons from LevelLoader data via GameState.
+## Level selection screen. Shows all levels; locked ones are disabled with a tooltip.
 
 signal level_chosen(level_id: int)
 
-@onready var _title: Label = $VBox/Title
 @onready var _button_container: HBoxContainer = $VBox/ButtonContainer
 @onready var _back_button: Button = $VBox/BackButton
 
@@ -17,14 +16,28 @@ func _ready() -> void:
 
 func _populate_buttons() -> void:
 	for level: LevelData in GameState.levels:
-		if level.level_id not in GameState.unlocked_levels:
-			continue
+		var unlocked: bool = level.level_id in GameState.unlocked_levels
 		var btn: Button = Button.new()
 		btn.text = (
 			level.display_name if level.display_name != "" else "Level %d" % (level.level_id + 1)
 		)
-		btn.pressed.connect(func() -> void: _on_level_chosen(level.level_id))
+		if unlocked:
+			btn.pressed.connect(func() -> void: _on_level_chosen(level.level_id))
+		else:
+			btn.disabled = true
+			btn.modulate = Color(0.55, 0.55, 0.55)
+			btn.tooltip_text = _unlock_hint(level.level_id)
 		_button_container.add_child(btn)
+
+
+func _unlock_hint(level_id: int) -> String:
+	for level: LevelData in GameState.levels:
+		if level.level_id == level_id - 1:
+			var name: String = (
+				level.display_name if level.display_name != "" else "Level %d" % level_id
+			)
+			return 'Beat "%s" to unlock' % name
+	return "Locked"
 
 
 func _on_level_chosen(level_id: int) -> void:
