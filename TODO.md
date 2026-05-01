@@ -11,6 +11,7 @@
 - [x] Level select must show levels loaded from `resources/levels/` via LevelLoader
 - [x] Add "Back to Menu" button on the level select screen
 - [ ] Redesign shop as two tabbed screens: "Upgrades" (abilities in a grid) and "Characters" (character cards with stats + stat upgrade buttons); replace the single scrolling VBox with a proper grid layout
+- [ ] Show locked levels in level select — render all levels as buttons, but disable and gray out locked ones with a tooltip explaining how to unlock (e.g. "Beat Test Level to unlock")
 
 ## Bugs
 - [x] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
