@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://c81nx6jtrhhro" path="res://game/gameplay/game.gd" id="Script_Game"]
 [ext_resource type="Script" uid="uid://bewj2th0xnmhd" path="res://game/systems/level_manager.gd" id="Script_LevelManager"]
 [ext_resource type="Script" uid="uid://d0dw2sdlydfae" path="res://game/systems/pickup_spawner.gd" id="Script_PickupSpawner"]
-[ext_resource type="Resource" uid="uid://c8ngbllbcliyy" path="res://resources/spawn_tables/default_debris.tres" id="SpawnTable_Default"]
+[ext_resource type="Resource" uid="uid://uw0qqwbik15p" path="res://resources/spawn_tables/default_debris.tres" id="SpawnTable_Default"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProcSky_1"]
 sky_top_color = Color(0.005, 0.005, 0.04, 1)

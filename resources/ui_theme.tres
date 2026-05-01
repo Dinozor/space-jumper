@@ -1,75 +1,12 @@
-[gd_resource type="Theme" format=3 uid="uid://uitheme001"]
+[gd_resource type="Theme" format=3 uid="uid://muhfbqycvnha"]
 
 [ext_resource type="FontFile" uid="uid://rxschx5403as" path="res://assets/kenney/ui/fonts/Kenney Future.ttf" id="Font_1"]
 
-[sub_resource type="StyleBoxFlat" id="Box_BarBg"]
-bg_color = Color(0.1, 0.1, 0.1, 0.8)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
-[sub_resource type="StyleBoxFlat" id="Box_BtnNormal"]
-bg_color = Color(0.08, 0.1, 0.2, 0.9)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.2, 0.5, 0.8, 0.8)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-content_margin_left = 12.0
-content_margin_top = 6.0
-content_margin_right = 12.0
-content_margin_bottom = 6.0
-
-[sub_resource type="StyleBoxFlat" id="Box_BtnHover"]
-bg_color = Color(0.12, 0.18, 0.32, 0.9)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.35, 0.65, 0.95, 1.0)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-content_margin_left = 12.0
-content_margin_top = 6.0
-content_margin_right = 12.0
-content_margin_bottom = 6.0
-
-[sub_resource type="StyleBoxFlat" id="Box_BtnPressed"]
-bg_color = Color(0.18, 0.28, 0.45, 1.0)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.4, 0.75, 1.0, 1.0)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-content_margin_left = 12.0
-content_margin_top = 6.0
-content_margin_right = 12.0
-content_margin_bottom = 6.0
-
-[sub_resource type="StyleBoxFlat" id="Box_BtnFocus"]
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.4, 0.75, 1.0, 1.0)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
 [sub_resource type="StyleBoxFlat" id="Box_BtnDisabled"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
 bg_color = Color(0.1, 0.1, 0.15, 0.5)
 border_width_left = 1
 border_width_top = 1
@@ -80,10 +17,66 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="Box_BtnFocus"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.75, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="Box_BtnHover"]
 content_margin_left = 12.0
 content_margin_top = 6.0
 content_margin_right = 12.0
 content_margin_bottom = 6.0
+bg_color = Color(0.12, 0.18, 0.32, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.65, 0.95, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="Box_BtnNormal"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0.08, 0.1, 0.2, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.5, 0.8, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="Box_BtnPressed"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0.18, 0.28, 0.45, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.75, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="Box_Panel"]
 bg_color = Color(0.05, 0.05, 0.15, 0.88)
@@ -97,17 +90,24 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="Box_BarBg"]
+bg_color = Color(0.1, 0.1, 0.1, 0.8)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [resource]
 default_font = ExtResource("Font_1")
 default_font_size = 22
-Button/colors/font_color = Color(0.9, 0.9, 1.0, 1.0)
-Button/colors/font_hover_color = Color(1.0, 1.0, 1.0, 1.0)
-Button/colors/font_pressed_color = Color(1.0, 1.0, 1.0, 1.0)
+Button/colors/font_color = Color(0.9, 0.9, 1, 1)
 Button/colors/font_disabled_color = Color(0.5, 0.5, 0.6, 0.7)
-Button/styles/normal = SubResource("Box_BtnNormal")
-Button/styles/hover = SubResource("Box_BtnHover")
-Button/styles/pressed = SubResource("Box_BtnPressed")
-Button/styles/focus = SubResource("Box_BtnFocus")
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
 Button/styles/disabled = SubResource("Box_BtnDisabled")
+Button/styles/focus = SubResource("Box_BtnFocus")
+Button/styles/hover = SubResource("Box_BtnHover")
+Button/styles/normal = SubResource("Box_BtnNormal")
+Button/styles/pressed = SubResource("Box_BtnPressed")
 Panel/styles/panel = SubResource("Box_Panel")
 ProgressBar/styles/background = SubResource("Box_BarBg")

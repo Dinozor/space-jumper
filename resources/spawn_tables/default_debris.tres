@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="SpawnTable" format=3 uid="uid://c8ngbllbcliyy"]
+[gd_resource type="Resource" script_class="SpawnTable" format=3 uid="uid://uw0qqwbik15p"]
 
-[ext_resource type="Script" path="res://core/models/spawn_table.gd" id="Script_SpawnTable"]
-[ext_resource type="Script" path="res://core/models/spawn_entry.gd" id="Script_SpawnEntry"]
-[ext_resource type="PackedScene" uid="uid://debrissafe01" path="res://game/objects/debris_safe.tscn" id="Scene_Safe"]
-[ext_resource type="PackedScene" uid="uid://debrisha0rd1" path="res://game/objects/debris_hazard.tscn" id="Scene_Hazard"]
-[ext_resource type="PackedScene" uid="uid://dwutydur07qr8" path="res://game/objects/debris_wall.tscn" id="Scene_Wall"]
 [ext_resource type="PackedScene" uid="uid://debrdoorw01" path="res://game/objects/debris_doorway.tscn" id="Scene_Doorway"]
+[ext_resource type="PackedScene" uid="uid://debrisha0rd1" path="res://game/objects/debris_hazard.tscn" id="Scene_Hazard"]
+[ext_resource type="PackedScene" uid="uid://debrissafe01" path="res://game/objects/debris_safe.tscn" id="Scene_Safe"]
+[ext_resource type="PackedScene" uid="uid://dwutydur07qr8" path="res://game/objects/debris_wall.tscn" id="Scene_Wall"]
+[ext_resource type="Script" uid="uid://d3nt8r2efwihe" path="res://core/models/spawn_entry.gd" id="Script_SpawnEntry"]
+[ext_resource type="Script" uid="uid://bjhhym2jqvqxf" path="res://core/models/spawn_table.gd" id="Script_SpawnTable"]
 
 [sub_resource type="Resource" id="Entry_Safe"]
 script = ExtResource("Script_SpawnEntry")
@@ -31,4 +31,4 @@ is_centered = true
 
 [resource]
 script = ExtResource("Script_SpawnTable")
-entries = [SubResource("Entry_Safe"), SubResource("Entry_Hazard"), SubResource("Entry_Wall"), SubResource("Entry_Doorway")]
+entries = Array[ExtResource("Script_SpawnEntry")]([SubResource("Entry_Safe"), SubResource("Entry_Hazard"), SubResource("Entry_Wall"), SubResource("Entry_Doorway")])

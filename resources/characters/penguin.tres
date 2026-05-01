@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3]
+
+[ext_resource type="Script" path="res://core/models/character_data.gd" id="Script_CharacterData"]
+
+[resource]
+script = ExtResource("Script_CharacterData")
+character_id = "penguin"
+display_name = "Penguin"
+cost = 0
+move_speed = 8.0
+jump_force = 12.0
+aerodynamics = 1.0

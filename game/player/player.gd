@@ -32,12 +32,30 @@ var _jetpack_active: bool = false
 var _jetpack_timer: float = 0.0
 var _was_on_floor: bool = false
 var _abilities: Array[PlayerAbility] = []
+var _move_speed_override: float = MOVE_SPEED
+var _bounce_force_override: float = BOUNCE_FORCE
+var _aerodynamics: float = 1.0
 
 @onready var _mesh: Node3D = $Mesh
 
 
 func _ready() -> void:
+	_apply_character_stats()
 	_build_abilities()
+
+
+func _apply_character_stats() -> void:
+	var char_data: CharacterData = GameState.get_current_character()
+	if char_data == null:
+		return
+	var id: String = char_data.character_id
+	var f: float = char_data.upgrade_factor
+	var speed_bonus: float = pow(f, GameState.get_upgrade_tier(id, "move_speed"))
+	var jump_bonus: float = pow(f, GameState.get_upgrade_tier(id, "jump_force"))
+	var aero_bonus: float = pow(f, GameState.get_upgrade_tier(id, "aerodynamics"))
+	_move_speed_override = char_data.move_speed * speed_bonus
+	_bounce_force_override = char_data.jump_force * jump_bonus
+	_aerodynamics = char_data.aerodynamics * aero_bonus
 
 
 func _build_abilities() -> void:
@@ -105,8 +123,10 @@ func apply_boost(force: float) -> void:
 
 
 func bounce(normal: Vector3) -> void:
-	_velocity.y = maxf(normal.y, MIN_VERTICAL_BOUNCE) * BOUNCE_FORCE
-	var lateral: Vector3 = Vector3(normal.x, 0.0, normal.z) * BOUNCE_FORCE * LATERAL_BOUNCE_FACTOR
+	_velocity.y = maxf(normal.y, MIN_VERTICAL_BOUNCE) * _bounce_force_override
+	var lateral: Vector3 = (
+		Vector3(normal.x, 0.0, normal.z) * _bounce_force_override * LATERAL_BOUNCE_FACTOR
+	)
 	for ab: PlayerAbility in _abilities:
 		lateral = ab.modify_lateral_bounce(lateral)
 	_lateral_bounce = lateral
@@ -138,7 +158,7 @@ func _apply_gravity(delta: float) -> void:
 			jetpack_depleted.emit()
 		return
 	if _velocity.y > 0.0:
-		_velocity.y *= 1.0 - drag * delta
+		_velocity.y *= 1.0 - drag * _aerodynamics * delta
 	_velocity.y -= station_escape_speed * delta
 	_velocity.y = maxf(_velocity.y, -station_escape_speed)
 
@@ -152,8 +172,8 @@ func _apply_movement(delta: float) -> void:
 		Input.get_axis("move_left", "move_right"), 0.0, Input.get_axis("move_forward", "move_back")
 	)
 	_lateral_bounce = _lateral_bounce.move_toward(Vector3.ZERO, LATERAL_BOUNCE_DECAY * delta)
-	_velocity.x = input.x * MOVE_SPEED + _lateral_bounce.x
-	_velocity.z = input.z * MOVE_SPEED + _lateral_bounce.z
+	_velocity.x = input.x * _move_speed_override + _lateral_bounce.x
+	_velocity.z = input.z * _move_speed_override + _lateral_bounce.z
 
 
 func _apply_velocity(_delta: float) -> void:

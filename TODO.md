@@ -48,7 +48,7 @@ orbital drift vs fast fleeing ship).
 - [x] Add jetpack boost intro: player starts with a burst, game begins when it runs out
 - [x] Bounce direction should reflect off the contact surface — player bounces away from the object, not just straight up
 - [x] Only dedicated hazard objects should deal damage — safe debris, walls, and doorways must not damage the player on contact (hitting a falling object is punishment enough)
-- [ ] **[HIGH PRIORITY]** Increase wall-bounce lateral impulse — current force is too weak; bouncing off the same wall twice in a row should require real effort and precise positioning
+- [x] **[HIGH PRIORITY]** Increase wall-bounce lateral impulse — current force is too weak; bouncing off the same wall twice in a row should require real effort and precise positioning
 
 ## Pickups
 - [x] Health pickup
@@ -57,7 +57,7 @@ orbital drift vs fast fleeing ship).
 ## Level design
 - [x] Level scripted sections: LevelData can define PatternSections — lists of pre-placed objects at fixed Y positions, injected at startup before random fill
 - [x] Checkpoint debris type: a stationary platform (gravity_scale = 0) that bounces the player, usable in PatternSections as a mid-level rest point
-- [ ] Add authored wave/pattern groups to the corridor spawner — instead of pure random fill, spawn curated formations (e.g. wall + two safe platforms + gap) so the corridor has breathing room and readable structure
+- [x] Add authored wave/pattern groups to the corridor spawner — instead of pure random fill, spawn curated formations (e.g. wall + two safe platforms + gap) so the corridor has breathing room and readable structure
 
 ## Tech / refactor
 - [x] Refactor end-state strings to use an Enum
@@ -70,26 +70,26 @@ orbital drift vs fast fleeing ship).
 - [x] Define a spawn table resource — what objects can spawn, their weight/frequency, and at what difficulty thresholds they appear
 - [x] Move all per-object tuning (fall speed, damage, size, etc.) into individual object resources instead of hardcoded script constants
 - [x] Replace hardcoded spawner ratios (`HAZARD_RATIO`, `boost_spawn_ratio`, etc.) with lookups into the spawn table resource
-- [ ] **[HIGH PRIORITY]** Reduce debris spawn rates — current density makes the game unplayable; tune spawn table so the corridor has clear gaps and readable object spacing
-- [ ] Add a tag/type system to debris — each object carries zero or more tags (e.g. `shootable`, `sticky`, `icy`); tags affect bounce behaviour and interaction rules; `shootable` objects can be destroyed by projectiles and some may require multiple hits
+- [x] **[HIGH PRIORITY]** Reduce debris spawn rates — current density makes the game unplayable; tune spawn table so the corridor has clear gaps and readable object spacing
+- [x] Add a tag/type system to debris — each object carries zero or more tags (e.g. `shootable`, `sticky`, `icy`); tags affect bounce behaviour and interaction rules; `shootable` objects can be destroyed by projectiles and some may require multiple hits
 
 ## CI/CD
 - [x] Set up pipeline; use butler to deploy to itch.io
 
 ## Economy / Progression
-- [ ] Completing a level rewards the player with a currency amount (stored in `GameState`)
-- [ ] Add an unlockables / shop menu accessible from the main menu where currency is spent on upgrades and character unlocks
+- [x] Completing a level rewards the player with a currency amount (stored in `GameState`)
+- [x] Add an unlockables / shop menu accessible from the main menu where currency is spent on upgrades and character unlocks
 
 ## Upgrades & Abilities
-- [ ] Design a dynamic, data-driven ability system — abilities attach to the player as injectable resources/components; no hardcoded `if has_ability` branches in player code
-- [ ] Ability: double jump — grants one extra jump while airborne before landing again
-- [ ] Ability: jetpack — purchasable active upward thrust (distinct from the intro boost); has limited fuel that recharges
-- [ ] Ability: boost recharge — passive; slowly refills boost fuel after a cooldown of X seconds post-boost; upgradable to increase recharge rate (multiple upgrade tiers)
-- [ ] Ability: shooting — player fires projectiles that destroy `shootable`-tagged debris; pairs with the debris tag system
-- [ ] Ability: grappling gloves — reduces lateral bounce velocity after wall contact, making it easier to chain wall jumps
-- [ ] Ability: sticky boots — negates lateral bounce velocity entirely on wall contact; allows precise repeated wall jumps from the same surface
+- [x] Design a dynamic, data-driven ability system — abilities attach to the player as injectable resources/components; no hardcoded `if has_ability` branches in player code
+- [x] Ability: double jump — grants one extra jump while airborne before landing again
+- [x] Ability: jetpack — purchasable active upward thrust (distinct from the intro boost); has limited fuel that recharges
+- [x] Ability: boost recharge — passive; slowly refills boost fuel after a cooldown of X seconds post-boost; upgradable to increase recharge rate (multiple upgrade tiers)
+- [x] Ability: shooting — player fires projectiles that destroy `shootable`-tagged debris; pairs with the debris tag system
+- [x] Ability: grappling gloves — reduces lateral bounce velocity after wall contact, making it easier to chain wall jumps
+- [x] Ability: sticky boots — negates lateral bounce velocity entirely on wall contact; allows precise repeated wall jumps from the same surface
 
 ## Characters
-- [ ] Allow players to unlock alternate characters from the Kenney Cube Pets pack via the shop menu
-- [ ] Each character has a stat profile: `move_speed`, `jump_force`, `aerodynamics` (scales the drag coefficient applied to that character)
-- [ ] Character stats are individually upgradable via the upgrades menu
+- [x] Allow players to unlock alternate characters from the Kenney Cube Pets pack via the shop menu
+- [x] Each character has a stat profile: `move_speed`, `jump_force`, `aerodynamics` (scales the drag coefficient applied to that character)
+- [x] Character stats are individually upgradable via the upgrades menu

@@ -16,7 +16,6 @@ entries = Array[ExtResource("Script_PatternEntry")]([SubResource("Entry_Checkpoi
 
 [resource]
 script = ExtResource("Script_LevelData")
-level_id = 0
 display_name = "Test level"
 debris_theme = "Random"
 environment_theme = "Random"
