@@ -22,7 +22,7 @@
 - [x] When countdown reaches 0 (boost runs out), player gains full control and gameplay begins
 
 ## Ending squence
-- [ ] Some levels might have a rope hangin from the station (cable). When reaching close enought proximity to the station, cinematic starts, player hooks onto cable and drags himslef into the station. Player wins. Note, that player player should become invincible to the object, or better object appear from withing the station and can not harm player.
+- [x] Some levels might have a rope hangin from the station (cable). When reaching close enought proximity to the station, cinematic starts, player hooks onto cable and drags himslef into the station. Player wins. Note, that player player should become invincible to the object, or better object appear from withing the station and can not harm player.
 
 ## Gameplay mechanics
 - [x] Cap max fall speed so player can catch the station

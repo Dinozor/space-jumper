@@ -9,6 +9,8 @@ signal level_lost(reason: EndState)
 enum EndState { DIED, DRIFTED, LEFT_BEHIND, WON }
 
 const INTRO_START_Y: float = -25.0
+const CABLE_GRAB_DISTANCE: float = 15.0
+const CABLE_PULL_DURATION: float = 1.8
 
 @export var level_data: LevelData
 
@@ -23,6 +25,8 @@ const INTRO_START_Y: float = -25.0
 var _intro_active: bool = false
 var _game_started: bool = false
 var _game_ended: bool = false
+var _has_cable_ending: bool = false
+var _cable_grabbed: bool = false
 
 
 func _ready() -> void:
@@ -57,6 +61,9 @@ func _process(_delta: float) -> void:
 			_player.get_jetpack_fuel_ratio() * float(roundi(_player.jetpack_duration))
 		)
 		_hud.show_countdown(maxi(digit, 1))
+	elif _has_cable_ending and _game_started and not _cable_grabbed and not _game_ended:
+		if _player.position.y >= _level_manager.station_y - CABLE_GRAB_DISTANCE:
+			_start_cable_cinematic()
 
 
 func _load_level_data() -> void:
@@ -75,6 +82,9 @@ func _apply_level_data() -> void:
 	_corridor_spawner.fall_speed_min = level_data.fall_speed * 0.75
 	_corridor_spawner.fall_speed_max = level_data.fall_speed * 1.25
 	_corridor_spawner.place_sections(level_data.sections)
+	_has_cable_ending = level_data.has_cable_ending
+	if _has_cable_ending:
+		_spawn_cable()
 
 
 func _begin_intro() -> void:
@@ -96,6 +106,39 @@ func _on_jetpack_depleted() -> void:
 	_player.invincible = false
 	_hud.show_countdown_go()
 	get_tree().create_timer(0.5).timeout.connect(_hud.hide_countdown)
+
+
+func _spawn_cable() -> void:
+	var cable := MeshInstance3D.new()
+	var mesh := CylinderMesh.new()
+	mesh.top_radius = 0.15
+	mesh.bottom_radius = 0.15
+	mesh.height = CABLE_GRAB_DISTANCE
+	cable.mesh = mesh
+	var mat := StandardMaterial3D.new()
+	mat.albedo_color = Color(0.85, 0.65, 0.15)
+	mat.emission_enabled = true
+	mat.emission = Color(0.5, 0.3, 0.05)
+	mat.emission_energy_multiplier = 1.5
+	cable.material_override = mat
+	cable.position = Vector3(0.0, _level_manager.station_y - CABLE_GRAB_DISTANCE * 0.5, 0.0)
+	add_child(cable)
+
+
+func _start_cable_cinematic() -> void:
+	_cable_grabbed = true
+	_game_ended = true
+	_player.set_physics_process(false)
+	_player.invincible = true
+	var tween: Tween = create_tween()
+	tween.tween_property(_player, "position:y", _level_manager.station_y, CABLE_PULL_DURATION)
+	tween.tween_callback(_finish_cable_win)
+
+
+func _finish_cable_win() -> void:
+	AudioManager.play_win()
+	level_won.emit()
+	_game_over.show_result(EndState.WON)
 
 
 func _on_player_healed() -> void:

@@ -11,3 +11,4 @@ extends Resource
 @export var fall_speed: float = 10.0
 @export var corridor_radius: float = 8.0
 @export var sections: Array[LevelSection] = []
+@export var has_cable_ending: bool = false
