@@ -16,3 +16,5 @@ extends Resource
 @export var sections: Array[LevelSection] = []
 @export var has_cable_ending: bool = false
 @export var level_reward: int = 100
+## Optional per-level spawn table; overrides the corridor spawner's default when set.
+@export var spawn_table: SpawnTable = null

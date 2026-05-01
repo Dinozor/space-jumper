@@ -14,6 +14,9 @@ const BOUNCE_FORCE: float = 12.0
 const MIN_VERTICAL_BOUNCE: float = 0.7
 const LATERAL_BOUNCE_FACTOR: float = 1.8
 const LATERAL_BOUNCE_DECAY: float = 3.0
+## Multiplier applied to bounce decay when input opposes bounce direction.
+## Lets the player actively brake or redirect after a wall hit.
+const LATERAL_BRAKE_FACTOR: float = 4.0
 
 @export var rotation_speed: float = 10.0
 @export var max_tilt_angle: float = 0.35
@@ -175,7 +178,10 @@ func _apply_movement(delta: float) -> void:
 	var input: Vector3 = Vector3(
 		Input.get_axis("move_left", "move_right"), 0.0, Input.get_axis("move_forward", "move_back")
 	)
-	_lateral_bounce = _lateral_bounce.move_toward(Vector3.ZERO, LATERAL_BOUNCE_DECAY * delta)
+	var brake_x: float = LATERAL_BRAKE_FACTOR if input.x * _lateral_bounce.x < 0.0 else 1.0
+	var brake_z: float = LATERAL_BRAKE_FACTOR if input.z * _lateral_bounce.z < 0.0 else 1.0
+	_lateral_bounce.x = move_toward(_lateral_bounce.x, 0.0, LATERAL_BOUNCE_DECAY * brake_x * delta)
+	_lateral_bounce.z = move_toward(_lateral_bounce.z, 0.0, LATERAL_BOUNCE_DECAY * brake_z * delta)
 	_velocity.x = input.x * _move_speed_override + _lateral_bounce.x
 	_velocity.z = input.z * _move_speed_override + _lateral_bounce.z
 

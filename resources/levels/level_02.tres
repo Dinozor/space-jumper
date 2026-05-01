@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("Script_LevelData")
-level_id = 1
+level_id = 2
 display_name = "Orbital Decay"
 debris_theme = "Random"
 environment_theme = "Random"

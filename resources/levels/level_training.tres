@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="LevelData" format=3 uid="uid://dys6ma32uvqxu"]
+
+[ext_resource type="Script" uid="uid://poq7ts01dtmv" path="res://core/models/level_data.gd" id="Script_LevelData"]
+[ext_resource type="Resource" path="res://resources/spawn_tables/training.tres" id="SpawnTable_Training"]
+
+[resource]
+script = ExtResource("Script_LevelData")
+level_id = 0
+display_name = "Training Grounds"
+debris_theme = "Walls"
+environment_theme = "Training"
+station_escape_speed = 4.0
+drag = 0.05
+corridor_radius = 8.0
+has_cable_ending = false
+level_reward = 50
+spawn_table = ExtResource("SpawnTable_Training")
+metadata/_custom_type_script = "uid://poq7ts01dtmv"

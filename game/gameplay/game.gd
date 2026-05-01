@@ -93,6 +93,8 @@ func _apply_level_data() -> void:
 	_corridor_spawner.fall_speed_min = level_data.station_escape_speed * 0.75
 	_corridor_spawner.fall_speed_max = level_data.station_escape_speed * 1.25
 	_corridor_spawner.place_sections(level_data.sections)
+	if level_data.spawn_table != null:
+		_corridor_spawner.spawn_table = level_data.spawn_table
 	_has_cable_ending = level_data.has_cable_ending
 	if _has_cable_ending:
 		_spawn_cable()
