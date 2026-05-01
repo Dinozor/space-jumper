@@ -8,8 +8,8 @@
 ## UI / HUD
 - [x] Add player health bar
 - [x] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
-- [ ] Level select must show levels loaded from `resources/levels/` via LevelLoader
-- [ ] Add "Back to Menu" button on the level select screen
+- [x] Level select must show levels loaded from `resources/levels/` via LevelLoader
+- [x] Add "Back to Menu" button on the level select screen
 
 ## Bugs
 - [x] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
