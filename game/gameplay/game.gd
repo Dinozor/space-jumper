@@ -21,6 +21,7 @@ const CABLE_PULL_DURATION: float = 1.8
 @onready var _level_manager: LevelManager = $LevelManager
 @onready var _hud: HUD = $HUD
 @onready var _game_over: GameOver = $GameOver
+@onready var _pause_menu: PauseMenu = $PauseMenu
 
 var _intro_active: bool = false
 var _game_started: bool = false
@@ -48,6 +49,16 @@ func _ready() -> void:
 	_corridor_spawner.fill_initial()
 	_hud.update_health(_player.stats.health)
 	_begin_intro()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not event.is_action_just_pressed("ui_cancel"):
+		return
+	if not _game_started or _game_ended:
+		return
+	get_viewport().set_input_as_handled()
+	get_tree().paused = true
+	_pause_menu.show()
 
 
 func _process(_delta: float) -> void:

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://pausemenu01"]
+
+[ext_resource type="Script" path="res://game/ui/pause_menu.gd" id="Script_1"]
+[ext_resource type="PackedScene" uid="uid://settings001" path="res://game/menu/settings.tscn" id="Scene_Settings"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+layer = 10
+process_mode = 3
+script = ExtResource("Script_1")
+settings_scene = ExtResource("Scene_Settings")

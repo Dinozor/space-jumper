@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://debrissafe01" path="res://game/objects/debris_safe.tscn" id="Scene_DebrisSafe"]
 [ext_resource type="PackedScene" uid="uid://dwutydur07qr8" path="res://game/objects/debris_wall.tscn" id="Scene_DebrisWall"]
 [ext_resource type="PackedScene" uid="uid://dp4g5kwtgxq0d" path="res://game/ui/game_over.tscn" id="Scene_GameOver"]
+[ext_resource type="PackedScene" uid="uid://pausemenu01" path="res://game/ui/pause_menu.tscn" id="Scene_PauseMenu"]
 [ext_resource type="PackedScene" uid="uid://hudscene001" path="res://game/ui/hud.tscn" id="Scene_HUD"]
 [ext_resource type="PackedScene" uid="uid://pickboost01" path="res://game/objects/pickup_boost.tscn" id="Scene_PickupBoost"]
 [ext_resource type="PackedScene" uid="uid://pickhp001" path="res://game/objects/pickup_health.tscn" id="Scene_PickupHealth"]
@@ -78,3 +79,5 @@ script = ExtResource("Script_LevelManager")
 [node name="HUD" parent="." unique_id=506885096 instance=ExtResource("Scene_HUD")]
 
 [node name="GameOver" parent="." unique_id=1351267110 instance=ExtResource("Scene_GameOver")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("Scene_PauseMenu")]

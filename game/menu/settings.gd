@@ -3,6 +3,8 @@ extends Control
 
 ## Settings screen: audio toggles and control remapping.
 
+signal back_pressed
+
 const _ACTIONS: Array[String] = ["move_left", "move_right", "move_forward", "move_back"]
 const _ACTION_LABELS: Array[String] = ["Move Left", "Move Right", "Move Forward", "Move Back"]
 
@@ -161,4 +163,7 @@ func _apply_remap(action: String, event: InputEventKey) -> void:
 
 func _on_back_pressed() -> void:
 	AudioManager.play_button()
-	get_tree().change_scene_to_file("res://game/menu/main_menu.tscn")
+	if back_pressed.get_connections().size() > 0:
+		back_pressed.emit()
+	else:
+		get_tree().change_scene_to_file("res://game/menu/main_menu.tscn")

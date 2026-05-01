@@ -12,7 +12,7 @@
 - [x] Add "Back to Menu" button on the level select screen
 - [x] Redesign shop as two tabbed screens: "Upgrades" (abilities in a grid) and "Characters" (character cards with stats + stat upgrade buttons); replace the single scrolling VBox with a proper grid layout
 - [x] Show locked levels in level select — render all levels as buttons, but disable and gray out locked ones with a tooltip explaining how to unlock (e.g. "Beat Test Level to unlock")
-- [ ] Add pause menu — pressing Esc during gameplay pauses the game and shows a pause overlay with three options: Settings (opens the existing settings screen), Exit to Main Menu, and Resume
+- [x] Add pause menu — pressing Esc during gameplay pauses the game and shows a pause overlay with three options: Settings (opens the existing settings screen), Exit to Main Menu, and Resume
 
 ## Bugs
 - [x] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
