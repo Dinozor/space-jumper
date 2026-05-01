@@ -51,8 +51,8 @@ func _ready() -> void:
 	_begin_intro()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not event.is_action_just_pressed("ui_cancel"):
+func _unhandled_input(_event: InputEvent) -> void:
+	if not Input.is_action_just_pressed(&"ui_cancel"):
 		return
 	if not _game_started or _game_ended:
 		return

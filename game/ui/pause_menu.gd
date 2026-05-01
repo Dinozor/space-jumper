@@ -16,8 +16,8 @@ func _ready() -> void:
 	hide()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not visible or not event.is_action_just_pressed("ui_cancel"):
+func _unhandled_input(_event: InputEvent) -> void:
+	if not visible or not Input.is_action_just_pressed(&"ui_cancel"):
 		return
 	get_viewport().set_input_as_handled()
 	if _settings_control != null and _settings_control.visible:
