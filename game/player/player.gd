@@ -25,6 +25,7 @@ const LATERAL_BOUNCE_DECAY: float = 8.0
 var stats: PlayerStats = PlayerStats.new()
 
 var input_locked: bool = false
+var invincible: bool = false
 
 var _velocity: Vector3 = Vector3.ZERO
 var _lateral_bounce: Vector3 = Vector3.ZERO
@@ -72,6 +73,8 @@ func heal(amount: int) -> void:
 
 
 func take_damage(amount: int) -> void:
+	if invincible:
+		return
 	stats.health -= amount
 	AudioManager.play_damage()
 	damaged.emit(amount)

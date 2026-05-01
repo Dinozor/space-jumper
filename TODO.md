@@ -14,7 +14,7 @@
 ## Bugs
 - [x] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
 - [x] Debris can trigger player bounce multiple times per touch — each contact should fire once only
-- [ ] Player should be invincible before game start as now he can die before game even starts.
+- [x] Player should be invincible before game start as now he can die before game even starts.
 
 ## Intro sequence
 - [x] Player starts below the debris field, boosting upward toward the station with no player control

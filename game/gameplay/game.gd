@@ -80,6 +80,7 @@ func _apply_level_data() -> void:
 func _begin_intro() -> void:
 	_player.position.y = INTRO_START_Y
 	_player.input_locked = true
+	_player.invincible = true
 	_player.set_physics_process(true)
 	_player.start_jetpack()
 	_intro_active = true
@@ -92,6 +93,7 @@ func _on_jetpack_depleted() -> void:
 	_intro_active = false
 	_game_started = true
 	_player.input_locked = false
+	_player.invincible = false
 	_hud.show_countdown_go()
 	get_tree().create_timer(0.5).timeout.connect(_hud.hide_countdown)
 
