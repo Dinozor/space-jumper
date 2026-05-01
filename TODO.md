@@ -32,7 +32,7 @@ the only way to close the gap. Different levels = different station escape speed
 orbital drift vs fast fleeing ship).
 
 - [x] Add `station_escape_speed` to `LevelData` (replaces the role of `fall_speed` for debris and player drift). This is the shared downward velocity applied to both the player and all debris every frame — the reference-frame equivalent of the station flying away.
-- [ ] Replace player's hardcoded `GRAVITY` constant with `station_escape_speed` read from the active level. Player drifts at this rate by default; bouncing is what lets them gain on the station. No hardcoded gravity values anywhere.
+- [x] Replace player's hardcoded `GRAVITY` constant with `station_escape_speed` read from the active level. Player drifts at this rate by default; bouncing is what lets them gain on the station. No hardcoded gravity values anywhere.
 - [ ] Debris base fall speed should equal `station_escape_speed` so debris feels stationary relative to the player in freefall. Player standing on a platform shouldn't slide off it vertically.
 - [ ] Add `drag` to `LevelData`: a 0–1 coefficient applied to the player's upward velocity each frame (`velocity.y *= 1.0 - drag * delta`). Explains in-world why a bounce doesn't carry the player forever — atmospheric resistance, debris-field drag, or weak gravitational pull of the escaping station. Different levels can feel floaty (low drag, deep space) or sluggish (high drag, dense debris cloud).
 - [ ] Win / left-behind thresholds in `LevelManager` should use distance-to-station rather than absolute Y so the system works when `station_escape_speed` varies across levels.

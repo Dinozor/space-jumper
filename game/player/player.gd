@@ -11,18 +11,18 @@ signal jetpack_depleted
 
 const MOVE_SPEED: float = 8.0
 const BOUNCE_FORCE: float = 12.0
-const GRAVITY: float = -10.0
 const MIN_VERTICAL_BOUNCE: float = 0.7
 const LATERAL_BOUNCE_FACTOR: float = 0.5
 const LATERAL_BOUNCE_DECAY: float = 8.0
 
-@export var max_fall_speed: float = 20.0
 @export var rotation_speed: float = 10.0
 @export var max_tilt_angle: float = 0.35
 @export var jetpack_duration: float = 3.0
 @export var jetpack_force: float = 15.0
 
 var stats: PlayerStats = PlayerStats.new()
+
+var station_escape_speed: float = 10.0
 
 var input_locked: bool = false
 var invincible: bool = false
@@ -90,8 +90,8 @@ func _apply_gravity(delta: float) -> void:
 			_jetpack_active = false
 			jetpack_depleted.emit()
 		return
-	_velocity.y += GRAVITY * delta
-	_velocity.y = maxf(_velocity.y, -max_fall_speed)
+	_velocity.y -= station_escape_speed * delta
+	_velocity.y = maxf(_velocity.y, -station_escape_speed)
 
 
 func _apply_movement(delta: float) -> void:
