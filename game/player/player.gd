@@ -19,10 +19,12 @@ const LATERAL_BOUNCE_DECAY: float = 8.0
 @export var max_fall_speed: float = 20.0
 @export var rotation_speed: float = 10.0
 @export var max_tilt_angle: float = 0.35
-@export var jetpack_duration: float = 2.5
+@export var jetpack_duration: float = 3.0
 @export var jetpack_force: float = 15.0
 
 var stats: PlayerStats = PlayerStats.new()
+
+var input_locked: bool = false
 
 var _velocity: Vector3 = Vector3.ZERO
 var _lateral_bounce: Vector3 = Vector3.ZERO
@@ -90,6 +92,10 @@ func _apply_gravity(delta: float) -> void:
 
 
 func _apply_movement(delta: float) -> void:
+	if input_locked:
+		_velocity.x = 0.0
+		_velocity.z = 0.0
+		return
 	var input: Vector3 = Vector3(
 		Input.get_axis("move_left", "move_right"), 0.0, Input.get_axis("move_forward", "move_back")
 	)

@@ -8,6 +8,8 @@ signal level_lost(reason: EndState)
 
 enum EndState { DIED, DRIFTED, LEFT_BEHIND, WON }
 
+const INTRO_START_Y: float = -25.0
+
 @export var level_data: LevelData
 
 @onready var _player: Player = $Player
@@ -18,6 +20,7 @@ enum EndState { DIED, DRIFTED, LEFT_BEHIND, WON }
 @onready var _hud: HUD = $HUD
 @onready var _game_over: GameOver = $GameOver
 
+var _intro_active: bool = false
 var _game_started: bool = false
 var _game_ended: bool = false
 
@@ -39,9 +42,8 @@ func _ready() -> void:
 	_game_over.menu_pressed.connect(_go_to_menu)
 	_game_over.hide()
 	_corridor_spawner.fill_initial()
-	_player.set_physics_process(false)
-	_hud.show_start_prompt(true)
 	_hud.update_health(_player.stats.health)
+	_begin_intro()
 
 
 func _process(_delta: float) -> void:
@@ -50,20 +52,11 @@ func _process(_delta: float) -> void:
 		(_player.position.y - _level_manager.fall_floor_y) / total, 0.0, 1.0
 	)
 	_hud.update_progress(progress)
-	if _game_started:
-		_hud.update_jetpack_fuel(_player.get_jetpack_fuel_ratio())
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if _game_started or _game_ended:
-		return
-	var is_press: bool = (
-		(event is InputEventKey and event.is_pressed() and not event.is_echo())
-		or (event is InputEventMouseButton and event.is_pressed())
-		or (event is InputEventJoypadButton and event.is_pressed())
-	)
-	if is_press:
-		_start_game()
+	if _intro_active:
+		var digit: int = ceili(
+			_player.get_jetpack_fuel_ratio() * float(roundi(_player.jetpack_duration))
+		)
+		_hud.show_countdown(maxi(digit, 1))
 
 
 func _load_level_data() -> void:
@@ -83,16 +76,23 @@ func _apply_level_data() -> void:
 	_corridor_spawner.fall_speed_max = level_data.fall_speed * 1.25
 
 
-func _start_game() -> void:
-	_game_started = true
+func _begin_intro() -> void:
+	_player.position.y = INTRO_START_Y
+	_player.input_locked = true
 	_player.set_physics_process(true)
 	_player.start_jetpack()
-	_hud.show_start_prompt(false)
-	_hud.show_jetpack_bar(true)
+	_intro_active = true
+	_hud.show_countdown(roundi(_player.jetpack_duration))
 
 
 func _on_jetpack_depleted() -> void:
-	_hud.show_jetpack_bar(false)
+	if not _intro_active:
+		return
+	_intro_active = false
+	_game_started = true
+	_player.input_locked = false
+	_hud.show_countdown_go()
+	get_tree().create_timer(0.5).timeout.connect(_hud.hide_countdown)
 
 
 func _on_player_healed() -> void:

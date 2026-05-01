@@ -11,6 +11,7 @@ const _FONT: FontFile = preload("res://assets/kenney/ui/fonts/Kenney Future.ttf"
 @onready var _jetpack_bar: ProgressBar = $JetpackBar
 @onready var _drift_warning: Label = $DriftWarning
 @onready var _start_prompt: Label = $StartPromptLabel
+@onready var _countdown_label: Label = $CountdownLabel
 
 
 func _ready() -> void:
@@ -22,6 +23,9 @@ func _ready() -> void:
 	_start_prompt.add_theme_font_override("font", _FONT)
 	_start_prompt.add_theme_font_size_override("font_size", 34)
 	_start_prompt.add_theme_color_override("font_color", Color(0.9, 0.9, 1.0, 1.0))
+	_countdown_label.add_theme_font_override("font", _FONT)
+	_countdown_label.add_theme_font_size_override("font_size", 96)
+	_countdown_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.2, 1.0))
 	_health_bar.max_value = float(PlayerStats.MAX_HEALTH)
 	_style_bar(_health_bar, Color(0.85, 0.2, 0.1, 1.0))
 	_style_bar(_station_bar, Color(0.1, 0.65, 0.9, 1.0))
@@ -54,6 +58,20 @@ func show_drift_warning(show: bool) -> void:
 
 func show_start_prompt(show: bool) -> void:
 	_start_prompt.visible = show
+
+
+func show_countdown(value: int) -> void:
+	_countdown_label.text = str(value)
+	_countdown_label.visible = true
+
+
+func show_countdown_go() -> void:
+	_countdown_label.text = "GO!"
+	_countdown_label.visible = true
+
+
+func hide_countdown() -> void:
+	_countdown_label.visible = false
 
 
 func _style_bar(bar: ProgressBar, fill_color: Color) -> void:

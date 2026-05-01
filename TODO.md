@@ -15,6 +15,11 @@
 - [x] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
 - [x] Debris can trigger player bounce multiple times per touch — each contact should fire once only
 
+## Intro sequence
+- [x] Player starts below the debris field, boosting upward toward the station with no player control
+- [x] Show a 3-2-1 countdown in the HUD during the boost; control is locked until it hits 0
+- [x] When countdown reaches 0 (boost runs out), player gains full control and gameplay begins
+
 ## Gameplay mechanics
 - [x] Cap max fall speed so player can catch the station
 - [x] Debris should have varied falling speeds
