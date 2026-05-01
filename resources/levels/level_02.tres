@@ -12,4 +12,5 @@ station_escape_speed = 14.0
 drag = 0.2
 corridor_radius = 12.0
 has_cable_ending = false
+level_reward = 250
 metadata/_custom_type_script = "uid://poq7ts01dtmv"

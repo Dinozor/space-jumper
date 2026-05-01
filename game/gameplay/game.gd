@@ -136,6 +136,7 @@ func _start_cable_cinematic() -> void:
 
 
 func _finish_cable_win() -> void:
+	_award_currency()
 	AudioManager.play_win()
 	level_won.emit()
 	_game_over.show_result(EndState.WON)
@@ -165,9 +166,15 @@ func _on_station_reached() -> void:
 	if _game_ended:
 		return
 	_game_ended = true
+	_award_currency()
 	AudioManager.play_win()
 	level_won.emit()
 	_game_over.show_result(EndState.WON)
+
+
+func _award_currency() -> void:
+	if level_data != null:
+		GameState.currency += level_data.level_reward
 
 
 func _on_player_left_behind() -> void:

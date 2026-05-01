@@ -15,3 +15,4 @@ extends Resource
 @export var corridor_radius: float = 8.0
 @export var sections: Array[LevelSection] = []
 @export var has_cable_ending: bool = false
+@export var level_reward: int = 100
