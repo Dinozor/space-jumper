@@ -297,7 +297,7 @@ extends Resource
 @export var is_unlocked: bool = false
 @export var has_boss: bool = false
 @export var debris_theme: String = "generic"       # maps to a spawner config
-@export var fall_speed: float = 8.0               # base debris fall speed
+@export var station_escape_speed: float = 8.0     # how fast the station flies away; shared drift rate for player and all debris
 @export var corridor_radius: float = 10.0          # how wide the fall tube is
 @export var station_approach_speed: float = 1.0    # how fast station descends toward player
 @export var unlock_requires: int = -1              # level_id that must be beaten first (-1 = free)
@@ -317,7 +317,7 @@ Document the design intent next to each one.
 | `max_fall_speed` | `game/player/player.gd` | Terminal velocity cap so player can always catch the station |
 | `DRIFT_LIMIT` | `game/systems/drift_tracker.gd` | Distance from corridor centre before loss |
 | `FALL_BEHIND_LIMIT` | `game/systems/drift_tracker.gd` | Distance below station before loss |
-| `DEBRIS_FALL_SPEED` | `game/systems/corridor_spawner.gd` | Base downward speed of objects |
+| `station_escape_speed` | `core/models/level_data.gd` | How fast the station flies away — shared drift rate for player and all debris |
 | `SPAWN_RATE` | `game/systems/corridor_spawner.gd` | Objects per second |
 | `HAZARD_RATIO` | `game/systems/corridor_spawner.gd` | Fraction of debris that are hazards (0–1) |
 | `spawn_interval` | `game/systems/pickup_spawner.gd` | Seconds between pickup drops |

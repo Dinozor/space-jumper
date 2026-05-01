@@ -24,6 +24,22 @@
 ## Ending squence
 - [x] Some levels might have a rope hangin from the station (cable). When reaching close enought proximity to the station, cinematic starts, player hooks onto cable and drags himslef into the station. Player wins. Note, that player player should become invincible to the object, or better object appear from withing the station and can not harm player.
 
+## Physics reframe — "station flies away"
+
+The story: the player isn't falling — the station is flying away. Everything in the debris
+field drifts at the same rate, so platforms feel stable relative to the player. Bouncing is
+the only way to close the gap. Different levels = different station escape speeds (slow
+orbital drift vs fast fleeing ship).
+
+- [x] Add `station_escape_speed` to `LevelData` (replaces the role of `fall_speed` for debris and player drift). This is the shared downward velocity applied to both the player and all debris every frame — the reference-frame equivalent of the station flying away.
+- [ ] Replace player's hardcoded `GRAVITY` constant with `station_escape_speed` read from the active level. Player drifts at this rate by default; bouncing is what lets them gain on the station. No hardcoded gravity values anywhere.
+- [ ] Debris base fall speed should equal `station_escape_speed` so debris feels stationary relative to the player in freefall. Player standing on a platform shouldn't slide off it vertically.
+- [ ] Add `drag` to `LevelData`: a 0–1 coefficient applied to the player's upward velocity each frame (`velocity.y *= 1.0 - drag * delta`). Explains in-world why a bounce doesn't carry the player forever — atmospheric resistance, debris-field drag, or weak gravitational pull of the escaping station. Different levels can feel floaty (low drag, deep space) or sluggish (high drag, dense debris cloud).
+- [ ] Win / left-behind thresholds in `LevelManager` should use distance-to-station rather than absolute Y so the system works when `station_escape_speed` varies across levels.
+- [ ] Progress bar shows distance-to-station (closes as player gains, opens as player falls behind), not the player's absolute Y height.
+- [ ] Tune `test_level`: set `station_escape_speed` and `drag` so standing still means losing, but skilled bouncing lets you close the gap.
+- [ ] Add a second level with a faster `station_escape_speed` to prove the per-level parameter changes the feel in a meaningful way.
+
 ## Gameplay mechanics
 - [x] Cap max fall speed so player can catch the station
 - [x] Debris should have varied falling speeds

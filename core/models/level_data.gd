@@ -8,7 +8,8 @@ extends Resource
 @export var debris_theme: String = ""
 @export var environment_theme: String = ""
 @export var has_boss: bool = false
-@export var fall_speed: float = 10.0
+## How fast the station is flying away — shared drift rate for player and all debris.
+@export var station_escape_speed: float = 10.0
 @export var corridor_radius: float = 8.0
 @export var sections: Array[LevelSection] = []
 @export var has_cable_ending: bool = false

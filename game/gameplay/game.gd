@@ -79,8 +79,8 @@ func _apply_level_data() -> void:
 	if level_data == null:
 		return
 	_corridor_spawner.spawn_z_range = level_data.corridor_radius
-	_corridor_spawner.fall_speed_min = level_data.fall_speed * 0.75
-	_corridor_spawner.fall_speed_max = level_data.fall_speed * 1.25
+	_corridor_spawner.fall_speed_min = level_data.station_escape_speed * 0.75
+	_corridor_spawner.fall_speed_max = level_data.station_escape_speed * 1.25
 	_corridor_spawner.place_sections(level_data.sections)
 	_has_cable_ending = level_data.has_cable_ending
 	if _has_cable_ending:
