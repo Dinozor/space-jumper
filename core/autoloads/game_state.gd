@@ -3,6 +3,7 @@ extends Node
 ## Global game state: score, lives, unlocks, current level, economy, characters.
 
 const CHARACTERS_PATH: String = "res://resources/characters/"
+const ABILITIES_PATH: String = "res://resources/abilities/"
 
 var score: int = 0
 var lives: int = 3
@@ -15,6 +16,7 @@ var purchased_abilities: Array[String] = []
 var current_character: String = "penguin"
 var unlocked_characters: Array[String] = ["penguin"]
 var characters: Array[CharacterData] = []
+var abilities: Array[AbilityData] = []
 ## Upgrade tiers per stat per character: {"penguin": {"move_speed": 2, ...}}
 var character_upgrades: Dictionary = {}
 
@@ -22,6 +24,14 @@ var character_upgrades: Dictionary = {}
 func _ready() -> void:
 	levels = LevelLoader.load_all()
 	characters = _load_characters()
+	abilities = _load_abilities()
+
+
+func get_ability_data(ability_id: String) -> AbilityData:
+	for ab: AbilityData in abilities:
+		if ab.ability_id == ability_id:
+			return ab
+	return null
 
 
 func get_current_character() -> CharacterData:
@@ -83,6 +93,18 @@ func _load_characters() -> Array[CharacterData]:
 		var res: Resource = load(CHARACTERS_PATH + file_name)
 		if res is CharacterData:
 			result.append(res as CharacterData)
+	return result
+
+
+func _load_abilities() -> Array[AbilityData]:
+	var result: Array[AbilityData] = []
+	var files: PackedStringArray = DirAccess.get_files_at(ABILITIES_PATH)
+	for file_name: String in files:
+		if not file_name.ends_with(".tres"):
+			continue
+		var res: Resource = load(ABILITIES_PATH + file_name)
+		if res is AbilityData:
+			result.append(res as AbilityData)
 	return result
 
 

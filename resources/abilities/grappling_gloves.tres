@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3]
+
+[ext_resource type="Script" path="res://core/models/ability_data.gd" id="Script_AbilityData"]
+[ext_resource type="PackedScene" path="res://game/player/abilities/ability_grappling_gloves.tscn" id="Scene_1"]
+
+[resource]
+script = ExtResource("Script_AbilityData")
+ability_id = "grappling_gloves"
+display_name = "Grappling Gloves"
+description = "60% less lateral kick on wall contact."
+cost = 200
+scene = ExtResource("Scene_1")

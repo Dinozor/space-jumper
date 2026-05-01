@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/player/abilities/ability_shooting.gd" id="Script_1"]
+[ext_resource type="PackedScene" path="res://game/objects/projectile.tscn" id="Scene_Projectile"]
+
+[node name="ability_shooting" type="Node"]
+script = ExtResource("Script_1")
+projectile_scene = ExtResource("Scene_Projectile")

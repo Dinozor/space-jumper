@@ -60,10 +60,14 @@ func _apply_character_stats() -> void:
 
 func _build_abilities() -> void:
 	for id: String in GameState.purchased_abilities:
-		var ability: PlayerAbility = _ability_for_id(id)
-		if ability != null:
-			add_child(ability)
-			_abilities.append(ability)
+		var data: AbilityData = GameState.get_ability_data(id)
+		if data == null or data.scene == null:
+			continue
+		var ability: PlayerAbility = data.scene.instantiate() as PlayerAbility
+		if ability == null:
+			continue
+		add_child(ability)
+		_abilities.append(ability)
 
 
 func _physics_process(delta: float) -> void:
@@ -204,22 +208,3 @@ func _rotate_mesh(delta: float) -> void:
 	_mesh.rotation.x = lerp(
 		_mesh.rotation.x, -normalized_vy * max_tilt_angle, rotation_speed * delta
 	)
-
-
-func _ability_for_id(id: String) -> PlayerAbility:
-	match id:
-		"double_jump":
-			return AbilityDoubleJump.new()
-		"grappling_gloves":
-			return AbilityGrapplingGloves.new()
-		"sticky_boots":
-			return AbilityStickyBoots.new()
-		"jetpack":
-			return AbilityJetpack.new()
-		"boost_recharge":
-			return AbilityBoostRecharge.new()
-		"shooting":
-			var ab: AbilityShooting = AbilityShooting.new()
-			ab.projectile_scene = load("res://game/objects/projectile.tscn")
-			return ab
-	return null

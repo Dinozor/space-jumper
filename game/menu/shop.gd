@@ -2,25 +2,8 @@ class_name Shop
 extends Control
 
 ## Shop: two tabs — Upgrades (ability grid) and Characters (cards + stat upgrades).
+## Abilities are loaded from GameState.abilities — no hardcoded list here.
 
-const ABILITIES: Array[Dictionary] = [
-	{"id": "double_jump", "name": "Double Jump", "desc": "Extra aerial jump.", "cost": 150},
-	{
-		"id": "grappling_gloves",
-		"name": "Grappling Gloves",
-		"desc": "60% less wall-kick.",
-		"cost": 200
-	},
-	{"id": "sticky_boots", "name": "Sticky Boots", "desc": "No lateral kick.", "cost": 300},
-	{"id": "jetpack", "name": "Jetpack", "desc": "Hold jump to thrust.", "cost": 400},
-	{
-		"id": "boost_recharge",
-		"name": "Boost Recharge",
-		"desc": "Boost refills over time.",
-		"cost": 250
-	},
-	{"id": "shooting", "name": "Shooter", "desc": "Left-click fires projectiles.", "cost": 350},
-]
 const STATS: Array[String] = ["move_speed", "jump_force", "aerodynamics"]
 const STAT_UPGRADE_COST: int = 100
 
@@ -44,30 +27,30 @@ func _refresh() -> void:
 func _build_upgrades_grid() -> void:
 	for child: Node in _grid.get_children():
 		child.queue_free()
-	for ability: Dictionary in ABILITIES:
-		_grid.add_child(_make_ability_card(ability))
+	for ab: AbilityData in GameState.abilities:
+		_grid.add_child(_make_ability_card(ab))
 
 
-func _make_ability_card(ability: Dictionary) -> PanelContainer:
+func _make_ability_card(ab: AbilityData) -> PanelContainer:
 	var card: PanelContainer = PanelContainer.new()
 	var vbox: VBoxContainer = VBoxContainer.new()
 	card.add_child(vbox)
 	var title: Label = Label.new()
-	title.text = ability["name"]
+	title.text = ab.display_name
 	vbox.add_child(title)
 	var desc: Label = Label.new()
-	desc.text = ability["desc"]
+	desc.text = ab.description
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(desc)
-	var owned: bool = ability["id"] in GameState.purchased_abilities
+	var owned: bool = ab.ability_id in GameState.purchased_abilities
 	if owned:
 		var lbl: Label = Label.new()
 		lbl.text = "[owned]"
 		vbox.add_child(lbl)
 	else:
 		var btn: Button = Button.new()
-		btn.text = "Buy  %d cr" % ability["cost"]
-		btn.pressed.connect(_on_buy_ability.bind(ability))
+		btn.text = "Buy  %d cr" % ab.cost
+		btn.pressed.connect(_on_buy_ability.bind(ab))
 		vbox.add_child(btn)
 	return card
 
@@ -130,9 +113,9 @@ func _add_char_stats(vbox: VBoxContainer, char_data: CharacterData) -> void:
 	vbox.add_child(grid)
 
 
-func _on_buy_ability(ability: Dictionary) -> void:
+func _on_buy_ability(ab: AbilityData) -> void:
 	AudioManager.play_button()
-	if GameState.purchase_ability(ability["id"], ability["cost"]):
+	if GameState.purchase_ability(ab.ability_id, ab.cost):
 		_refresh()
 
 

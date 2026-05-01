@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/player/abilities/ability_double_jump.gd" id="Script_1"]
+
+[node name="ability_double_jump" type="Node"]
+script = ExtResource("Script_1")

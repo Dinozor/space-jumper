@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://game/player/abilities/ability_grappling_gloves.gd" id="Script_1"]
+
+[node name="ability_grappling_gloves" type="Node"]
+script = ExtResource("Script_1")
