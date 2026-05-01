@@ -12,8 +12,8 @@ signal jetpack_depleted
 const MOVE_SPEED: float = 8.0
 const BOUNCE_FORCE: float = 12.0
 const MIN_VERTICAL_BOUNCE: float = 0.7
-const LATERAL_BOUNCE_FACTOR: float = 0.5
-const LATERAL_BOUNCE_DECAY: float = 8.0
+const LATERAL_BOUNCE_FACTOR: float = 1.8
+const LATERAL_BOUNCE_DECAY: float = 3.0
 
 @export var rotation_speed: float = 10.0
 @export var max_tilt_angle: float = 0.35

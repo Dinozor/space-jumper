@@ -7,9 +7,9 @@ extends Node
 @export var hazard_debris_scene: PackedScene
 @export var wall_debris_scene: PackedScene
 @export var doorway_debris_scene: PackedScene
-@export var spawn_interval: float = 0.3
+@export var spawn_interval: float = 2.0
 @export var spawn_z_range: float = 12.0
-@export var initial_fill_count: int = 36
+@export var initial_fill_count: int = 6
 @export var fall_speed_min: float = 5.0
 @export var fall_speed_max: float = 12.0
 @export var wall_spawn_ratio: float = 0.15
