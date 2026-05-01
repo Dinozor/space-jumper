@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.1.0](https://github.com/Dinozor/space-jumper/compare/v1.0.0...v1.1.0) (2026-05-01)
+
+
+### Features
+
+* **gameplay:** intro boost sequence with 3-2-1 countdown ([1d692cc](https://github.com/Dinozor/space-jumper/commit/1d692ccff1c5fe95cea692b0a2a8c3ad30419434))
+* **gameplay:** load LevelData from GameState at runtime in game.gd ([7cb3d97](https://github.com/Dinozor/space-jumper/commit/7cb3d978bef5fa12e77a0f971a79d7dffded3454))
+* **level:** scripted sections and checkpoint platform ([2e169dc](https://github.com/Dinozor/space-jumper/commit/2e169dc3a9ca54cb66eae449de0b3a1fd4a0b313))
+* **menu:** add settings screen with audio toggles and control remapping ([c8b7ea5](https://github.com/Dinozor/space-jumper/commit/c8b7ea5d5da4436bb6e7d7c1e242f5dafd06ba3f))
+* **menu:** level select reads LevelData from GameState, adds Back button ([733a700](https://github.com/Dinozor/space-jumper/commit/733a700e1ac95ae2c7520ff8cd652794f58a006e))
+* **player:** directional bounce off contact surface normal ([4cb1a7e](https://github.com/Dinozor/space-jumper/commit/4cb1a7ecba042629c30da0101d164fe41620d755))
+* **spawner:** spawn table resource replaces hardcoded corridor ratios ([e65a39d](https://github.com/Dinozor/space-jumper/commit/e65a39dc7f145bd15306adac286a1a8ee8451098))
+
+
+### Bug Fixes
+
+* **debris:** use player-side slide collision for reliable single-fire bounce detection ([ea1b1fe](https://github.com/Dinozor/space-jumper/commit/ea1b1fe59aa09d7f72b25b7050b0fa863c05e376))
+* **player:** player is invincible during intro boost sequence ([3a33a95](https://github.com/Dinozor/space-jumper/commit/3a33a95377b1b74e7ede7cf431a76274791b3e21))
+
 ## 1.0.0 (2026-04-30)
 
 
