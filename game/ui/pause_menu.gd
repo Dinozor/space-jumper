@@ -89,6 +89,7 @@ func _on_resume() -> void:
 
 func _on_settings() -> void:
 	AudioManager.play_button()
+	GameState.settings_from_main_menu = false
 	_main_panel.hide()
 	if _settings_control != null:
 		_settings_control.show()
