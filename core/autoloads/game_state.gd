@@ -8,6 +8,8 @@ const ABILITIES_PATH: String = "res://resources/abilities/"
 var score: int = 0
 var lives: int = 3
 var current_level: int = 0
+var attempt_count: int = 0
+var last_attempt_level_id: int = -1
 var unlocked_levels: Array[int] = [0]
 var levels: Array[LevelData] = []
 
