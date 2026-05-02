@@ -24,8 +24,11 @@ var character_upgrades: Dictionary = {}
 
 ## level_id (as String key) → Array of attempt dicts {result, time, ts}
 var scoreboard: Dictionary = {}
+## True when settings were opened from the main menu; controls visibility of destructive buttons.
 var settings_from_main_menu: bool = false
+## Level id passed to the scoreboard scene on open.
 var scoreboard_open_level: int = 0
+## Scene path the scoreboard Back button returns to.
 var scoreboard_return_path: String = "res://game/menu/main_menu.tscn"
 
 
