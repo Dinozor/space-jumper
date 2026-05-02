@@ -2,9 +2,10 @@ class_name SaveManager
 
 const SAVE_PATH: String = "user://progression.json"
 const SCORES_PATH: String = "user://scores.json"
-const _MAX_SCORES: int = 20
+const MAX_SCORES_PER_LEVEL: int = 20
 
 
+## Serialises GameState progression fields to disk.
 static func save_progression() -> void:
 	var data: Dictionary = {
 		"currency": GameState.currency,
@@ -16,11 +17,13 @@ static func save_progression() -> void:
 	}
 	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file == null:
+		push_error("SaveManager: failed to open %s for write" % SAVE_PATH)
 		return
 	file.store_string(JSON.stringify(data, "\t"))
 	file.close()
 
 
+## Loads progression from disk into GameState; no-op if file absent.
 static func load_progression() -> void:
 	if not FileAccess.file_exists(SAVE_PATH):
 		return
@@ -49,10 +52,11 @@ static func load_progression() -> void:
 		GameState.purchased_abilities.clear()
 		for v: Variant in data["purchased_abilities"]:
 			GameState.purchased_abilities.append(str(v))
-	if "character_upgrades" in data:
+	if "character_upgrades" in data and data["character_upgrades"] is Dictionary:
 		GameState.character_upgrades = data["character_upgrades"] as Dictionary
 
 
+## Deletes the progression save file and resets GameState to defaults.
 static func delete_progression() -> void:
 	_delete_file(SAVE_PATH)
 	GameState.currency = 0
@@ -65,14 +69,17 @@ static func delete_progression() -> void:
 	GameState.character_upgrades.clear()
 
 
+## Serialises GameState scoreboard to disk.
 static func save_scores() -> void:
 	var file: FileAccess = FileAccess.open(SCORES_PATH, FileAccess.WRITE)
 	if file == null:
+		push_error("SaveManager: failed to open %s for write" % SCORES_PATH)
 		return
 	file.store_string(JSON.stringify(GameState.scoreboard, "\t"))
 	file.close()
 
 
+## Loads scores from disk into GameState; no-op if file absent.
 static func load_scores() -> void:
 	if not FileAccess.file_exists(SCORES_PATH):
 		return
@@ -82,10 +89,12 @@ static func load_scores() -> void:
 	var text: String = file.get_as_text()
 	file.close()
 	var parsed: Variant = JSON.parse_string(text)
-	if parsed is Dictionary:
-		GameState.scoreboard = parsed as Dictionary
+	if not parsed is Dictionary:
+		return
+	GameState.scoreboard = parsed as Dictionary
 
 
+## Deletes the scores file and clears GameState.scoreboard.
 static func delete_scores() -> void:
 	_delete_file(SCORES_PATH)
 	GameState.scoreboard.clear()
