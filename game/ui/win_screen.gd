@@ -24,6 +24,17 @@ func _ready() -> void:
 	_menu_button.pressed.connect(_on_menu_pressed)
 
 
+## Shows coins earned and total, gates Next Level button, then reveals the win screen.
+func show_result(earned: int, total: int) -> void:
+	_result_label.text = "You reached the station!"
+	_coins_label.text = "+%d coins  ·  Total: %d" % [earned, total]
+	var next_id: int = GameState.current_level + 1
+	var has_next: bool = next_id in GameState.unlocked_levels
+	_next_level_button.disabled = not has_next
+	_next_level_hint.visible = not has_next
+	show()
+
+
 func _on_play_again_pressed() -> void:
 	AudioManager.play_button()
 	play_again_pressed.emit()
@@ -42,14 +53,3 @@ func _on_shop_pressed() -> void:
 func _on_menu_pressed() -> void:
 	AudioManager.play_button()
 	menu_pressed.emit()
-
-
-## Shows coins earned and total, gates Next Level button, then reveals the win screen.
-func show_result(earned: int, total: int) -> void:
-	_result_label.text = "You reached the station!"
-	_coins_label.text = "+%d coins  ·  Total: %d" % [earned, total]
-	var next_id: int = GameState.current_level + 1
-	var has_next: bool = next_id in GameState.unlocked_levels
-	_next_level_button.disabled = not has_next
-	_next_level_hint.visible = not has_next
-	show()
