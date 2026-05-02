@@ -128,6 +128,7 @@ func _on_buy_character(char_data: CharacterData) -> void:
 func _on_select_character(character_id: String) -> void:
 	AudioManager.play_button()
 	GameState.current_character = character_id
+	SaveManager.save_progression()
 	_refresh()
 
 

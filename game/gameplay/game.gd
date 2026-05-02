@@ -29,6 +29,7 @@ var _game_started: bool = false
 var _game_ended: bool = false
 var _has_cable_ending: bool = false
 var _cable_grabbed: bool = false
+var _game_start_time: float = 0.0
 
 
 func _ready() -> void:
@@ -125,10 +126,33 @@ func _on_jetpack_depleted() -> void:
 		return
 	_intro_active = false
 	_game_started = true
+	_game_start_time = Time.get_unix_time_from_system()
 	_player.input_locked = false
 	_player.invincible = false
 	_hud.show_countdown_go()
 	get_tree().create_timer(0.5).timeout.connect(_hud.hide_countdown)
+
+
+func _record_attempt(result: String) -> void:
+	if not _game_started:
+		return
+	var elapsed: float = Time.get_unix_time_from_system() - _game_start_time
+	var ts: int = int(Time.get_unix_time_from_system())
+	var key: String = str(GameState.current_level)
+	if key not in GameState.scoreboard:
+		GameState.scoreboard[key] = []
+	var entries: Array = GameState.scoreboard[key]
+	entries.append({"result": result, "time": elapsed, "ts": ts})
+	if entries.size() > SaveManager.MAX_SCORES_PER_LEVEL:
+		var oldest_idx: int = 0
+		var oldest_ts: int = int(entries[0]["ts"])
+		for i: int in range(1, entries.size()):
+			var candidate: int = int(entries[i]["ts"])
+			if candidate < oldest_ts:
+				oldest_ts = candidate
+				oldest_idx = i
+		entries.remove_at(oldest_idx)
+	SaveManager.save_scores()
 
 
 func _spawn_cable() -> void:
@@ -159,6 +183,7 @@ func _start_cable_cinematic() -> void:
 
 
 func _finish_cable_win() -> void:
+	_record_attempt(EndState.keys()[EndState.WON])
 	_award_currency()
 	AudioManager.play_win()
 	level_won.emit()
@@ -191,6 +216,7 @@ func _on_station_reached() -> void:
 	if _game_ended:
 		return
 	_game_ended = true
+	_record_attempt(EndState.keys()[EndState.WON])
 	_award_currency()
 	AudioManager.play_win()
 	level_won.emit()
@@ -203,6 +229,7 @@ func _award_currency() -> void:
 	if level_data != null:
 		GameState.currency += level_data.level_reward
 		GameState.unlock_next_level(level_data.level_id)
+		SaveManager.save_progression()
 
 
 func _on_player_left_behind() -> void:
@@ -213,6 +240,7 @@ func _on_player_left_behind() -> void:
 
 func _end_game(reason: EndState) -> void:
 	_game_ended = true
+	_record_attempt(EndState.keys()[reason])
 	AudioManager.play_lose()
 	level_lost.emit(reason)
 	_lose_screen.show_result(reason, GameState.attempt_count)
