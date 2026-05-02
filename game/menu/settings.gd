@@ -12,6 +12,9 @@ var _remapping_action: String = ""
 var _remap_buttons: Dictionary = {}
 var _key_labels: Dictionary = {}
 
+var _confirm_delete_save: ConfirmationDialog
+var _confirm_reset_scores: ConfirmationDialog
+
 
 func _ready() -> void:
 	var vbox: VBoxContainer = _build_vbox()
@@ -20,6 +23,8 @@ func _ready() -> void:
 	vbox.add_child(HSeparator.new())
 	_build_audio_section(vbox)
 	_build_controls_section(vbox)
+	if GameState.settings_from_main_menu:
+		_build_data_section(vbox)
 	_build_back_button(vbox)
 
 
@@ -41,14 +46,15 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _build_vbox() -> VBoxContainer:
 	var vbox: VBoxContainer = VBoxContainer.new()
+	var half_height: float = 330.0 if GameState.settings_from_main_menu else 280.0
 	vbox.anchor_left = 0.5
 	vbox.anchor_top = 0.5
 	vbox.anchor_right = 0.5
 	vbox.anchor_bottom = 0.5
 	vbox.offset_left = -220.0
-	vbox.offset_top = -280.0
+	vbox.offset_top = -half_height
 	vbox.offset_right = 220.0
-	vbox.offset_bottom = 280.0
+	vbox.offset_bottom = half_height
 	vbox.add_theme_constant_override("separation", 10)
 	return vbox
 
@@ -124,6 +130,48 @@ func _build_remap_row(vbox: VBoxContainer, action: String, label_text: String) -
 	_key_labels[action] = key_label
 	row.add_child(btn)
 	vbox.add_child(row)
+
+
+func _build_data_section(vbox: VBoxContainer) -> void:
+	vbox.add_child(_make_label("DATA", 18))
+	var delete_btn: Button = _make_button("Delete Save")
+	delete_btn.pressed.connect(_on_delete_save_pressed)
+	vbox.add_child(delete_btn)
+	var reset_btn: Button = _make_button("Reset Scoreboard")
+	reset_btn.pressed.connect(_on_reset_scores_pressed)
+	vbox.add_child(reset_btn)
+	vbox.add_child(HSeparator.new())
+
+	_confirm_delete_save = ConfirmationDialog.new()
+	_confirm_delete_save.title = "Delete Save"
+	_confirm_delete_save.dialog_text = ("This will delete all progression (currency, unlocks, upgrades). Scores are kept. Continue?")
+	_confirm_delete_save.confirmed.connect(_on_delete_save_confirmed)
+	add_child(_confirm_delete_save)
+
+	_confirm_reset_scores = ConfirmationDialog.new()
+	_confirm_reset_scores.title = "Reset Scoreboard"
+	_confirm_reset_scores.dialog_text = ("This will delete all scoreboard history. Progression is kept. Continue?")
+	_confirm_reset_scores.confirmed.connect(_on_reset_scores_confirmed)
+	add_child(_confirm_reset_scores)
+
+
+func _on_delete_save_pressed() -> void:
+	AudioManager.play_button()
+	_confirm_delete_save.popup_centered()
+
+
+func _on_delete_save_confirmed() -> void:
+	SaveManager.delete_progression()
+	get_tree().change_scene_to_file("res://game/menu/main_menu.tscn")
+
+
+func _on_reset_scores_pressed() -> void:
+	AudioManager.play_button()
+	_confirm_reset_scores.popup_centered()
+
+
+func _on_reset_scores_confirmed() -> void:
+	SaveManager.delete_scores()
 
 
 func _build_back_button(vbox: VBoxContainer) -> void:
