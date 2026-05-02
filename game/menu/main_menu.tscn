@@ -30,6 +30,10 @@ text = "Play"
 layout_mode = 2
 text = "Level Select"
 
+[node name="ScoreboardButton" type="Button" parent="VBox" unique_id=1234567891]
+layout_mode = 2
+text = "Scoreboard"
+
 [node name="ShopButton" type="Button" parent="VBox" unique_id=1234567890]
 layout_mode = 2
 text = "Shop"
