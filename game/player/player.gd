@@ -44,6 +44,7 @@ var _aerodynamics: float = 1.0
 
 func _ready() -> void:
 	_apply_character_stats()
+	_apply_character_mesh()
 	_build_abilities()
 
 
@@ -59,6 +60,20 @@ func _apply_character_stats() -> void:
 	_move_speed_override = char_data.move_speed * speed_bonus
 	_bounce_force_override = char_data.jump_force * jump_bonus
 	_aerodynamics = char_data.aerodynamics * aero_bonus
+
+
+func _apply_character_mesh() -> void:
+	var char_data: CharacterData = GameState.get_current_character()
+	if char_data == null or char_data.mesh_scene == null:
+		return
+	var new_mesh: Node3D = char_data.mesh_scene.instantiate() as Node3D
+	if new_mesh == null:
+		return
+	new_mesh.name = "Mesh"
+	new_mesh.transform = _mesh.transform
+	_mesh.queue_free()
+	add_child(new_mesh)
+	_mesh = new_mesh
 
 
 func _build_abilities() -> void:
