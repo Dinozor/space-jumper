@@ -6,7 +6,7 @@
 - [x] Control remapping for all player actions (move_left, move_right, move_forward, move_back)
 
 ## UI / HUD
-- [ ] Win screen: replace GameOver with split WinScreen + LoseScreen scenes. Win shows "+X coins · Total: Y", Play Again, Next Level (disabled+tooltip if last level), Go to Shop, Main Menu. Lose shows context-aware button: "Try Again" on first attempt, "Keep Trying" on retries. Track attempts via GameState.attempt_count.
+- [x] Win screen: replace GameOver with split WinScreen + LoseScreen scenes. Win shows "+X coins · Total: Y", Play Again, Next Level (disabled+tooltip if last level), Go to Shop, Main Menu. Lose shows context-aware button: "Try Again" on first attempt, "Keep Trying" on retries. Track attempts via GameState.attempt_count.
 - [x] Add player health bar
 - [x] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
 - [x] Level select must show levels loaded from `resources/levels/` via LevelLoader
