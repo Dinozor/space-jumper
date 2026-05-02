@@ -110,9 +110,9 @@ func _render() -> void:
 	)
 	var sorted_all: Array = wins + losses
 
-	var ts_to_rank: Dictionary = {}
+	var rank_map: Dictionary = {}
 	for i: int in sorted_all.size():
-		ts_to_rank[int((sorted_all[i] as Dictionary)["ts"])] = i + 1
+		rank_map[sorted_all[i]] = i + 1
 
 	var latest_ts: int = -1
 	for e: Variant in raw_entries:
@@ -130,7 +130,7 @@ func _render() -> void:
 	else:
 		for entry: Variant in last3:
 			var d: Dictionary = entry as Dictionary
-			var rank: int = ts_to_rank.get(int(d["ts"]), 0)
+			var rank: int = rank_map.get(entry, 0)
 			_last3_box.add_child(_make_entry_row(rank, d, int(d["ts"]) == latest_ts))
 
 	_clear_box(_all_box)
