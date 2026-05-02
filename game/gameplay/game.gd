@@ -136,8 +136,9 @@ func _on_jetpack_depleted() -> void:
 func _record_attempt(result: String) -> void:
 	if not _game_started:
 		return
-	var elapsed: float = Time.get_unix_time_from_system() - _game_start_time
-	var ts: int = int(Time.get_unix_time_from_system())
+	var now: float = Time.get_unix_time_from_system()
+	var elapsed: float = now - _game_start_time
+	var ts: int = int(now)
 	var key: String = str(GameState.current_level)
 	if key not in GameState.scoreboard:
 		GameState.scoreboard[key] = []
