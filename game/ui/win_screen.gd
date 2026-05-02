@@ -7,6 +7,7 @@ signal play_again_pressed
 signal next_level_pressed
 signal shop_pressed
 signal menu_pressed
+signal scores_pressed
 
 @onready var _result_label: Label = $Panel/ResultLabel
 @onready var _coins_label: Label = $Panel/CoinsLabel
@@ -15,6 +16,7 @@ signal menu_pressed
 @onready var _next_level_hint: Label = $Panel/NextLevelHint
 @onready var _shop_button: Button = $Panel/ShopButton
 @onready var _menu_button: Button = $Panel/MenuButton
+@onready var _scores_button: Button = $Panel/ScoresButton
 
 
 func _ready() -> void:
@@ -22,6 +24,7 @@ func _ready() -> void:
 	_next_level_button.pressed.connect(_on_next_level_pressed)
 	_shop_button.pressed.connect(_on_shop_pressed)
 	_menu_button.pressed.connect(_on_menu_pressed)
+	_scores_button.pressed.connect(_on_scores_pressed)
 
 
 ## Shows coins earned and total, gates Next Level button, then reveals the win screen.
@@ -53,3 +56,8 @@ func _on_shop_pressed() -> void:
 func _on_menu_pressed() -> void:
 	AudioManager.play_button()
 	menu_pressed.emit()
+
+
+func _on_scores_pressed() -> void:
+	AudioManager.play_button()
+	scores_pressed.emit()

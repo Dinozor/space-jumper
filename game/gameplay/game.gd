@@ -53,6 +53,7 @@ func _ready() -> void:
 	_win_screen.next_level_pressed.connect(_go_to_next_level)
 	_win_screen.shop_pressed.connect(_go_to_shop)
 	_win_screen.menu_pressed.connect(_go_to_menu)
+	_win_screen.scores_pressed.connect(_go_to_scoreboard)
 	_lose_screen.retry_pressed.connect(_restart)
 	_lose_screen.menu_pressed.connect(_go_to_menu)
 	_win_screen.hide()
@@ -254,6 +255,12 @@ func _restart() -> void:
 func _go_to_menu() -> void:
 	GameState.last_attempt_level_id = -1
 	get_tree().change_scene_to_file("res://game/menu/main_menu.tscn")
+
+
+func _go_to_scoreboard() -> void:
+	GameState.scoreboard_open_level = GameState.current_level
+	GameState.scoreboard_return_path = "res://game/menu/main_menu.tscn"
+	get_tree().change_scene_to_file("res://game/ui/scoreboard.tscn")
 
 
 func _go_to_next_level() -> void:
