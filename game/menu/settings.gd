@@ -211,6 +211,7 @@ func _apply_remap(action: String, event: InputEventKey) -> void:
 
 func _on_back_pressed() -> void:
 	AudioManager.play_button()
+	GameState.settings_from_main_menu = false
 	if back_pressed.get_connections().size() > 0:
 		back_pressed.emit()
 	else:
