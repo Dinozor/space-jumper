@@ -17,7 +17,7 @@
 - [x] Add pause menu — pressing Esc during gameplay pauses the game and shows a pause overlay with three options: Settings (opens the existing settings screen), Exit to Main Menu, and Resume
 
 ## Bugs
-- [ ] Character selection visual bug: selecting cat/bear in shop doesn't change player mesh (only stats). Fix: add mesh_scene to cat.tres/bear.tres, add mesh-swap in player.gd._ready().
+- [x] Character selection visual bug: selecting cat/bear in shop doesn't change player mesh (only stats). Fix: add mesh_scene to cat.tres/bear.tres, add mesh-swap in player.gd._ready().
 - [ ] Boost bar not updating during intro and never hidden/shown based on jetpack ability ownership. Fix: update fuel in game.gd._process during intro; hide bar on game start if player lacks jetpack ability.
 - [x] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
 - [x] Debris can trigger player bounce multiple times per touch — each contact should fire once only
