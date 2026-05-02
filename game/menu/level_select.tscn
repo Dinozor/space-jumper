@@ -23,7 +23,7 @@ text = "LEVEL SELECT"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 26
 
-[node name="ButtonContainer" type="HBoxContainer" parent="VBox"]
+[node name="ButtonContainer" type="VBoxContainer" parent="VBox"]
 layout_mode = 2
 
 [node name="BackButton" type="Button" parent="VBox"]
