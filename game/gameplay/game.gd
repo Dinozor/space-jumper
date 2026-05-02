@@ -77,6 +77,7 @@ func _process(_delta: float) -> void:
 	var distance: float = _level_manager.station_y - _player.position.y
 	var progress: float = clamp(1.0 - distance / _level_manager.left_behind_distance, 0.0, 1.0)
 	_hud.update_progress(progress)
+	_hud.update_jetpack_fuel(_player.get_jetpack_fuel_ratio())
 	if _intro_active:
 		var digit: int = ceili(
 			_player.get_jetpack_fuel_ratio() * float(roundi(_player.jetpack_duration))
@@ -119,6 +120,7 @@ func _begin_intro() -> void:
 	_player.set_physics_process(true)
 	_player.start_jetpack()
 	_intro_active = true
+	_hud.show_jetpack_bar(true)
 	_hud.show_countdown(roundi(_player.jetpack_duration))
 
 
@@ -130,6 +132,7 @@ func _on_jetpack_depleted() -> void:
 	_game_start_time = Time.get_unix_time_from_system()
 	_player.input_locked = false
 	_player.invincible = false
+	_hud.show_jetpack_bar("jetpack" in GameState.purchased_abilities)
 	_hud.show_countdown_go()
 	get_tree().create_timer(0.5).timeout.connect(_hud.hide_countdown)
 

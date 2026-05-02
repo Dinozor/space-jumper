@@ -18,7 +18,7 @@
 
 ## Bugs
 - [x] Character selection visual bug: selecting cat/bear in shop doesn't change player mesh (only stats). Fix: add mesh_scene to cat.tres/bear.tres, add mesh-swap in player.gd._ready().
-- [ ] Boost bar not updating during intro and never hidden/shown based on jetpack ability ownership. Fix: update fuel in game.gd._process during intro; hide bar on game start if player lacks jetpack ability.
+- [x] Boost bar not updating during intro and never hidden/shown based on jetpack ability ownership. Fix: update fuel in game.gd._process during intro; hide bar on game start if player lacks jetpack ability.
 - [x] Debris contact sometimes fails to trigger player bounce — needs reliable single-fire collision detection
 - [x] Debris can trigger player bounce multiple times per touch — each contact should fire once only
 - [x] Player should be invincible before game start as now he can die before game even starts.
