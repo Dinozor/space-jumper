@@ -20,7 +20,8 @@ const CABLE_PULL_DURATION: float = 1.8
 @onready var _drift_tracker: DriftTracker = $DriftTracker
 @onready var _level_manager: LevelManager = $LevelManager
 @onready var _hud: HUD = $HUD
-@onready var _game_over: GameOver = $GameOver
+@onready var _win_screen: WinScreen = $WinScreen
+@onready var _lose_screen: LoseScreen = $LoseScreen
 @onready var _pause_menu: PauseMenu = $PauseMenu
 
 var _intro_active: bool = false
@@ -43,9 +44,18 @@ func _ready() -> void:
 	_drift_tracker.drifted_out.connect(_on_player_drifted_out)
 	_level_manager.station_reached.connect(_on_station_reached)
 	_level_manager.left_behind.connect(_on_player_left_behind)
-	_game_over.restart_pressed.connect(_restart)
-	_game_over.menu_pressed.connect(_go_to_menu)
-	_game_over.hide()
+	if GameState.last_attempt_level_id != GameState.current_level:
+		GameState.attempt_count = 0
+		GameState.last_attempt_level_id = GameState.current_level
+	GameState.attempt_count += 1
+	_win_screen.play_again_pressed.connect(_restart)
+	_win_screen.next_level_pressed.connect(_go_to_next_level)
+	_win_screen.shop_pressed.connect(_go_to_shop)
+	_win_screen.menu_pressed.connect(_go_to_menu)
+	_lose_screen.retry_pressed.connect(_restart)
+	_lose_screen.menu_pressed.connect(_go_to_menu)
+	_win_screen.hide()
+	_lose_screen.hide()
 	_corridor_spawner.fill_initial()
 	_hud.update_health(_player.stats.health)
 	_begin_intro()
@@ -152,7 +162,9 @@ func _finish_cable_win() -> void:
 	_award_currency()
 	AudioManager.play_win()
 	level_won.emit()
-	_game_over.show_result(EndState.WON)
+	_win_screen.show_result(
+		level_data.level_reward if level_data != null else 0, GameState.currency
+	)
 
 
 func _on_player_healed() -> void:
@@ -182,7 +194,9 @@ func _on_station_reached() -> void:
 	_award_currency()
 	AudioManager.play_win()
 	level_won.emit()
-	_game_over.show_result(EndState.WON)
+	_win_screen.show_result(
+		level_data.level_reward if level_data != null else 0, GameState.currency
+	)
 
 
 func _award_currency() -> void:
@@ -201,7 +215,7 @@ func _end_game(reason: EndState) -> void:
 	_game_ended = true
 	AudioManager.play_lose()
 	level_lost.emit(reason)
-	_game_over.show_result(reason)
+	_lose_screen.show_result(reason, GameState.attempt_count)
 
 
 func _restart() -> void:
@@ -209,4 +223,15 @@ func _restart() -> void:
 
 
 func _go_to_menu() -> void:
+	GameState.last_attempt_level_id = -1
 	get_tree().change_scene_to_file("res://game/menu/main_menu.tscn")
+
+
+func _go_to_next_level() -> void:
+	GameState.current_level += 1
+	get_tree().reload_current_scene()
+
+
+func _go_to_shop() -> void:
+	GameState.last_attempt_level_id = -1
+	get_tree().change_scene_to_file("res://game/menu/shop.tscn")
