@@ -22,11 +22,19 @@ var abilities: Array[AbilityData] = []
 ## Upgrade tiers per stat per character: {"penguin": {"move_speed": 2, ...}}
 var character_upgrades: Dictionary = {}
 
+## level_id (as String key) → Array of attempt dicts {result, time, ts}
+var scoreboard: Dictionary = {}
+var settings_from_main_menu: bool = false
+var scoreboard_open_level: int = 0
+var scoreboard_return_path: String = "res://game/menu/main_menu.tscn"
+
 
 func _ready() -> void:
 	levels = LevelLoader.load_all()
 	characters = _load_characters()
 	abilities = _load_abilities()
+	SaveManager.load_progression()
+	SaveManager.load_scores()
 
 
 func get_ability_data(ability_id: String) -> AbilityData:
@@ -60,6 +68,7 @@ func upgrade_stat(character_id: String, stat: String, cost: int) -> bool:
 	if character_id not in character_upgrades:
 		character_upgrades[character_id] = {}
 	character_upgrades[character_id][stat] = tier + 1
+	SaveManager.save_progression()
 	return true
 
 
@@ -75,6 +84,7 @@ func purchase_ability(ability_id: String, cost: int) -> bool:
 		return false
 	currency -= cost
 	purchased_abilities.append(ability_id)
+	SaveManager.save_progression()
 	return true
 
 
@@ -83,6 +93,7 @@ func unlock_character(character_id: String, cost: int) -> bool:
 		return false
 	currency -= cost
 	unlocked_characters.append(character_id)
+	SaveManager.save_progression()
 	return true
 
 
