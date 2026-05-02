@@ -44,6 +44,7 @@ func _on_menu_pressed() -> void:
 	menu_pressed.emit()
 
 
+## Shows coins earned and total, gates Next Level button, then reveals the win screen.
 func show_result(earned: int, total: int) -> void:
 	_result_label.text = "You reached the station!"
 	_coins_label.text = "+%d coins  ·  Total: %d" % [earned, total]
