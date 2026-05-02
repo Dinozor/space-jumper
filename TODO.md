@@ -6,7 +6,7 @@
 - [x] Control remapping for all player actions (move_left, move_right, move_forward, move_back)
 
 ## UI / HUD
-- [ ] Scoreboard: per-level screen showing ~20 attempts; wins show completion time. Accessible from main menu, level select (per level), and win screen. Scoreboard data persisted in save file.
+- [x] Scoreboard: per-level screen showing ~20 attempts; wins show completion time. Accessible from main menu, level select (per level), and win screen. Scoreboard data persisted in save file.
 - [x] Win screen: replace GameOver with split WinScreen + LoseScreen scenes. Win shows "+X coins · Total: Y", Play Again, Next Level (disabled+tooltip if last level), Go to Shop, Main Menu. Lose shows context-aware button: "Try Again" on first attempt, "Keep Trying" on retries. Track attempts via GameState.attempt_count.
 - [x] Add player health bar
 - [x] Add progress bar — starts at 1/3; fills toward station; 0 = "left behind" loss
@@ -88,7 +88,7 @@ orbital drift vs fast fleeing ship).
 ## Economy / Progression
 - [x] Completing a level rewards the player with a currency amount (stored in `GameState`)
 - [x] Add an unlockables / shop menu accessible from the main menu where currency is spent on upgrades and character unlocks
-- [ ] Persist progress between sessions: save currency, unlocked levels/characters, purchased abilities, character upgrades, current character to disk (user://save.json). Load on startup. Add "Delete Save" button in settings (only accessible from main menu) that wipes the file and resets GameState to defaults.
+- [x] Persist progress between sessions: save currency, unlocked levels/characters, purchased abilities, character upgrades, current character to disk (user://save.json). Load on startup. Add "Delete Save" button in settings (only accessible from main menu) that wipes the file and resets GameState to defaults.
 
 ## Upgrades & Abilities
 - [x] Design a dynamic, data-driven ability system — abilities attach to the player as injectable resources/components; no hardcoded `if has_ability` branches in player code
