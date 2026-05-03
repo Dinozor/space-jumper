@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LevelData" format=3]
+
+[ext_resource type="Script" uid="uid://poq7ts01dtmv" path="res://core/models/level_data.gd" id="Script_LevelData"]
+
+[resource]
+script = ExtResource("Script_LevelData")
+level_id = 3
+display_name = "Bridge"
+debris_theme = "Generic"
+environment_theme = "Space"
+station_escape_speed = 11.0
+drag = 0.45
+corridor_radius = 10.0
+has_cable_ending = true
+level_reward = 200
+metadata/_custom_type_script = "uid://poq7ts01dtmv"

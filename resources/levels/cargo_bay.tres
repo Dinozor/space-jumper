@@ -4,13 +4,13 @@
 
 [resource]
 script = ExtResource("Script_LevelData")
-level_id = 2
-display_name = "Orbital Decay"
-debris_theme = "Random"
-environment_theme = "Random"
-station_escape_speed = 14.0
-drag = 0.2
-corridor_radius = 12.0
-has_cable_ending = false
-level_reward = 250
+level_id = 1
+display_name = "Cargo Bay"
+debris_theme = "Generic"
+environment_theme = "Space"
+station_escape_speed = 7.0
+drag = 0.35
+corridor_radius = 10.0
+has_cable_ending = true
+level_reward = 100
 metadata/_custom_type_script = "uid://poq7ts01dtmv"
