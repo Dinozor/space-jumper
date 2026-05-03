@@ -1,6 +1,8 @@
 class_name LevelSelect
 extends Control
 
+## Level-select screen — orbital map layout. Builds all UI in code; scene is a blank Control.
+
 signal level_chosen(level_id: int)
 
 const _ARC_RX_RATIO: float = 0.46
@@ -83,8 +85,7 @@ func _arc_center() -> Vector2:
 	return Vector2(s.x * 0.5, s.y + _ARC_CENTER_Y_OFFSET)
 
 
-func _arc_pos(index: int, count: int) -> Vector2:
-	var t: float = float(index) / float(maxi(count - 1, 1))
+func _arc_pos_t(t: float) -> Vector2:
 	var angle: float = lerp(_ANGLE_START, _ANGLE_END, t)
 	var s: Vector2 = get_viewport_rect().size
 	return (
@@ -92,19 +93,17 @@ func _arc_pos(index: int, count: int) -> Vector2:
 	)
 
 
+func _arc_pos(index: int, count: int) -> Vector2:
+	return _arc_pos_t(float(index) / float(maxi(count - 1, 1)))
+
+
 func _add_orbit_arc() -> void:
 	var arc: Line2D = Line2D.new()
 	arc.width = 1.0
 	arc.default_color = Color(1.0, 1.0, 1.0, 0.12)
 	var steps: int = 60
-	var s: Vector2 = get_viewport_rect().size
-	var center: Vector2 = _arc_center()
 	for i: int in range(steps + 1):
-		var t: float = float(i) / float(steps)
-		var angle: float = lerp(_ANGLE_START, _ANGLE_END, t)
-		arc.add_point(
-			center + Vector2(cos(angle) * s.x * _ARC_RX_RATIO, sin(angle) * s.y * _ARC_RY_RATIO)
-		)
+		arc.add_point(_arc_pos_t(float(i) / float(steps)))
 	add_child(arc)
 
 
@@ -137,9 +136,7 @@ func _add_node(lv: LevelData, center: Vector2, node_size: Vector2, is_boss: bool
 
 func _make_node_button(lv: LevelData, node_size: Vector2, state: String, is_boss: bool) -> Button:
 	var btn: Button = Button.new()
-	var state_label: String = (
-		"✓" if state == "beaten" else ("🔒" if state == "locked" else str(lv.level_id))
-	)
+	var state_label: String = "✓" if state == "beaten" else str(lv.level_id)
 	btn.text = state_label
 	btn.custom_minimum_size = node_size
 	btn.size = node_size
