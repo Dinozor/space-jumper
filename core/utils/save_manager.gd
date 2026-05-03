@@ -62,7 +62,7 @@ static func delete_progression() -> void:
 	GameState.currency = 0
 	GameState.current_character = "penguin"
 	GameState.unlocked_levels.clear()
-	GameState.unlocked_levels.append(0)
+	GameState.unlocked_levels.append(1)
 	GameState.unlocked_characters.clear()
 	GameState.unlocked_characters.append("penguin")
 	GameState.purchased_abilities.clear()
