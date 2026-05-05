@@ -340,6 +340,29 @@ Before shipping an HTML5 build:
 
 ---
 
+## itch.io Page Copy
+
+The game description is maintained in two files:
+
+| File | Purpose |
+|------|---------|
+| `README.md` | Markdown version — source of truth, human-readable |
+| `itch_description.html` | HTML version — paste directly into the itch.io description field |
+
+When updating the description (new features, story changes, credits), edit `README.md` first then mirror the changes to `itch_description.html`. itch.io's editor accepts the HTML tags used: `<h2>`, `<p>`, `<strong>`, `<em>`, `<ul>/<li>`, `<a>`, `<hr>`, `<br>`.
+
+### itch.io image sizes
+
+| Asset | Size | Notes |
+|-------|------|-------|
+| Cover image | 630×500 px (or 315×250 px) | Shown in search results and jam listings — most important asset |
+| Screenshots | 1280×720 px minimum | Aim for 3–5; show gameplay, UI/shop, and win cinematic |
+| GIF / trailer | 480×270 px or link a YouTube URL | Optional but helps in jam voting |
+
+Take screenshots in-game (Godot editor Play button or exported build). Use F12 / your OS screenshot tool — Godot does not capture them automatically.
+
+---
+
 ## Running the Game
 
 ```bash
