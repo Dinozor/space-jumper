@@ -2,8 +2,20 @@ extends Node
 
 ## Global game state: score, lives, unlocks, current level, economy, characters.
 
-const CHARACTERS_PATH: String = "res://resources/characters/"
-const ABILITIES_PATH: String = "res://resources/abilities/"
+## Explicit paths required — DirAccess directory scanning does not work in web exports.
+const _CHARACTER_PATHS: Array[String] = [
+	"res://resources/characters/bear.tres",
+	"res://resources/characters/cat.tres",
+	"res://resources/characters/penguin.tres",
+]
+const _ABILITY_PATHS: Array[String] = [
+	"res://resources/abilities/boost_recharge.tres",
+	"res://resources/abilities/double_jump.tres",
+	"res://resources/abilities/grappling_gloves.tres",
+	"res://resources/abilities/jetpack.tres",
+	"res://resources/abilities/shooting.tres",
+	"res://resources/abilities/sticky_boots.tres",
+]
 
 var score: int = 0
 var lives: int = 3
@@ -102,11 +114,8 @@ func unlock_character(character_id: String, cost: int) -> bool:
 
 func _load_characters() -> Array[CharacterData]:
 	var result: Array[CharacterData] = []
-	var files: PackedStringArray = DirAccess.get_files_at(CHARACTERS_PATH)
-	for file_name: String in files:
-		if not file_name.ends_with(".tres"):
-			continue
-		var res: Resource = load(CHARACTERS_PATH + file_name)
+	for path: String in _CHARACTER_PATHS:
+		var res: Resource = load(path)
 		if res is CharacterData:
 			result.append(res as CharacterData)
 	return result
@@ -114,11 +123,8 @@ func _load_characters() -> Array[CharacterData]:
 
 func _load_abilities() -> Array[AbilityData]:
 	var result: Array[AbilityData] = []
-	var files: PackedStringArray = DirAccess.get_files_at(ABILITIES_PATH)
-	for file_name: String in files:
-		if not file_name.ends_with(".tres"):
-			continue
-		var res: Resource = load(ABILITIES_PATH + file_name)
+	for path: String in _ABILITY_PATHS:
+		var res: Resource = load(path)
 		if res is AbilityData:
 			result.append(res as AbilityData)
 	return result
