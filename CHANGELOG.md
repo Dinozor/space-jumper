@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.1](https://github.com/Dinozor/space-jumper/compare/v1.2.0...v1.2.1) (2026-05-05)
+
+
+### Bug Fixes
+
+* **assets:** switch colormap textures to lossless for web compatibility ([de7c11d](https://github.com/Dinozor/space-jumper/commit/de7c11dda3eb5290e554490730971069fbf4b985))
+* **player:** add mesh_scene to penguin.tres so texture renders correctly ([953eda7](https://github.com/Dinozor/space-jumper/commit/953eda73bd0645bfdd879a725c2b6c25c620a80d))
+* **web:** replace DirAccess directory scans with explicit resource paths ([071969e](https://github.com/Dinozor/space-jumper/commit/071969e93c786746321e283ea4ee807f7f048c5f))
+
 ## [1.2.0](https://github.com/Dinozor/space-jumper/compare/v1.1.0...v1.2.0) (2026-05-03)
 
 
