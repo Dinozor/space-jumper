@@ -1,5 +1,6 @@
 # Godot 4 generated files
-.godot/imported/
+.godot/imported/*
+!.godot/imported/*.fontdata
 .godot/shader_cache/
 
 # Per-machine editor state (folding, edit positions, open tabs)
@@ -17,6 +18,9 @@ build/
 *.pck
 *.apk
 *.aab
+
+.godot/export_credentials.cfg
+.godot/exported/
 
 # macOS
 .DS_Store

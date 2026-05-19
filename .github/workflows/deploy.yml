@@ -48,9 +48,6 @@ jobs:
         run: |
           GODOT="$RUNNER_TEMP/godot_bin/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64"
           mkdir -p build/Web
-          # First pass: import assets so the font cache exists before ui_theme.tres loads
-          "$GODOT" --headless --import || true
-          # Second pass: export (font import data now exists)
           "$GODOT" --headless --export-release "Web" build/Web/index.html
 
       - name: Push to itch.io
