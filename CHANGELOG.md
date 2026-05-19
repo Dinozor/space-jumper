@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/Dinozor/space-jumper/compare/v1.2.1...v1.2.2) (2026-05-19)
+
+
+### Bug Fixes
+
+* **ci:** commit font import data; official Godot treats missing theme as fatal ([61179ed](https://github.com/Dinozor/space-jumper/commit/61179edce6b0861e5bb9748011b44d3533919acd))
+
 ## [1.2.1](https://github.com/Dinozor/space-jumper/compare/v1.2.0...v1.2.1) (2026-05-05)
 
 
