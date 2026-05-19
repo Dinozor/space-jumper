@@ -18,14 +18,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Export with Godot
-        uses: firebelley/godot-export@v7.0.0
+      - name: Cache Godot and export templates
+        id: godot-cache
+        uses: actions/cache@v4
         with:
-          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_export_templates.tpz
-          relative_project_path: "."
-          relative_export_path: ./build
-          cache: true
+          path: |
+            ${{ runner.temp }}/godot_bin
+            ~/.local/share/godot/export_templates
+          key: godot-${{ env.GODOT_VERSION }}
+
+      - name: Install Godot and export templates
+        if: steps.godot-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/godot_bin"
+
+          curl -L -o "$RUNNER_TEMP/godot.zip" \
+            "https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip"
+          unzip "$RUNNER_TEMP/godot.zip" -d "$RUNNER_TEMP/godot_bin"
+          chmod +x "$RUNNER_TEMP/godot_bin/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64"
+
+          curl -L -o "$RUNNER_TEMP/templates.tpz" \
+            "https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_export_templates.tpz"
+          unzip "$RUNNER_TEMP/templates.tpz" -d "$RUNNER_TEMP/godot_templates"
+          TEMPLATE_VER=$(cat "$RUNNER_TEMP/godot_templates/templates/version.txt")
+          mkdir -p "$HOME/.local/share/godot/export_templates/$TEMPLATE_VER"
+          cp "$RUNNER_TEMP/godot_templates/templates/"* "$HOME/.local/share/godot/export_templates/$TEMPLATE_VER/"
+
+      - name: Export Web build
+        run: |
+          mkdir -p build/Web
+          "$RUNNER_TEMP/godot_bin/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64" \
+            --headless --export-release "Web" build/Web/index.html
 
       - name: Push to itch.io
         env:
