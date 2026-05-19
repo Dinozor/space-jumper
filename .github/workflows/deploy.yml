@@ -19,10 +19,11 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Export with Godot
-        uses: firebelley/godot-export@v6.0.0
+        uses: firebelley/godot-export@v7.0.0
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/${{ env.GODOT_VERSION }}-stable/Godot_v${{ env.GODOT_VERSION }}-stable_export_templates.tpz
+          relative_project_path: "."
           relative_export_path: ./build
           cache: true
 
