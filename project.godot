@@ -36,6 +36,10 @@ window/stretch/mode="canvas_items"
 movie_writer/movie_file="/home/dino/project/jams/core-mechanics/wall_jumper/build/movie.avi"
 movie_writer/fps=30
 
+[gui]
+
+theme/custom="res://resources/ui_theme.tres"
+
 [input]
 
 move_left={
@@ -69,13 +73,9 @@ move_back={
 }
 shoot={
 "deadzone": 0.5,
-"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"button_index":1,"factor":1.0,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"tilt":Vector2(0, 0),"pressure":0.0,"pen_inverted":false,"double_click":false,"script":null)
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
 ]
 }
-
-[gui]
-
-theme/custom="res://resources/ui_theme.tres"
 
 [rendering]
 

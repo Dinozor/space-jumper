@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="SpawnTable" format=3 uid="uid://uw0qqwbik15p"]
 
+[ext_resource type="Script" uid="uid://bp2a338g1q7gv" path="res://core/models/spawn_wave.gd" id="7_fgoiy"]
 [ext_resource type="PackedScene" uid="uid://debrdoorw01" path="res://game/objects/debris_doorway.tscn" id="Scene_Doorway"]
 [ext_resource type="PackedScene" uid="uid://debrisha0rd1" path="res://game/objects/debris_hazard.tscn" id="Scene_Hazard"]
 [ext_resource type="PackedScene" uid="uid://debrissafe01" path="res://game/objects/debris_safe.tscn" id="Scene_Safe"]
